@@ -1,17 +1,15 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import PostCard from './PostCard';
 import Toggle from 'material-ui/Toggle';
-import { voteBegin } from './actions/vote';
-import isEmpty from 'lodash/isEmpty';
 
-class PostList extends Component {
+class PostList extends PureComponent {
   static propTypes = {
     posts: PropTypes.array.isRequired,
     category: PropTypes.string.isRequired,
     vote: PropTypes.func.isRequired,
+    isConnected: PropTypes.bool.isRequired,
+    username: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -29,16 +27,18 @@ class PostList extends Component {
     })
   };
 
-  vote(post) {
-    if (!isEmpty(this.props.profile)) {
-      this.props.vote(post);
+  vote(post, index) {
+    const { category, isConnected, vote } = this.props;
+    console.log('index', index);
+    if (isConnected) {
+      vote(post, category, index);
     } else {
       console.log('Not logged');
     }
   }
 
   render() {
-    const { posts, category } = this.props;
+    const { posts, category, username } = this.props;
     return (
       <div className="post_container clearfix">
         <div>
@@ -53,9 +53,10 @@ class PostList extends Component {
             key={post.id}
             post={post}
             index={index}
+            username={username}
             category={category}
             styleShowColumn={this.state.styleShowColumn}
-            vote={this.vote}
+            vote={() => this.vote(post, index)}
           />
         )}
       </div>
@@ -63,8 +64,5 @@ class PostList extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, props) => ({
-  vote: post => dispatch(voteBegin(post)),
-});
 
-export default connect(null, mapDispatchToProps)(PostList);
+export default PostList;

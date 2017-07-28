@@ -21,6 +21,11 @@ export const selectRead = () => createSelector(
   state => state.read || {},
 );
 
+export const selectComments = () => createSelector(
+  selectPostDomain(),
+  state => state.comments || {},
+);
+
 export const selectPostVideosFeed = () => createSelector(
   selectPostFeed(),
   state => state.filter(post => post.json_metadata && !isEmpty(post.json_metadata.links) && post.json_metadata.links.find(link => link.match(/youtube/))) || [],

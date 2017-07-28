@@ -5,7 +5,7 @@ import truncate from 'lodash/truncate';
 import striptags from 'striptags';
 import ReactMarkdown from 'react-markdown';
 
-const PostCard = ({ className = "", post, styleShowColumn = null, vote, category, index }) => {
+const PostCard = ({ className = "", username, post, styleShowColumn = null, vote, category, index }) => {
   return (
     <div className={`post_card ${className}`} data-style={styleShowColumn ? "column" : ""}>
       <Link to={'/test'} className="post_card__block post_card__block--img">
@@ -26,7 +26,12 @@ const PostCard = ({ className = "", post, styleShowColumn = null, vote, category
             </div>
           </div>
           <div className="details float_right">
-            <button className="btn_go_ahead"><i className="material-icons" onClick={() => vote(post)}>arrow_upward</i>
+            <button className="btn_go_ahead">
+              {!post.active_votes.find(vote => vote.voter === username) ? (
+                <i className="material-icons" onClick={() => vote(post)}>arrow_upward</i>
+              ) : (
+                'already voted'
+              )}
             </button>
             <div className="price"><span>$</span>{post.price}</div>
             <div className="social_area social_area--like">

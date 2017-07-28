@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PlayIcon from 'material-ui/svg-icons/av/play-circle-filled';
+import './PostFeedEmbed.css';
 
 export default class PostFeedEmbed extends Component {
   constructor(props) {
@@ -11,14 +12,11 @@ export default class PostFeedEmbed extends Component {
 
   renderThumbFirst(thumb) {
     return (
-      <a
-        className="PostFeedCard__thumbs PostFeedEmbed"
-        onClick={this.handleThumbClick}
-      >
-        <div className="PostFeedEmbed__playButton">
-          <PlayIcon />
+      <a className="postFeedEmbed" onClick={this.handleThumbClick}>
+        <div className="postFeedEmbed-icon">
+          <PlayIcon style={{ width: 60, height: 60 }} />
         </div>
-        <img className="PostFeedEmbed__preview" src={thumb} />
+        <img src={thumb} />
       </a>
     );
   }

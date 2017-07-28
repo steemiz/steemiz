@@ -5,14 +5,19 @@ import combine from '../../utils/combine';
  */
 import getPostsBy, { getPostsByReducer } from './actions/getPostsBy';
 import getOnePost, { getOnePostReducer } from './actions/getOnePost';
+import getComments, { getCommentsReducer } from './actions/getComments';
 import vote, { voteReducer } from './actions/vote';
 
 export const initialState = {
   read: {},
+  comments: {
+    commentsChild: {},
+    commentsData: {},
+  },
 };
 
 export const postReducer = (state = initialState, action) => combine(
-  [ getPostsByReducer, getOnePostReducer, voteReducer ],
+  [ getPostsByReducer, getOnePostReducer, getCommentsReducer, voteReducer ],
   state,
   action,
 );
@@ -21,5 +26,6 @@ export const postReducer = (state = initialState, action) => combine(
 export default [
   getPostsBy,
   getOnePost,
+  getComments,
   vote,
 ];
