@@ -1,0 +1,261 @@
+#right_sidebar {
+	@include position(fixed, $height_header $body_gap $body_gap null);
+	width: $width_rightsidebar;
+	background: #f3f3f6;
+	border-radius: 0 0 $app_radius 0;
+	border-left: 1px solid #e9e9e9;
+	padding: 1rem;
+
+	.btn_next {
+		padding: 0.5rem;
+		background: $white;
+		border: 0;
+		border-radius: 100%;
+		color: $blue;
+		@include position(fixed, 50% -1.2rem null null);
+		transform: translateY(-50%);
+		&:hover {
+			right: .4rem;
+			transition: 0.5s ease;
+			box-shadow: 0px 3px 10px 1px #999;
+		}
+	}
+
+	.tab {
+		position: relative;
+		padding: 0 0 2rem 0;
+
+		.btn__options, .btn__show_more {
+			background: transparent;
+			border: 0;
+			font-size: 1.2rem;
+			padding: 0.5rem;
+			cursor: pointer;
+			color: #a2a2a3;
+			&:hover {
+				color: $blue;
+			}
+		}
+
+		.btn__show_more {
+			@include absoluteCenterX();
+			bottom: -10px;
+			padding: 5px 10px;
+		}
+
+		&__title {
+			border-bottom: 1px solid #e7e7e8;
+			width: 100%;
+		}
+
+		&__key {
+			font-family: 'nunito_sanssemibold';
+			color: #d4d4d4;
+			display: inline-block;
+			line-height: 3rem;
+			border-bottom: 1px solid transparent;
+			padding: 0 0.2rem;
+			margin: 0 0.3rem -1px;
+			font-size: 1.1rem;
+			cursor: pointer;
+			&.active {
+				color: #a2a2a3;
+				border-bottom: 1px solid #a2a2a3;
+			}
+		}
+
+		&__search {
+			$height_search: 2.9rem;
+			$width_icon: 3rem;
+			@include size(100% #{$height_search});
+			@include clearfix();
+			margin: 0.5rem 0 0.5rem;
+			padding: 0 0 0.5rem 0;
+			position: relative;
+			border-bottom: 1px solid rgba(232, 232, 232, 0.5);
+			box-sizing: content-box;
+			.icon {
+				float: left;
+				width: $width_icon;
+				height: $height_search;
+				line-height: $height_search;
+				text-align: center;
+				color: #a2a2a3;
+				cursor: pointer;
+			}
+
+			.input {
+				font-family: 'nunito_sanssemibold';
+				float: left;
+				width: calc(100% - #{$width_icon});
+				color: #a2a2a3;
+				line-height: $height_search;
+				padding: 0 1rem 0 0;
+				border: 0;
+				background: transparent;
+				@include placeholder(#d4d4d4);
+				&:focus {
+					outline: 0;
+				}
+			}
+
+			.btn__options {
+				@include position(absolute, 0px 5px null null);
+			}
+		}
+
+		&__result {
+			@include clearfix();
+			.link_wrapper {
+				height: 162px;
+				overflow-y: auto;
+			}
+		}
+		
+
+		&__result--link {
+			float: left;
+			padding: 9px 12px;
+			background: #f9f9fb;
+			border-radius: 0.3rem;
+			color: $gray;
+			margin: 0 8px 8px 0;
+			cursor: pointer;
+    		box-shadow: 0px 0px 4px 1px #e8e8e8;
+    		&:hover {
+    			color: $blue;
+    			background: $white;
+    		}
+		}
+
+		.chat_list {
+
+			padding: 0;
+			margin-bottom: 0;
+			li {
+				list-style-type: none;
+				position: relative;
+				.user_contact {
+					$width_avatar: 40px;
+					@include clearfix();
+					display: inline-block;
+					padding: 0.5rem 0.7rem;
+					border-radius: 0.5rem;
+					width: 100%;
+
+					&[data-show="false"] {
+						opacity: 0.5;
+					}
+
+					&:hover {
+						background: $white;
+						opacity: 1;
+						.btn_unfollow {
+							display: inline-block;
+						}
+						.user_contact__data {
+							h3, p {
+								@include ellipsis(55%);
+							}
+						}
+					}
+
+					&__avatar {
+						float: left;
+						width: $width_avatar;
+					}
+
+					&__data {
+						float: left;
+						width: calc(100% - #{$width_avatar});
+						padding: 0 1rem 0 0.7rem;
+						position: relative;
+						
+						h3 {
+							color: #666666;
+							margin: 0;
+							@include ellipsis(75%);
+							line-height: 1.4rem;
+							margin-top: 3px;
+							position: relative;
+							padding: 0 2rem 0 0;
+							span {
+								font-family: 'nunito_sansregular';
+								@include position(absolute, 0px 0px null null);
+								border-radius: 0.3rem;
+								border: 1px solid #b3b3b3;
+								background: #f8f8fb;
+								color: #b3b3b3;
+								@include size(1.3rem);
+								line-height: 1.3rem;
+								text-align: center;
+								font-size: 0.7rem;
+								font-weight: normal;
+							}
+						}
+						
+						p {
+							color: #89898a;
+							margin: 0;
+							@include ellipsis(85%);
+							position: relative;
+							.user_contact__status {
+								display: inline-block;
+								border-radius: 100%;
+								&.active {
+									background: $blue;
+									@include size(7px);
+									margin-right: 5px;
+								}
+							}
+						}
+
+						.user_contact__new_message {
+							background: $light-red;
+							@include size(1.2rem);
+							line-height: 1.2rem;
+							border-radius: 100%;
+							font-size: 0.7rem;
+							text-align: center;
+							display: inline-block;
+							@include position(absolute, 0px 0px null null);
+							color: $white;
+						}
+					}
+
+					.btn_unfollow {
+						border: 1px solid #f0f0f2;
+						border-radius: 0.3rem;
+						background: $white;
+						padding: 0.7rem 0.5rem;
+						color: $blue;
+						@include position(absolute, 10px 30px null null);
+						display: none;
+						&:hover {
+							background: $blue;
+							color: $white;
+							transition: 0.4s ease;
+						}
+					}
+				}
+			}
+		}
+
+	}
+	/*
+	|--------------------------------------------------
+	| Resize ChatList on different device
+	|--------------------------------------------------
+	*/
+	$h_tab_top: 295px; // you must calc it
+	$h_all_components_in_tab_bottom: 110px; // you must calculate it
+	$gap_sidebar: 2rem;
+	.tab--bottom {
+		height: calc(100% - #{$h_tab_top});
+		.tab__result {
+			height: calc(100% - #{$h_all_components_in_tab_bottom});
+			overflow-y: auto;
+		}
+	}
+
+}

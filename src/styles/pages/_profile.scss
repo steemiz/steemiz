@@ -1,0 +1,32 @@
+.profile_container {
+	// here
+}
+
+/*
+|--------------------------------------------------
+| Comments page
+|--------------------------------------------------
+*/
+.comments_container {
+	.comment_card {
+		border-bottom: 1px solid #e6e6e6;
+		// margin: 1rem;
+
+		&__block--content {
+			padding: 1rem;
+		}
+	}
+}
+
+/*
+|--------------------------------------------------
+| Votes page
+|--------------------------------------------------
+*/
+.votes_container {
+	.votes {
+		&__head {
+			
+		}
+	}
+}

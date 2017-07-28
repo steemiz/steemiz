@@ -1,0 +1,76 @@
+#left_sidebar {
+	$height_link: 2.8rem;
+
+	@include position(fixed, $height_header null $body_gap $body_gap);
+	width: $width_leftsidebar;
+	border-radius: 0 0 0 $app_radius;
+	padding: 1rem;
+	text-align: center;
+	z-index: $index_leftsidebar;
+
+	.link {
+		display: inline-block;
+		@include size($height_link);
+		line-height: $height_link;
+		border-radius: 100%;
+		text-align: center;
+		margin: 0 0 1.5rem;
+
+		&:hover {
+			.link__inner {
+				background: #fff;
+				padding: 0 8px;
+				border-radius: 3rem;
+				min-width: 8rem;
+				transition: 0.3s ease;
+				box-shadow: 0px 6px 10px -1px #acaaaa;
+				span {
+					display: block;
+				}
+			}
+		}
+
+		&__inner {
+			@include size($height_link);
+			line-height: $height_link;
+			display: inline-block;
+			text-decoration: none;
+			text-align: center;
+			border-radius: 3rem;
+			padding: 0 8px;
+
+			&:active, &:focus, &.active {
+				background: $white;
+				i {
+					color: $blue;
+				}
+			}
+
+			i {
+				height: 100%;
+				line-height: $height_link;
+				color: #d3d3d6;
+				display: inline-block;
+				float: left;
+			}
+
+			span {
+				display: none;
+				padding: 0 1rem 0 2rem;
+				white-space: nowrap;
+				color: #666666;
+			}
+
+		}
+	}
+
+	.link--account {
+		@include absoluteCenterX();
+		bottom: 3.5rem;
+	}
+
+	.link--setting {
+		@include absoluteCenterX();
+		bottom: 0;
+	}
+}

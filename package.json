@@ -1,0 +1,42 @@
+{
+  "name": "steemiz",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "embedjs": "^0.0.4",
+    "emojione": "^3.1.1",
+    "history": "^4.6.3",
+    "lodash": "^4.17.4",
+    "material-ui": "^0.18.6",
+    "prop-types": "^15.5.10",
+    "query-string": "^4.3.4",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-loadable": "^4.0.3",
+    "react-markdown": "^2.5.0",
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.2",
+    "react-router-redux": "next",
+    "react-scripts": "1.0.10",
+    "react-tap-event-plugin": "^2.0.1",
+    "react-virtualized": "^9.9.0",
+    "redux": "^3.7.1",
+    "redux-saga": "^0.15.4",
+    "remarkable": "^1.7.1",
+    "reselect": "^3.0.1",
+    "sanitize-html": "^1.14.1",
+    "steem": "^0.5.20",
+    "striptags": "^3.0.1",
+    "xmldom": "^0.1.27"
+  },
+  "scripts": {
+    "start": "NODE_PATH=src PORT=3004 react-scripts start",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "node-sass-chokidar": "^0.0.3"
+  }
+}

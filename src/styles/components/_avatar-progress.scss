@@ -1,0 +1,113 @@
+$_sizeArr: 24px 28px 32px 36px 40px 44px 48px 80px;
+
+@each $size in $_sizeArr {
+	.avatar_progress {
+		&[data-size="#{$size}"] {
+			$circle-size: $size;
+			$inset-size: $circle-size - 4px;
+			$avatar-size: $inset-size - 4px;
+
+			@include size($circle-size);
+			.circle {
+				.mask, .fill {
+					width:    $circle-size;
+					height:   $circle-size;
+				}
+				.mask {
+					clip: rect(0px, $circle-size, $circle-size, $circle-size/2);
+					.fill {
+						clip: rect(0px, $circle-size/2, $circle-size, 0px);
+						background-color: $blue;
+					}
+				}
+			}
+			.inset {
+				@include size($inset-size);
+				margin-left: ($circle-size - $inset-size)/2;
+				margin-top:  ($circle-size - $inset-size)/2;
+
+				.avatar {
+					@include size($avatar-size);
+					margin-left: ($inset-size - $avatar-size)/2;
+					margin-top:  ($inset-size - $avatar-size)/2;
+				}
+			}
+		}
+	}
+}
+
+.avatar_progress {
+	background-color: #e6e6e6;
+	border-radius: 50%;
+
+	.circle {
+		.mask, .fill {
+			position: absolute;
+			border-radius: 50%;
+		}
+		.mask, .fill {
+			-webkit-backface-visibility: hidden;
+			transition: -webkit-transform 1s;
+			transition: -ms-transform 1s;
+			transition: transform 1s;
+			border-radius: 50%;
+		}
+	}
+
+	.inset {
+		position:    absolute;
+		border-radius: 50%;
+		background: $white;
+
+		.avatar {
+			position: relative;
+
+			&:hover {
+				.avatar__hover {
+					opacity: 1;
+				}
+			}
+
+			img {
+				width: 100% !important;
+				height: 100% !important;
+			}
+
+			&__hover {
+				text-align: center;
+				align-items: center;
+				border-radius: 100%;
+				@include position(absolute, 0 0 0 0);
+				display: flex;
+				background: rgba(64, 193, 152, 0.6);
+				opacity: 0;
+				transition: 0.3s ease;
+				span {
+					font-family: 'nunito_sanssemibold';
+					width: 100%;
+					color: $white;
+					font-size: 1rem;
+				}
+			}
+		}
+	}
+
+	$i: 0;
+	$increment: 180deg / 100;
+	@for $i from 1 through 100 {
+		&[data-progress="#{$i}"] {
+			.circle {
+				.mask.full, .fill {
+					-webkit-transform: rotate($increment * $i);
+					-ms-transform: rotate($increment * $i);
+					transform: rotate($increment * $i);
+				}	
+				.fill.fix {
+					-webkit-transform: rotate($increment * $i * 2);
+					-ms-transform: rotate($increment * $i * 2);
+					transform: rotate($increment * $i * 2);
+				}
+			}
+		}
+	}
+}

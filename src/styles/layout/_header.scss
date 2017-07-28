@@ -1,0 +1,102 @@
+.header {
+	min-height: $height_header;
+	background: $bg_header;
+	padding: 1rem 1.5rem;
+	@include position(fixed, $body_gap $body_gap null $body_gap);
+	border-radius: $app_radius $app_radius 0 0;
+	z-index: $index_header;
+
+	#logo {
+		display: inline-block;
+		float: left;
+	}
+
+	.icon_flag {
+		background-position: 0 center !important;
+		padding-left: 30px !important;
+		text-transform: uppercase;
+	}
+
+	.notifications {
+		color: #999999 !important;
+	}
+
+	&__group:nth-child(1) {
+		padding: 0.5rem 0 0.3rem;
+	}
+
+	&__group--filter {
+		.select_wrapper {
+			margin: 0 1rem 0 0;
+			float: left;
+			height: 3.8rem;
+
+			.select_filter {
+				padding: 0 0 0 1.5rem;
+				margin: 2px 0 0 0;
+				background: url(styles/assets/imgs/icons/arrow_down.png) transparent no-repeat 87% center/14px;
+				
+				svg {
+					path {
+						display: none !important;
+					}
+				}
+
+				&:hover {
+					border-radius: 2rem;
+					box-shadow: 0px 6px 15px 1px #dadada;
+				}
+			}
+
+			&>div {
+				font-size: 1rem !important;
+				color: #999999 !important;
+			}
+
+			hr {
+				display: none;
+			}
+		}
+	}
+
+	&__group--function {
+		align-items: center;
+		vertical-align: middle;
+		display: flex;
+	}
+
+	.search {
+		$height_search: 2.9rem;
+		$width_icon: 3rem;
+		float: left;
+		margin: 0 1rem;
+		@include size(20rem #{$height_search});
+		background: $white;
+		border-radius: 2rem;
+		border: 1px solid #f0f0f2;
+		position: relative;
+		overflow: hidden;
+
+		&__icon {
+			float: left;
+			width: $width_icon;
+			height: calc(#{$height_search} - 2px);
+			line-height: calc(#{$height_search} - 2px);
+			text-align: center;
+			color: $gray;
+		}
+
+		&__input {
+			font-family: 'nunito_sanssemibold';
+			float: left;
+			width: calc(100% - #{$width_icon});
+			color: $gray;
+			line-height: calc(#{$height_search} - 2px);
+			padding: 0 0.5rem 0 0;
+			border: 0;
+			&:focus {
+				outline: 0;
+			}
+		}
+	}
+}

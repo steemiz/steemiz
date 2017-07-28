@@ -1,0 +1,141 @@
+html, body {
+	font-family: 'nunito_sansregular';
+	font-weight: normal;
+	font-size: 14px;
+	background: $bg_default;
+	margin: 0; 
+	padding: 0;
+	@include size(100%);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+    color: $blue;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button {
+	cursor: pointer;
+}
+
+input, select, textarea, a, button {
+	&:hover, &:active, &:focus {
+		outline: 0;
+	}
+}
+
+#app_container {
+	background: #f8f8fb;
+	border-radius: $app_radius;
+	@include position(absolute, $body_gap $body_gap $body_gap $body_gap);
+}
+
+#app_content {
+	background: #f8f8fb;
+	padding: $height_header $width_rightsidebar 0 $width_leftsidebar;
+	.content__inner {
+		@include size(100%);
+		padding: 1rem 0;
+	}
+}
+
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 40px white inset;
+}
+
+.clearfix {
+	@include clearfix();
+}
+
+.float_left {
+	float: left;
+}
+
+.float_right {
+	float: right;
+}
+
+.hidden {
+	display: none;
+}
+/*
+|--------------------------------------------------
+| Select
+|--------------------------------------------------
+*/
+.custom_select {
+	display: inline-block;
+
+	hr {
+		display: none;
+	}
+
+	.select {
+		background: url(styles/assets/imgs/icons/arrow_down.png) transparent no-repeat 87% center/14px;
+		path {
+			opacity: 0;
+		}
+	}
+}
+
+/*
+|--------------------------------------------------
+| Collapse
+|--------------------------------------------------
+*/
+.collapse {
+	max-height: 0px;
+	display: block;
+	overflow: hidden;
+	transition: max-height 0.4s ease-out;
+	&.in {
+		max-height: 20rem;
+		transition: max-height 0.5s ease-in;
+	}
+}
+
+/*
+|--------------------------------------------------
+| Button
+|--------------------------------------------------
+*/
+.btn_default {
+	border: 1px solid #f0f0f2;
+	height: 2.8rem;
+	line-height: calc(2.8rem - 2px);
+	color: $blue;
+	padding: 0 2rem;
+	border-radius: 2rem;
+	background: $white;
+	cursor: pointer;
+	font-family: 'nunito_sanssemibold';
+	overflow: hidden;
+	&:hover, &:focus, &:active {
+		transition: 0.4s ease;
+		@include gradientHorizontal();
+		color: $white;
+	}
+}
+
+/*
+|--------------------------------------------------
+| Icons
+|--------------------------------------------------
+*/
+// flag icon
+$_countryArr: afg afr ala;
+
+@each $country in $_countryArr {
+	.icon_flag_#{$country} {
+		background-image: url(styles/assets/imgs/icons/flags/#{$country}.png) !important;
+		background-repeat: no-repeat !important;
+		background-position: 15px center !important;
+		background-size: 20px auto !important;
+		padding-left: 20px !important;
+		text-transform: uppercase;
+	}
+}
