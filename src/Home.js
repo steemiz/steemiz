@@ -5,8 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import PostList from './features/Post/PostList';
 import { selectPostCreated, selectPostFeed, selectPostVideosFeed } from './features/Post/selectors';
 import { getPostsByBegin } from './features/Post/actions/getPostsBy';
-import { voteBegin } from './features/Post/actions/vote';
-import { selectIsConnected, selectUsername } from './features/User/selectors';
+import { voteBegin } from './features/Vote/actions/vote';
+import { selectIsConnected, selectAccount } from './features/User/selectors';
 import isEmpty from 'lodash/isEmpty';
 
 class Home extends Component {
@@ -15,17 +15,9 @@ class Home extends Component {
     postsFeed: PropTypes.array.isRequired,
     getPostsBy: PropTypes.func.isRequired,
     isConnected: PropTypes.bool.isRequired,
-    username: PropTypes.string.isRequired,
+    account: PropTypes.object.isRequired,
     vote: PropTypes.func.isRequired,
   };
-
-  constructor(props) {
-    super(props);
-    this.toggleStyleShow = this.toggleStyleShow.bind(this);
-    this.state = {
-      styleShowColumn: true,
-    };
-  }
 
   componentDidMount() {
     // POSTS BY CREATED
@@ -34,25 +26,19 @@ class Home extends Component {
 
   componentWillReceiveProps(nextProps) {
     // POSTS BY CREATED IF CONNECTED
-    if (isEmpty(this.props.postsFeed) && (nextProps.isConnected && this.props.isConnected !== true)) {
+    /*if (isEmpty(this.props.postsFeed) && (nextProps.isConnected && this.props.isConnected !== true)) {
       this.props.getPostsBy('feed', { tag: 'aggroed', limit: 5 });
-    }
+    }*/
   }
 
-  toggleStyleShow() {
-    this.setState(state => {
-      state.styleShowColumn = !state.styleShowColumn
-    })
-  };
-
   render() {
-    const { postsCreated, postsFeed, isConnected, username, vote } = this.props;
+    const { postsCreated, postsFeed, isConnected, account, vote } = this.props;
     return (
       <PostList
-        posts={!isConnected ? postsCreated : postsFeed}
-        category={!isConnected ? 'created' : 'feed'}
+        posts={postsCreated}
+        category={'created'}
         isConnected={isConnected}
-        username={username}
+        account={account}
         vote={vote}
       />
     );
@@ -63,12 +49,12 @@ const mapStateToProps = createStructuredSelector({
   postsCreated: selectPostCreated(),
   postsFeed: selectPostFeed(),
   isConnected: selectIsConnected(),
-  username: selectUsername(),
+  account: selectAccount(),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
   getPostsBy: (category, query) => dispatch(getPostsByBegin(category, query)),
-  vote: (post, category, index) => dispatch(voteBegin(post, category, index)),
+  vote: (post, weight, params) => dispatch(voteBegin(post, weight, params)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

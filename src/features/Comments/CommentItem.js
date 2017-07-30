@@ -3,14 +3,14 @@ import { Link, withRouter } from 'react-router-dom';
 //import { FormattedRelative } from 'react-intl';
 import numeral from 'numeral';
 import isEmpty from 'lodash/isEmpty';
-import { getUpvotes, getDownvotes, sortVotes } from '../../../utils/helpers/voteHelpers';
-import Body from '../../../components/Body';
+import { getUpvotes, getDownvotes, sortVotes } from '../../utils/helpers/voteHelpers';
+import Body from '../../components/Body';
 import Avatar from 'material-ui/Avatar'
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
 import ThumbDown from 'material-ui/svg-icons/action/thumb-down';
 import Edit from 'material-ui/svg-icons/editor/mode-edit';
 import Reply from 'material-ui/svg-icons/content/reply';
-import { sortCommentsFromSteem } from '../../../utils/helpers/stateHelpers';
+import { sortCommentsFromSteem } from '../../utils/helpers/stateHelpers';
 //import CommentFormEmbedded from './CommentFormEmbedded';
 //import './CommentItem.scss';
 
@@ -82,21 +82,21 @@ class CommentItem extends Component {
   }
 
   render() {
-    const { comment, likeComment, unlikeComment, dislikeComment, profile, allComments, sortOrder } = this.props;
+    const { comment, vote, isLiked, likeComment, unlikeComment, dislikeComment, account, allComments, sortOrder } = this.props;
 
     const pendingPayoutValue = parseFloat(comment.pending_payout_value);
     const totalPayoutValue = parseFloat(comment.total_payout_value);
     const payout = totalPayoutValue || pendingPayoutValue;
 
     const isCommentLiked =
-      !isEmpty(profile) &&
-      comment.active_votes.some(vote => vote.voter === profile.user && vote.percent > 0);
+      !isEmpty(account) &&
+      comment.active_votes.some(vote => vote.voter === account.name && vote.percent > 0);
 
     const isCommentDisliked =
-      !isEmpty(profile) &&
-      comment.active_votes.some(vote => vote.voter === profile.user && vote.percent < 0);
+      !isEmpty(account) &&
+      comment.active_votes.some(vote => vote.voter === account.name && vote.percent < 0);
 
-    const isEditable = comment.author === profile.user;
+    const isEditable = comment.author === account.name;
     const numberOfLikes = numeral(comment.active_votes.filter(vote => vote.percent > 0).length).format('0,0');
     const numberOfDislikes = numeral(comment.active_votes.filter(vote => vote.percent < 0).length).format('0,0');
 
@@ -148,10 +148,10 @@ class CommentItem extends Component {
             <div className="CommentActionButtons">
               <div className="CommentActionButtons__button">
                 <a
-                  onClick={isCommentLiked
-                    ? () => unlikeComment(comment.id)
-                    : () => likeComment(comment.id)}
-                  className={isCommentLiked ? 'active' : ''}
+                  onClick={!isLiked
+                    ? () => vote(comment, account.voting_power)
+                    : () => vote(comment, 0)}
+                  className={isLiked ? 'active' : ''}
                 >
                   <ThumbUp />
                 </a>

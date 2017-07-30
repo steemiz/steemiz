@@ -11,6 +11,11 @@ export const selectProfile = () => createSelector(
   state => state.profile,
 );
 
+export const selectAccount = () => createSelector(
+  selectProfile(),
+  state => state.account || {},
+);
+
 export const selectIsConnected = () => createSelector(
   selectProfile(),
   profile => !isEmpty(profile),
@@ -21,7 +26,7 @@ export const selectUsername = () => createSelector(
   profile => profile.user || '',
 );
 
-export const selectProfileMetadata = () => createSelector(
-  selectProfile(),
-  profile => profile.account && profile.account.json_metadata ? JSON.parse(profile.account.json_metadata) : {},
+export const selectAccountMetadata = () => createSelector(
+  selectAccount(),
+  account => account && account.json_metadata ? JSON.parse(account.json_metadata) : {},
 );

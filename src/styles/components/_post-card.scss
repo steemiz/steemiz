@@ -137,7 +137,7 @@
 				padding: 0;
 				@include size(2.2rem);
 				text-align: center;
-				&:hover, &:active, &:focus {
+				&:hover, &:active, &:focus, &.active {
 					color: $white;
 					background: $blue;
 					transition: 0.4s ease;

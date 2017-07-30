@@ -9,7 +9,7 @@ class PostList extends PureComponent {
     category: PropTypes.string.isRequired,
     vote: PropTypes.func.isRequired,
     isConnected: PropTypes.bool.isRequired,
-    username: PropTypes.string.isRequired,
+    account: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -17,7 +17,7 @@ class PostList extends PureComponent {
     this.toggleStyleShow = this.toggleStyleShow.bind(this);
     this.vote = this.vote.bind(this);
     this.state = {
-      styleShowColumn: true,
+      styleShowColumn: false,
     };
   }
 
@@ -27,18 +27,17 @@ class PostList extends PureComponent {
     })
   };
 
-  vote(post, index) {
+  vote(post, weight, index) {
     const { category, isConnected, vote } = this.props;
-    console.log('index', index);
     if (isConnected) {
-      vote(post, category, index);
+      vote(post, weight, { type: 'post', category, index });
     } else {
       console.log('Not logged');
     }
   }
 
   render() {
-    const { posts, category, username } = this.props;
+    const { posts, category, account } = this.props;
     return (
       <div className="post_container clearfix">
         <div>
@@ -53,10 +52,10 @@ class PostList extends PureComponent {
             key={post.id}
             post={post}
             index={index}
-            username={username}
+            account={account}
             category={category}
             styleShowColumn={this.state.styleShowColumn}
-            vote={() => this.vote(post, index)}
+            vote={(post, weight) => this.vote(post, weight, index)}
           />
         )}
       </div>

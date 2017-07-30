@@ -32,7 +32,7 @@
     "xmldom": "^0.1.27"
   },
   "scripts": {
-    "start": "NODE_PATH=src PORT=3004 react-scripts start",
+    "start": "NODE_PATH=src react-scripts start",
     "build-css": "node-sass-chokidar src/ -o src/",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

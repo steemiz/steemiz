@@ -44,7 +44,7 @@ const onSelectChange = (event, index, value) => {
   this.setState(state => { state.filter.category = value })
 };
 
-const Header = ({dataFilter, handleSelectPost, handleSelectCategory, handleSelectCountry, handleCreatePost, profileMetadata}) => {
+const Header = ({dataFilter, handleSelectPost, handleSelectCategory, handleSelectCountry, handleCreatePost, accountMetadata}) => {
   return (
     <header className="header clearfix">
       <div className="header__group float_left">
@@ -69,7 +69,7 @@ const Header = ({dataFilter, handleSelectPost, handleSelectCategory, handleSelec
             <NotificationsIcon className="notifications" />
           </IconButton>
         </Badge>
-        <AvatarProgress src={!isEmpty(profileMetadata) ? profileMetadata.profile.profile_image : ''} progress={75} size="48px" />
+        <AvatarProgress src={!isEmpty(accountMetadata) ? accountMetadata.profile.profile_image : ''} progress={75} size="48px" />
       </div>
 
       <div className="header__group header__group--filter float_right">
@@ -123,7 +123,7 @@ Header.propTypes = {
   handleSelectCategory: PropTypes.func, // handle filter after select Category
   handleSelectCountry: PropTypes.func, // handle filter after select Country
   handleCreatePost: PropTypes.func, // handle create post
-  profileMetadata: PropTypes.object, // source of avatar
+  accountMetadata: PropTypes.object, // source of avatar
 };
 
 Header.defaultProps = {
@@ -136,7 +136,7 @@ Header.defaultProps = {
   handleSelectCategory: undefined, // handle filter after select Category
   handleSelectCountry: undefined, // handle filter after select Country
   handleCreatePost: undefined, // handle create post
-  profileMetadata: {}, // source of avatar
+  accountMetadata: {}, // source of avatar
 };
 
 export default Header;

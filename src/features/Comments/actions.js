@@ -3,21 +3,22 @@ import combine from '../../utils/combine';
 /*
  * EXPORTING REDUCERS and SAGAS
  */
-import getProfile, { getProfileReducer } from './actions/getProfile';
-import logout, { logoutReducer } from './actions/logout';
+import getComments, { getCommentsReducer } from './actions/getComments';
+import commentsReducer from './reducer';
 
 export const initialState = {
-  profile: {},
+  commentsChild: {},
+  commentsData: {},
+  commentsRoots: [],
 };
 
 export const reducer = (state = initialState, action) => combine(
-  [ getProfileReducer, logoutReducer ],
+  [ getCommentsReducer, commentsReducer ],
   state,
   action,
 );
 
 // All sagas to be loaded
 export default [
-  getProfile,
-  logout,
+  getComments,
 ];

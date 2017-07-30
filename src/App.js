@@ -7,7 +7,7 @@ import { NavLink, withRouter } from 'react-router-dom';
 import asyncComponent from './utils/asyncComponent';
 import './custom.css';
 import steemconnect from './utils/steemconnect';
-import { selectProfileMetadata } from './features/User/selectors';
+import { selectAccountMetadata } from './features/User/selectors';
 import { logoutBegin } from './features/User/actions/logout';
 import Header from './features/Layout/Header';
 import LeftSideBar from './features/Layout/LeftSideBar';
@@ -18,11 +18,11 @@ const Test = asyncComponent(() => import('./Test'));
 
 class App extends Component {
   static propTypes = {
-    profileMetadata: PropTypes.object,
+    accountMetadata: PropTypes.object,
   };
 
   static defaultProps = {
-    profileMetadata: {},
+    accountMetadata: {},
   };
 
   constructor(props) {
@@ -63,11 +63,11 @@ class App extends Component {
   }
 
   render() {
-    const { profileMetadata } = this.props;
+    const { accountMetadata } = this.props;
 
     return (
       <div id="app_container">
-        <Header profileMetadata={profileMetadata} />
+        <Header accountMetadata={accountMetadata} />
         <LeftSideBar />
         <div id="app_content">
           <div className="content__inner">
@@ -84,7 +84,7 @@ class App extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  profileMetadata: selectProfileMetadata(),
+  accountMetadata: selectAccountMetadata(),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

@@ -1,20 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import truncate from 'lodash/truncate';
 import striptags from 'striptags';
 import ReactMarkdown from 'react-markdown';
 
-const PostCard = ({ className = "", username, post, styleShowColumn = null, vote, category, index }) => {
+const PostCard = ({ className = "", account, post, styleShowColumn = null, vote, category, index }) => {
   return (
     <div className={`post_card ${className}`} data-style={styleShowColumn ? "column" : ""}>
       <Link to={'/test'} className="post_card__block post_card__block--img">
         {post.main_img && <img src={`https://steemitimages.com/256x512/${post.main_img}`} alt="" />}
       </Link>
       <div className="post_card__block post_card__block--content">
-        <Link to={{ pathname: post.url, state: { category: category, index: index }}} className="post_card__block">
+        <Link to={{ pathname: post.url, state: { category: category, index: index } }}
+              className="post_card__block">
           <h3>{post.title}</h3>
-          <ReactMarkdown source={truncate(striptags(post.body), { length: 250, separator: ' ' })} disallowedTypes={['Image', 'Link', 'Heading', 'BlockQuote', 'ThematicBreak', 'List', 'Item']} />
+          <ReactMarkdown source={truncate(striptags(post.body), { length: 250, separator: ' ' })}
+                         disallowedTypes={['Image', 'Link', 'Heading', 'BlockQuote', 'ThematicBreak', 'List', 'Item']} />
         </Link>
         <div className="post_card__block post_card__block--info">
           <div className="float_right">
@@ -26,13 +28,15 @@ const PostCard = ({ className = "", username, post, styleShowColumn = null, vote
             </div>
           </div>
           <div className="details float_right">
-            <button className="btn_go_ahead">
-              {!post.active_votes.find(vote => vote.voter === username) ? (
-                <i className="material-icons" onClick={() => vote(post)}>arrow_upward</i>
-              ) : (
-                'already voted'
-              )}
-            </button>
+            {!post.active_votes.find(vote => vote.voter === account.name) ? (
+              <button className="btn_go_ahead">
+                <i className="material-icons" onClick={() => vote(post, account.voting_power)}>arrow_upward</i>
+              </button>
+            ) : (
+              <button className="btn_go_ahead active">
+                <i className="material-icons" onClick={() => vote(post, 0)}>arrow_upward</i>
+              </button>
+            )}
             <div className="price"><span>$</span>{post.price}</div>
             <div className="social_area social_area--like">
               <i className="material-icons">favorite</i>
