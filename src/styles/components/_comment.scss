@@ -1,0 +1,56 @@
+.CommentComponent {
+	padding: 0.5rem 0;
+
+	&__detail {
+		width: 100%;
+		padding: 0.2rem 1rem;
+	}
+
+	&__head {
+		display: flex;
+		align-items: center;
+		margin: 0 0 10px;
+		&>* {
+			margin-right: 0.3rem;
+		}
+	}
+
+	&__content {
+		p {
+			margin: 0 0 5px;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			margin: 0 0 8px;
+		}
+		img {
+			max-width: 100%;
+		}
+	}
+
+	&__footer {
+		display: flex;
+		align-items: center;
+		margin: 0 0 10px;
+		@include clearfix();
+		&>* {
+			margin-right: 8px;
+		}
+	}
+
+	&__reply {
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.Comment {
+	&__child {
+		padding-left: 4rem;
+	}
+}
+
+.CommentItem {
+	display: flex;
+}

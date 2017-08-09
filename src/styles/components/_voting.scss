@@ -1,0 +1,67 @@
+.Voting {
+	display: flex;
+	align-items: center;
+
+	&__button {
+		cursor: pointer;
+	}
+
+	&__money {
+		font-weight: 600;
+		margin-right: 8px;
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	&__voters_list {
+		font-weight: 600;
+		padding-left: 7px;
+		border-left: 1px solid #8a8a8a;
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.MoneyCard {
+	color: #8a8a8a;
+	padding: 0.7rem 1rem 0.8rem;
+	max-width: 15rem;
+
+	p {
+		margin: 0 0 0.5rem;
+		&:last-child {
+			margin: 0;
+		}
+	}
+}
+
+.VoteCard {
+	max-width: 15rem;
+	min-width: 10rem;
+
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0.5rem 0;
+
+		li {
+			padding: 2px 10px;
+			&:hover {
+				background: #eee;
+			}
+			a {
+				color: #8a8a8a;
+				display: inline-block;
+				width: 100%;
+
+				&:hover {
+					color: $blue;
+				}
+			}
+		}
+	}
+}

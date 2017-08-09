@@ -1,0 +1,32 @@
+.create_post {
+	&__editor {
+		min-height: 15rem;
+		border: 1px solid #f1f1f1;
+		padding: 0 10px;
+	}
+}
+
+.rdw-dropdown-selectedtext {
+	color: #333;
+}
+
+.rdw-option-wrapper {
+	box-sizing: content-box;
+
+	&.rdw-option-active {
+		background: $blue !important;
+		border-color: $blue !important;
+		box-shadow: none !important;
+	}
+
+	&:hover {
+		box-shadow: none !important;
+		background: $blue !important;
+		border-color: $blue !important;
+		transition: 0.4s ease;
+	}
+}
+
+.Select-value {
+    margin-top: 4px !important;
+}

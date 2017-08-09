@@ -1,3 +1,30 @@
 .post_container {
-	// here
+	padding: 1rem 0;
+
+	.post_card {
+		@media screen and (min-width: 1600px) {
+			&[data-style="column"] {
+				width: calc(20% - 1.5rem);
+			}
+		}
+
+		@media screen and (max-width: 992px) {
+			&[data-style="column"] {
+				width: calc(33.33% - 1.5rem);
+			}
+		}
+
+		@media screen and (max-width: 768px) {
+			&[data-style="column"] {
+				width: calc(50% - 1rem);
+				margin: 0 1rem 1rem 0;
+			}
+		}
+
+		@media screen and (max-width: 480px) {
+			&[data-style="column"] {
+				width: calc(100% - 1rem);
+			}
+		}
+	}
 }

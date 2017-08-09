@@ -21,13 +21,10 @@ export function getOnePostFailure(message) {
 }
 
 /*--------- REDUCER ---------*/
-export function getOnePostReducer(state, action) {
+export function getOnePostReducer(state = {}, action) {
   switch (action.type) {
     case GET_ONE_POST_SUCCESS:
-      return {
-        ...state,
-        read: action.post,
-      };
+      return action.post;
     default:
       return state;
   }

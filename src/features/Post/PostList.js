@@ -1,12 +1,21 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import PostCard from './PostCard';
-import Toggle from 'material-ui/Toggle';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import isEmpty from 'lodash/isEmpty';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
-class PostList extends PureComponent {
+import { selectPostsByCat } from './selectors';
+import { getPostsByBegin } from './actions/getPostsBy';
+import { voteBegin } from '../Vote/actions/vote';
+import { selectIsConnected, selectMyAccount } from '../User/selectors';
+import PostCard from '../../components/PostCard';
+
+class PostList extends Component {
   static propTypes = {
     posts: PropTypes.array.isRequired,
     category: PropTypes.string.isRequired,
+    query: PropTypes.object.isRequired,
     vote: PropTypes.func.isRequired,
     isConnected: PropTypes.bool.isRequired,
     account: PropTypes.object.isRequired,
@@ -14,17 +23,24 @@ class PostList extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.toggleStyleShow = this.toggleStyleShow.bind(this);
+    this.handleChangeTypeShow = this.handleChangeTypeShow.bind(this);
     this.vote = this.vote.bind(this);
     this.state = {
-      styleShowColumn: false,
+      typeShowPostCard: 'row',
     };
   }
 
-  toggleStyleShow() {
-    this.setState(state => {
-      state.styleShowColumn = !state.styleShowColumn
-    })
+  componentDidMount() {
+    // POSTS BY CATEGORY
+    if (isEmpty(this.props.posts)) {
+      this.props.getPostsBy(this.props.category, this.props.query);
+    }
+  }
+
+  handleChangeTypeShow = (event, value) => {
+    this.setState({
+      typeShowPostCard: value,
+    });
   };
 
   vote(post, weight, index) {
@@ -41,11 +57,32 @@ class PostList extends PureComponent {
     return (
       <div className="post_container clearfix">
         <div>
-          <Toggle
-            label="Toggled style show"
-            defaultToggled={true}
-            onToggle={this.toggleStyleShow}
-          />
+          <RadioButtonGroup
+            name="typeShow"
+            defaultSelected={this.state.typeShowPostCard}
+            onChange={this.handleChangeTypeShow}
+            className="clearfix"
+            style={{margin: "0 0 1.5rem 0"}}
+          >
+            <RadioButton
+              value="column"
+              label="Type Column"
+              style={{float: "left", width: "auto", "minWidth": "12rem"}}
+              labelStyle={{color: "#999"}}
+            />
+            <RadioButton
+              value="row"
+              label="Type Row"
+              style={{float: "left", width: "auto", "minWidth": "10rem"}}
+              labelStyle={{color: "#999"}}
+            />
+            <RadioButton
+              value=""
+              label="Type Default"
+              style={{float: "left", width: "auto", "minWidth": "12rem"}}
+              labelStyle={{color: "#999"}}
+            />
+          </RadioButtonGroup>
         </div>
         {posts && posts.map((post, index) =>
           <PostCard
@@ -54,7 +91,7 @@ class PostList extends PureComponent {
             index={index}
             account={account}
             category={category}
-            styleShowColumn={this.state.styleShowColumn}
+            styleShow={this.state.typeShowPostCard}
             vote={(post, weight) => this.vote(post, weight, index)}
           />
         )}
@@ -63,5 +100,15 @@ class PostList extends PureComponent {
   }
 }
 
+const mapStateToProps = (state, props) => createStructuredSelector({
+  posts: selectPostsByCat(props.category),
+  isConnected: selectIsConnected(),
+  account: selectMyAccount(),
+});
 
-export default PostList;
+const mapDispatchToProps = (dispatch, props) => ({
+  getPostsBy: (category, query) => dispatch(getPostsByBegin(category, query)),
+  vote: (post, weight, params) => dispatch(voteBegin(post, weight, params)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList);

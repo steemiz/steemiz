@@ -1,5 +1,225 @@
 .profile_container {
-	// here
+    padding: 0.71rem 1.42rem 1.5rem 0rem;
+
+    // User Informations
+    .user {
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+
+        &__overlay {
+            @include position(absolute, 0 0 0 0);
+            opacity: 0.2;
+            background: #000;
+        }
+
+        &__wrapper {
+            @include position(relative, 0 0 0 0);
+            padding: 3rem 2rem 3rem 3rem;
+            overflow: hidden;
+        }
+
+        &__containner {
+            float: left;
+            padding-right: 2.2rem;
+            
+            .avatar_progress {
+                background-color: transparent;
+                box-shadow: inset 0px 0px 0px 2px rgba(230, 230, 230, 0.6);
+                .inset {
+                    background: transparent;
+                }
+                .circle {
+                    .mask {
+                        .fill {
+                            background-color: transparent;
+                            border: 2px solid $blue;
+                        }
+                    }
+                }
+                .avatar {
+                    height: 134px;
+                    width: 134px;
+                    margin-left: 6px;
+                    margin-top: 6px;
+                }
+            }
+        }
+
+        &__info {
+            float: left;
+            color: white;
+
+            &__name {
+                margin: 1rem 0 0;
+                font-size: 2.5rem;
+                font-family: 'nunito_sanslight';
+                font-weight: normal;
+                position: relative;
+                display: inline-block;
+
+                span {
+                    border: 1px solid white;
+                    border-radius: 0.5rem;
+                    font-size: 0.9rem;
+                    @include position(relative, -7px 0px null null);
+                    padding: 0.52rem 0.45rem 0.33rem;
+                }
+            }
+
+            &__position {
+                font-size: 15px;
+                margin: 5px 0 10px;
+            }
+
+            &__statistics {
+                overflow: hidden;
+                padding-top: 0.8rem;
+
+                .statistic {
+                    float: left;
+                    padding: 0 1.5rem;
+                    margin: 0.5rem 0;
+
+                    h3 {
+                        font-size: 20px;
+                        margin: 0px 0px;
+                        line-height: 25px;
+                    }
+
+                    p {
+                        font-size: 12px;
+                        margin: 0px 0px;
+                        color: #e6e6e6;
+                    }
+                }
+            }
+
+            .statistic--steem_power {
+                margin-left: -1.5rem;
+                border-right: 1px solid #e6e6e6;
+
+                h3 {
+                    color: $yellow;
+                }
+            }
+
+            .statistic--buttons {
+                float: left;
+                display: flex;
+
+                &__message {
+                    background: transparent;
+                    border-radius: 50%;
+                    padding: 8px 8px 4px 8px;    
+                    border: 1px solid rgba(234, 234, 234, 0.7);
+                    display: inline-block;
+                    margin-right: 20px;
+                    color: white;
+                }
+
+                .btn_default{
+                    @include gradientHorizontal();
+                    color: white;
+                    border: none;
+                }
+            }
+        }
+    }
+
+    // Content Links
+    .content {
+        &__links {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            position: relative;
+
+            &:after {
+                content: "";
+                @include position(absolute, null 0 0 0);
+                @include size(100% 1px);
+                background: #e7e7e8;
+            }
+
+            a {
+                font-family: 'nunito_sanssemibold';
+                color: #a2a2a3;
+                display: inline-block;
+                line-height: 4rem;
+                border-bottom: 1px solid transparent;
+                margin: 0 1rem;
+                font-size: 1rem;
+                cursor: pointer;
+                position: relative;
+            }
+
+            a.active {
+                color: $blue;
+                border-bottom: 1px solid $blue;
+            }
+
+            a:hover {
+                text-decoration:none;
+                color: $blue;
+            }
+
+            a:after{
+                content: "";
+                transition: 0.2s all ease;
+                @include position(absolute, null null -1px 0);
+                @include size(0 1px);
+                background: $blue;
+                z-index: 1;
+            }
+
+            a:hover:after{
+                width:100%;
+            }
+
+            a:last-of-type {
+                float: right;
+            }
+
+        }
+    }
+}
+
+/*
+|--------------------------------------------------
+| Blog page
+|--------------------------------------------------
+*/
+.blog_container {
+    padding-top: 1rem;
+    margin-right: -1.4rem;
+
+    .post_card {
+        @media screen and (min-width: 1600px) {
+            &[data-style="column"] {
+                width: calc(20% - 1.5rem);
+            }
+        }
+
+        @media screen and (max-width: 992px) {
+            &[data-style="column"] {
+                width: calc(33.33% - 1.5rem);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            &[data-style="column"] {
+                width: calc(50% - 1rem);
+                margin: 0 1rem 1rem 0;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            &[data-style="column"] {
+                width: calc(100% - 1rem);
+            }
+        }
+    }
 }
 
 /*
@@ -8,15 +228,35 @@
 |--------------------------------------------------
 */
 .comments_container {
-	.comment_card {
-		border-bottom: 1px solid #e6e6e6;
-		// margin: 1rem;
+    .comment_card {
+        border-bottom: 1px solid #e6e6e6;
 
-		&__block--content {
-			padding: 1rem;
-		}
-	}
+        &__block--content {
+            padding: 1rem;
+        }
+        
+        &__block--info {
+            @media screen and (max-width: 400px) {
+                .details {
+                    display: block;
+                    &>* {
+                        float: left;
+                    }
+                }
+            } 
+        }
+    }
 }
+
+/*
+|--------------------------------------------------
+| Replies page
+|--------------------------------------------------
+*/
+.replies_container {
+
+}
+
 
 /*
 |--------------------------------------------------
@@ -24,9 +264,459 @@
 |--------------------------------------------------
 */
 .votes_container {
-	.votes {
-		&__head {
-			
-		}
-	}
+    .votes {
+        &__head {
+            border-bottom: 1px solid #e7e7e8;
+            @include clearfix();
+
+            h3 {
+                float: left;
+                font-size: 1.3rem;
+                line-height: 2rem;
+                color: #a2a2a3;
+                padding-left: 1rem;
+            }
+
+            .custom_select {
+                float: right;
+                padding-top: 0.5rem;
+            }
+
+        }
+
+        &__body {
+            .votes__result {
+                float: left;
+                width: 49%;
+                @media screen and (max-width: 768px) {
+                    width: 100%;
+                } 
+
+                &__number {
+                    h2 {
+                        color: #bdccd4;
+                        font-size: 2.3rem;
+                        font-family: 'nunito_sanslight';
+                        margin-bottom: 0.5rem;
+                        padding-left: 1rem;
+                    }
+                    
+                    p {
+                        margin: 0px;
+                        padding-left: 1rem;
+                        color: #a2a2a3;
+                        font-size: 0.9rem;
+                    }
+                }
+
+                &__list {
+                    list-style-type: none;
+                    padding: 0rem;
+                    margin: 2rem 0rem;
+                    border-top: 1px solid #e6e6e6;
+
+                    li {
+                        padding: 1rem 1rem;
+                        @include clearfix();
+
+                        &:nth-child(odd) {
+                            background-color: #f0f0f2;
+                        }
+
+                        &:nth-child(even) {
+                            background-color: #f8f8fb;
+                        }
+
+                        .timestamp {
+                            float: left;
+                            width: 28%;
+                            margin-right: 2%;
+                            color: $gray;
+                        }
+
+                        .author {
+                            width: 18%;
+                            margin-right: 2%;
+                            color: $gray;
+                            float: left;
+                        }
+
+                        .source {
+                            float: left;
+                            width: 50%;
+                            a {
+                                @include ellipsis(100%);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .votes__result--given {
+                float: right;
+
+                h2 {
+                    color: #ff7bac;
+                }
+            }
+        }
+    }
+}
+
+/*
+|--------------------------------------------------
+| Followers page & Followings page
+|--------------------------------------------------
+*/
+.usercard_container {
+    $margin_profile : 0.8rem;
+    text-align: center;
+    margin: 1rem -#{$margin_profile};
+
+    .user_profile {
+        width: calc(25% - 2*#{$margin_profile});
+        float: left;
+        background-color: #ffffff;
+        position: relative;
+        margin: 1rem $margin_profile;
+        border-radius: 5px;
+
+        @media screen and (min-width: 1600px) {
+            width: calc(20% - 2*#{$margin_profile});
+        }
+
+        @media screen and (max-width: 992px) {
+            width: calc(33.33% - 2*#{$margin_profile});
+        }
+
+        @media screen and (max-width: 768px) {
+            width: calc(50% - 2*#{$margin_profile});
+        }
+
+        @media screen and (max-width: 480px) {
+            width: calc(100% - 2*#{$margin_profile});
+        }
+
+        button {
+            @include position(absolute, 0.5rem 0.5rem null null);
+            background: transparent;
+            border: none;
+            color: #666666;
+            font-size: 24px;
+            padding: 10px;
+
+            &:hover {
+                color: $light_red;
+            }
+        }
+
+        &__avatar {
+            display: inline-block;
+            padding-top: 2rem;
+
+            .avatar {
+                height: 124px !important;
+                width: 124px !important;
+                margin-left: 6px !important;
+                margin-top: 6px !important;
+            }
+        }
+
+        &__rate {
+            border: 1px solid #b7b7b7;
+            border-radius: 5px;
+            padding: 3px;
+            position: absolute;
+            top: 10.8rem;
+            right: 1.8rem;
+            font-size: 10px;
+            color : #b7b7b7;
+            min-width: 18px;
+        }
+
+        &__name {
+            color: #666;
+            margin: 0.8rem 0rem;
+            @include ellipsis(100%);
+            display: block;
+        }
+
+        &__steem_power {
+            color: #ff992b;
+            margin: 0px;
+        }
+
+        p {
+            color: #ffd6aa;
+            margin-top: 0px;
+            font-size: 0.7rem;
+            padding-bottom: 1rem; 
+        }
+
+        &__view {
+            border-top: 1px solid #f2f2f2;
+
+            a {
+                line-height: 3rem;
+                display: inline-block;
+                width: 100%;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+/*
+|--------------------------------------------------
+| Rewards page
+|--------------------------------------------------
+*/
+.rewards_container {
+    .tab {
+        &__title {
+            border-bottom: 1px solid #e7e7e8;
+            @include clearfix();
+
+            p {
+                float: left;
+                margin: 0rem 0rem;
+            }
+
+            p.tab__key {
+                float: left;
+                font-family: 'nunito_sanssemibold';
+                color: #d4d4d4;
+                display: inline-block;
+                border-bottom: 1px solid transparent;
+                margin: 0 2.3rem -1px 0.6rem;
+                font-size: 1.1rem;
+                cursor: pointer;
+                line-height: 5rem;
+
+                &.active {
+                    color: #a2a2a3;
+                    border-bottom: 1px solid #a2a2a3;
+                }
+
+                &:hover {
+                    color: $blue;
+                    border-bottom: 1px solid $blue;
+                    transition: 0.4s ease;
+                }
+            }
+
+            &__statistic {
+                float: right;
+                margin-top: 0.3rem;
+
+                .number {
+                    float: left;
+                    border-left: 1px solid #e6e6e6;
+                    padding: 1rem 1rem 1rem 3rem;
+
+                    h3 {
+                        margin: 0rem 0rem;
+                        color: #4aa7f4;
+                        font-size: 1.3rem;
+                    }
+
+                    p {
+                        color: #b1d7f8;
+                        float: right;
+                        font-size: 0.8rem;
+                    }
+                }
+
+                p.text {
+                    padding: 1rem;
+                    width: 15rem;
+                    color: #9f9fa0;
+                    font-size: 0.9rem;
+                    line-height: 1.2rem;
+                }
+            }
+        }
+
+        &__filter {
+            @include clearfix();
+
+            h3 {
+                float: left;
+                font-size: 1.3rem;
+                line-height: 2rem;
+                color: #a2a2a3;
+                padding-left: 1rem;
+            }
+
+            .custom_select {
+                float: right;
+                padding-top: 0.5rem;
+            }
+        }
+
+        &__result {
+            list-style-type: none;
+            padding: 0rem;
+            border-top: 1px solid #e6e6e6;
+
+            .history {
+                $width_timestamp: 150px;
+                $gap_timestamp: 10px;
+
+                padding: 1rem 1rem;
+                @include clearfix();
+
+                &:nth-child(odd) {
+                    background-color: #f0f0f2;
+                }
+                &:nth-child(even) {
+                    background-color: #f8f8fb;
+                }
+
+                .timestamp {
+                    float: left;
+                    width: $width_timestamp;
+                    margin-right: $gap_timestamp;
+                    color: $gray;
+
+                    @media screen and (max-width: 400px) {
+                        display: none;
+                    } 
+                }
+
+                &__text {
+                    @include ellipsis(calc(100% - #{$width_timestamp} - #{$gap_timestamp}));
+
+                    @media screen and (max-width: 400px) {
+                        max-width: 100%;
+                    } 
+
+                    span {
+                        color: $gray;
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*
+|--------------------------------------------------
+| Transactions page
+|--------------------------------------------------
+*/
+.transactions_container {
+
+}
+
+/*
+|--------------------------------------------------
+| Wallet page
+|--------------------------------------------------
+*/
+.wallet_container {
+    .wallet {
+        &__head {
+            @include clearfix();
+
+            h3 {
+                float: left;
+                font-family: 'nunito_sanssemibold';
+                display: inline-block;
+                font-size: 1.3rem;
+                line-height: 3rem;
+                color: #a2a2a3;
+                padding-left: 1rem;
+            }
+
+            &__total {
+                float: right;
+                margin-top: 1rem;
+
+                .number {
+                    float: left;
+                    border-left: 1px solid #e6e6e6;
+                    padding: 1rem 1rem 1rem 3rem;
+
+                    h4 {
+                        margin: 0rem 0rem;
+                        color: #99d570;
+                        font-size: 1.3rem;
+                    }
+                }
+
+                p.text {
+                    float: left;
+                    max-width: 21rem;
+                    width: 100%;
+                    padding-right: 1rem;
+                    color: #9f9fa0;
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
+        &__body {
+            list-style-type: none;
+            padding: 0rem;
+            border-top: 1px solid #e6e6e6;
+
+            &__row {
+                padding: 1.2rem 1.2rem 1rem 1rem;
+                h3 {
+                    margin: 0;
+                }
+                @include clearfix();
+
+                &:nth-child(odd) {
+                background-color: #f0f0f2;
+                }
+                &:nth-child(even) {
+                    background-color: #f8f8fb;
+                }
+
+                .text {
+                    float: left;
+                    width: 60%;
+                    color: $gray;
+
+                    @media screen and (max-width: 400px) {
+                        width: 100%;
+                    } 
+
+                    h3 {
+                        text-transform: uppercase;
+                        color: #888889;
+                    }
+
+                    p {
+                        margin: 0.6rem 0;
+                        font-size: 0.9rem;
+                        line-height: 1.2rem;
+                    }
+                }
+
+                .number {
+                    width: 10%;
+                    float: right;
+
+                    h3 {
+                        float: right;
+                        color: #99d570;
+                        font-size: 1.3rem;
+                    }
+
+                    p {
+                        float: right;
+                        font-size: 0.8rem;
+                        color: #b9e09f;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,4 +1,4 @@
-import steem from 'steem';
+import { formatter } from 'steem';
 
 export default function format(post) {
   const metadata = JSON.parse(post.json_metadata);
@@ -7,6 +7,6 @@ export default function format(post) {
     ...post,
     json_metadata: metadata,
     main_img: mainImg,
-    author_reputation: steem.formatter.reputation(post.author_reputation),
+    author_reputation: formatter.reputation(post.author_reputation),
   };
 }

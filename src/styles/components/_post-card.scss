@@ -1,15 +1,18 @@
 .post_card {
 	$width_img: 15rem;
+	$height_img: 9.2rem;
 	$border_radius: 0.3rem;
 
 	position: relative;
 	background: $white;
 	border-radius: $border_radius;
 	margin: 1rem 1rem 1.5rem 0;
+	transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 	@include clearfix();
+	overflow: hidden;
 
 	&:hover {
-		box-shadow: 0px 7px 10px 1px #999;
+		box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 45px, rgba(0, 0, 0, 0.22) 0px 10px 18px;
 	}
 
 	&[data-style="column"] {
@@ -27,14 +30,17 @@
 
 		.post_card__block--content {
 			padding: 1rem;
+			margin-left: 0;
 		}
 
 		.post_card__block {
 			width: 100% !important;
 		}
 
-		.post_card__block--img img {
+		.post_card__block--img {
 			border-radius: $border_radius $border_radius 0 0;
+			position: relative;
+			height: $height_img;
 		}
 
 		.author, .datetime {
@@ -45,15 +51,10 @@
 
 		.details {
 			width: 100%;
-			position: relative;
 			margin-top: 10px;
 	
 			&:before {
-				@include position(absolute, -10px -1rem null -1rem);
-				display: inline-block;
-				height: 1px;
-				background: #cccccc;
-				content: "";
+				display: block;
 			}
 
 			.social_area--like {
@@ -62,20 +63,44 @@
 		}
 	}
 
-	&__block--img {
-		float: left;
-		width: $width_img;
-		overflow: hidden;
-		img {
-			width: 100%;
-			border-radius: $border_radius 0 0 $border_radius;
+	&[data-style="row"] {
+		background: transparent;
+		margin-bottom: 1.5rem;
+		overflow: initial;
+
+		&:hover {
+			box-shadow: none;
+		}
+
+		.post_card__block--content {
+			padding-top: 0;
+			padding-bottom: 0;
+
+			p {
+				@include ellipsis();
+			}
+		}
+
+		@media screen and (max-width: 600px) {
+			.post_card__block--content {
+				padding-top: 1.3rem;
+			}
 		}
 	}
 
-	&__block--content {
+	&__block--img {
 		float: left;
+		overflow: hidden;
+		@include position(absolute, 0 null 0 0);
+		width: $width_img;
+		border-radius: $border_radius 0 0 $border_radius;
+	}
+
+	&__block--content {
+		margin-left: $width_img;
 		width: calc(100% - #{$width_img});
-		padding: 1.5rem;
+		padding: 1.3rem 1.5rem;
+		overflow: hidden;
 
 		h3 {
 			color: #6f6f6f;
@@ -85,9 +110,9 @@
 
 		p {
 			color: #999999;
-			margin: 0 0 0.3rem;
+			margin: 0 0 0.4rem;
 			line-height: 1.5rem;
-			@include ellipsis();
+			@include overflowLine(1.4rem, 2);
 		}
 	}
 
@@ -109,12 +134,13 @@
 
 				i {
 					color: #cccccc;
-					border: 1px solid #cccccc;
+					// border: 1px solid #cccccc;
 					border-radius: 0.3rem;
 					padding: 0 4px;
 					font-size: 0.8rem;
 					height: 1.5rem;
 					display: inline-block;
+					font-style: normal;
 					line-height: 1.5rem;
 					margin-left: 4px;
 				}
@@ -128,6 +154,16 @@
 		.details {
 			display: flex;
 			align-items: center;
+			position: relative;
+	
+			&:before {
+				@include position(absolute, -10px -1rem null -1rem);
+				display: inline-block;
+				height: 1px;
+				background: #cccccc;
+				content: "";
+				display: none;
+			}
 
 			.btn_go_ahead {
 				border: 1px solid #f1f1f1;
@@ -137,10 +173,18 @@
 				padding: 0;
 				@include size(2.2rem);
 				text-align: center;
-				&:hover, &:active, &:focus, &.active {
+
+				&:hover, &:active, &:focus {
 					color: $white;
-					background: $blue;
-					transition: 0.4s ease;
+					@include gradientDiagonal();
+					transition: 0.2s ease;
+					border-color: $blue;
+				}
+				
+				i {
+					transform: rotate(270deg);
+					font-size: 16px;
+					margin-top: 2px;
 				}
 			}
 
@@ -158,20 +202,50 @@
 
 			.social_area {
 				color: #cccccc;
-				border: 1px solid #cccccc;
+				// border: 1px solid #cccccc;
 				border-radius: 0.3rem;
 				margin: 0 0.25rem;
 				padding: 0.2rem 0.5rem;
 				font-size: 0.8rem;
 				display: flex;
 				align-items: center;
+
+				&:hover {
+					* {
+						color: $blue;
+					}
+				}
+
 				i {
 					font-size: 1rem;
 					margin: 0 0.3rem;
 				}
 			}
+		}
+	}
 
-
+	@media screen and (max-width: 600px) {
+		margin-bottom: 1rem;
+		.post_card__block {
+			width: 100% !important;
+		}
+		.post_card__block--content {
+			margin-left: 0 !important;
+		}
+		.social_area--like {
+			display: none !important;
+		}
+		.post_card__block--img {
+			position: relative;
+			height: $height_img;
+			border-radius: 0.3rem 0.3rem 0 0;
+		}
+		.details {
+			width: 100%;
+			margin-top: 10px;
+			&:before {
+				display: block;
+			}
 		}
 	}
 }

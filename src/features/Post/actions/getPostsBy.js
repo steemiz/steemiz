@@ -1,5 +1,6 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { put, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
+import { VOTE_OPTIMISTIC, VOTE_FAILURE } from '../../Vote/actions/vote';
 import format from '../utils/format';
 
 /*--------- CONSTANTS ---------*/
@@ -21,13 +22,48 @@ export function getPostsByFailure(message) {
 }
 
 /*--------- REDUCER ---------*/
-export function getPostsByReducer(state, action) {
+export function getPostsByReducer(state = {}, action) {
   switch (action.type) {
     case GET_POSTS_BY_SUCCESS:
       return {
         ...state,
         [action.category]: action.posts,
       };
+    case VOTE_OPTIMISTIC: {
+      const { accountName, weight, params: { type, category, index } } = action;
+      if (type === 'post') {
+        const newPosts = [ ...state[category] ];
+        if (weight > 0) {
+          // VOTE
+          newPosts[index].active_votes.push({
+            voter: accountName,
+            percent: weight,
+          });
+        } else {
+          // UNVOTE
+          newPosts[index].active_votes = newPosts[index].active_votes.filter(vote => vote.voter !== accountName);
+        }
+        return {
+          ...state,
+          [category]: newPosts,
+        };
+      } else {
+        return state;
+      }
+    }
+    case VOTE_FAILURE: {
+      const { category, index, user } = action;
+      let newState = state;
+      if (category) {
+        const newPosts = [ ...state[category] ];
+        newPosts[index].active_votes = newPosts[index].active_votes.filter(vote => vote.user !== user);
+        newState = {
+          ...state,
+          [category]: newPosts,
+        }
+      }
+      return newState;
+    }
     default:
       return state;
   }
@@ -39,10 +75,13 @@ function* getPostsBy({ category, query }) {
     let posts;
     switch(category) {
       case 'created':
-        posts = yield steem.api.getDiscussionsByCreated(query);
+        posts = yield steem.api.getDiscussionsByCreatedAsync(query);
         break;
       case 'feed':
-        posts = yield steem.api.getDiscussionsByFeed(query);
+        posts = yield steem.api.getDiscussionsByFeedAsync(query);
+        break;
+      case 'blog':
+        posts = yield steem.api.getDiscussionsByBlogAsync(query);
         break;
     }
 

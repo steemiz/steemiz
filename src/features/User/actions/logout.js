@@ -12,8 +12,8 @@ export function logoutBegin(token) {
   return { type: LOGOUT_BEGIN, token };
 }
 
-export function logoutSuccess(profile) {
-  return { type: LOGOUT_SUCCESS, profile };
+export function logoutSuccess() {
+  return { type: LOGOUT_SUCCESS };
 }
 
 export function logoutFailure(message) {
@@ -26,7 +26,7 @@ export function logoutReducer(state, action) {
     case LOGOUT_SUCCESS:
       return {
         ...state,
-        profile: {},
+        me: {},
       };
     default:
       return state;
@@ -37,8 +37,8 @@ export function logoutReducer(state, action) {
 function* logout() {
   steemconnect.setAccessToken(getToken());
   try {
-    const res = yield call(steemconnect.revokeToken);
-    yield put(logoutSuccess(res));
+    yield call(steemconnect.revokeToken);
+    yield put(logoutSuccess());
     removeToken();
   } catch(e) {
     yield put(logoutFailure(e.message));

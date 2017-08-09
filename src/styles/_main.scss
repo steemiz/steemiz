@@ -1,4 +1,5 @@
 @import './libraries/material-icons';
+@import './libraries/font-awesome';
 @import './libraries/nunito_sans-fonts';
 
 @import './variables/configs';
@@ -15,6 +16,15 @@
 @import './components/avatar-progress';
 @import './components/post-card';
 @import './components/comment-card';
+@import './components/create-post';
+@import './components/author';
+@import './components/voting';
+@import './components/tag-list';
+@import './components/login-form';
+@import './components/markdown-editor';
+@import './components/comment';
+@import './components/post-detail';
 
 @import './pages/post';
+@import './pages/single-post';
 @import './pages/profile';

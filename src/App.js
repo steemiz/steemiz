@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { NavLink, withRouter } from 'react-router-dom';
+import isEmpty from 'lodash/isEmpty';
 
 import asyncComponent from './utils/asyncComponent';
 import './custom.css';
 import steemconnect from './utils/steemconnect';
-import { selectAccountMetadata } from './features/User/selectors';
+import { selectMyAccountMetadata, selectMyAccount } from './features/User/selectors';
 import { logoutBegin } from './features/User/actions/logout';
 import Header from './features/Layout/Header';
 import LeftSideBar from './features/Layout/LeftSideBar';
+import RightSideBar from './features/Layout/RightSideBar';
 import Routes from './Routes';
 
 const Home = asyncComponent(() => import('./Home'));
@@ -18,19 +20,9 @@ const Test = asyncComponent(() => import('./Test'));
 
 class App extends Component {
   static propTypes = {
-    accountMetadata: PropTypes.object,
+    accountMetadata: PropTypes.object.isRequired,
+    account: PropTypes.object.isRequired,
   };
-
-  static defaultProps = {
-    accountMetadata: {},
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      disc: [],
-    };
-  }
 
   componentDidMount() {
     // POSTS BY AUTHOR
@@ -63,18 +55,23 @@ class App extends Component {
   }
 
   render() {
-    const { accountMetadata } = this.props;
+    const { accountMetadata, account } = this.props;
 
     return (
       <div id="app_container">
-        <Header accountMetadata={accountMetadata} />
+        <Header
+          avatar={!isEmpty(accountMetadata) ? accountMetadata.profile.profile_image : ''}
+          name={account.name || ''}
+        />
         <LeftSideBar />
+        <RightSideBar />
         <div id="app_content">
           <div className="content__inner">
             <a href="#" onClick={this.props.logout}>Logout</a>
             <a href={steemconnect.getLoginURL()}>Connect</a>
             <NavLink to="/test" exact activeStyle={{ fontWeight: 'bold' }}>Go to test</NavLink>
             <NavLink to="/" exact activeStyle={{ fontWeight: 'bold' }}>Go to Home</NavLink>
+            <NavLink to="/profile" exact activeStyle={{ fontWeight: 'bold' }}>Go to My Profile</NavLink>
             <Routes />
           </div>
         </div>
@@ -84,7 +81,8 @@ class App extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  accountMetadata: selectAccountMetadata(),
+  accountMetadata: selectMyAccountMetadata(),
+  account: selectMyAccount(),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

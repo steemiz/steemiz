@@ -1,0 +1,41 @@
+.MarkdownEditor {
+	&__editor {
+		textarea {
+			width: 100%;
+			resize: none;
+			padding: 2px 5px;
+			border: 1px solid #cbc7c7;
+		}
+	}
+
+	&__control {
+		margin: 0.5rem 0;
+	}
+
+	&__preview {
+		position: relative;
+		label {
+			line-height: 2rem;
+			color: #333;
+		}
+	}
+
+	&__preview_content {
+		position: relative;
+		padding: 0.5rem;
+		border: 1px solid #cbc7c7;
+		p {
+			margin: 0 0 6px;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			margin: 0 0 10px;
+		}
+		img {
+			max-width: 100%;
+		}
+	}
+
+	#markdown_guide {
+		@include position(absolute, 5px 0 null null);
+	}
+}

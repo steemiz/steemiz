@@ -6,52 +6,54 @@ import { Route, Link, withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import asyncComponent from './utils/asyncComponent';
 import { getToken } from './utils/token';
-import { getProfileBegin } from './features/User/actions/getProfile';
-import { selectProfile } from './features/User/selectors';
+import { getMeBegin } from './features/User/actions/getMe';
+import { selectMe } from './features/User/selectors';
 import isEmpty from 'lodash/isEmpty';
 
 const Home = asyncComponent(() => import('./Home'));
 const Test = asyncComponent(() => import('./Test'));
 const PostRead = asyncComponent(() => import('./features/Post/PostRead'));
+const MyProfile = asyncComponent(() => import('./features/User/MyProfile'));
 
 class Routes extends Component {
   static propTypes = {
-    profile: PropTypes.object.isRequired,
-    getProfile: PropTypes.func.isRequired,
+    me: PropTypes.string.isRequired,
+    getMe: PropTypes.func.isRequired,
   };
 
   render() {
-    const { profile } = this.props;
+    const { me } = this.props;
     return (
       <div>
         <Route path="/" children={(props) => {
           if (props.location.search) {
             const { access_token } = queryString.parse(props.location.search);
             if (access_token) {
-              this.props.getProfile(access_token);
+              this.props.getMe(access_token);
               props.history.replace('/');
             }
           }
           const accessToken = getToken();
-          if (accessToken && isEmpty(profile)) {
-            this.props.getProfile(accessToken);
+          if (accessToken && isEmpty(me)) {
+            this.props.getMe(accessToken);
           }
           return <div/>;
         }} />
         <Route path="/" exact component={Home} />
         <Route path="/:category/@:author/:permlink" exact component={PostRead} />
         <Route path="/test" exact component={Test} />
+        <Route path="/profile" exact component={MyProfile} />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => createStructuredSelector({
-  profile: selectProfile(),
+  me: selectMe(),
 });
 
 const mapDispatchToProps = dispatch => ({
-  getProfile: token => dispatch(getProfileBegin(token)),
+  getMe: token => dispatch(getMeBegin(token)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Routes));

@@ -1,45 +1,50 @@
-import React                    from 'react';
-import { Link }                 from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const LeftSidebar = () => {
   return (
     <aside id="left_sidebar">
       <div className="link">
-        <Link className="link__inner" to="/posts" >
-          <i className="material-icons">sim_card</i>
-          <span>Sim Card</span>
-        </Link>
+        <NavLink className="link__inner" activeClassName="active" to="/">
+          <i className="material-icons">view_quilt</i>
+          <span>View Quilt</span>
+        </NavLink>
       </div>
       <div className="link">
-        <Link className="link__inner" to="/profile" >
+        <NavLink className="link__inner" activeClassName="active" to="/users/1/profile">
           <i className="material-icons">star</i>
           <span>Star Rate</span>
-        </Link>
+        </NavLink>
       </div>
       <div className="link">
-        <Link className="link__inner" to="/1" >
+        <NavLink className="link__inner" activeClassName="active" to="/1">
           <i className="material-icons">rss_feed</i>
           <span>Rss Feed</span>
-        </Link>
+        </NavLink>
       </div>
       <div className="link">
-        <Link className="link__inner" to="/2" >
-          <i className="material-icons">local_offer</i>
-          <span>Local offer</span>
-        </Link>
+        <NavLink className="link__inner" activeClassName="active" to="/1">
+          <i className="material-icons">group_work</i>
+          <span>Group</span>
+        </NavLink>
       </div>
-
+      <div className="link">
+        <NavLink className="link__inner" activeClassName="active" to="/2">
+          <i className="material-icons rotate__90">local_offer</i>
+          <span>Local offer</span>
+        </NavLink>
+      </div>
       <div className="link link--account">
-        <Link className="link__inner" to="/3" >
+        <NavLink className="link__inner" activeClassName="active" to="/3">
           <i className="material-icons">account_circle</i>
           <span>Account</span>
-        </Link>
+        </NavLink>
       </div>
       <div className="link link--setting">
-        <Link className="link__inner" to="/4" >
+        <NavLink className="link__inner" activeClassName="active" to="/4">
           <i className="material-icons">settings</i>
           <span>Settings</span>
-        </Link>
+        </NavLink>
       </div>
     </aside>
   )

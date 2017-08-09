@@ -1,142 +1,201 @@
-import React                         from 'react'
-import PropTypes                     from 'prop-types'
-import { Link }                      from 'react-router-dom'
-import SelectField                   from 'material-ui/SelectField'
-import MenuItem                      from 'material-ui/MenuItem'
-import Badge                         from 'material-ui/Badge'
-import IconButton                    from 'material-ui/IconButton'
-import NotificationsIcon             from 'material-ui/svg-icons/social/notifications'
-import isEmpty from 'lodash/isEmpty';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
-import AvatarProgress                from '../../components/AvatarProgress';
-import logo                          from '../../styles/assets/imgs/logos/logo.png'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
+import Badge from 'material-ui/Badge'
+import IconButton from 'material-ui/IconButton'
+import NotificationsIcon from 'material-ui/svg-icons/social/notifications'
+import Popover from 'material-ui/Popover'
+import Menu from 'material-ui/Menu'
 
-const countriesItems = [];
-const COUNTRIES = {
-  1 : {
-    name: 'afg',
-    flag: 'Afghanistan.png'
-  },
-  2 : {
-    name: 'afr',
-    flag: 'african_union.png'
-  },
-  3 : {
-    name: 'ala',
-    flag: 'aland.png'
-  },
-};
+import logo from '../../styles/assets/imgs/logos/logo.png'
+import HeaderSearch from './HeaderSearch.Container'
+import CreatePost from '../../components/__common/CreatePost'
+import AvatarProgress from '../../components/__common/AvatarProgress'
 
-for(let index in COUNTRIES) {
-  countriesItems.push(
-    <MenuItem
-      className={`icon_flag_${COUNTRIES[index].name}`}
-      value={index}
-      key={index}
-      primaryText={COUNTRIES[index].name}
-      label={<span className={`icon_flag icon_flag_${COUNTRIES[index].name}`}>{COUNTRIES[index].name}</span>}
-    />
-  );
+import { COUNTRIES } from '../../constants/constants'
+import { getClassName } from '../../components/__utilities'
+
+const countriesItems = Object.keys(COUNTRIES).map(index => (
+  <MenuItem
+    className={`icon_flag icon_flag_${COUNTRIES[index].flag}`}
+    value={index}
+    key={index}
+    primaryText={COUNTRIES[index].name}
+    label={<span
+      className={`selected_flag icon_flag_${COUNTRIES[index].flag}`}>{COUNTRIES[index].name}</span>}
+  />
+));
+
+export default class Header extends React.Component {
+  static propTypes = {
+    avatar: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      filter: {
+        post: 1,
+        category: 1,
+        country: "1",
+      },
+      dropdownMenu: {
+        open: false,
+      },
+      collapseOpen: false,
+    }
+  }
+
+  handleSelectPost = (event, index, value) => {
+    this.setState(state => { state.filter.post = value })
+  };
+
+  handleSelectCategory = (event, index, value) => {
+    this.setState(state => { state.filter.category = value })
+  };
+
+  handleSelectCountry = (event, index, value) => {
+    this.setState(state => { state.filter.country = value })
+  };
+
+  handleShowDropdownMenu = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
+
+    this.setState({
+      dropdownMenu: {
+        open: true,
+        anchorEl: event.currentTarget,
+      }
+    })
+  };
+
+  handleCloseDropdownMenu = () => {
+    this.setState( state => { state.dropdownMenu.open = false })
+  };
+
+  handleControlCollapse = () => {
+    this.setState( state => { state.collapseOpen = !state.collapseOpen })
+  };
+
+  render() {
+    const { avatar, name } = this.props;
+    const { filter, dropdownMenu, collapseOpen } = this.state;
+    return (
+      <header className="header clearfix">
+        <div className="header__group header__group--search float_left">
+          <Link to="/" id="logo">
+            <img src={logo} alt="logo" />
+          </Link>
+
+          <HeaderSearch />
+        </div>
+
+        <div className="header__collapse__control">
+          <IconButton onTouchTap={this.handleControlCollapse}><i
+            className="material-icons">{collapseOpen ? "close" : "menu"}</i></IconButton>
+        </div>
+
+        <div
+          className={getClassName({ in: collapseOpen }, "header__collapse collapse clearfix float_right")}>
+          <div className="header__group header__group--function float_right">
+            <CreatePost />
+
+            <Badge
+              badgeContent={10}
+              secondary={true}
+              style={{ padding: '2px', margin: '0 0rem 0 1rem' }}
+              badgeStyle={{
+                top: 30,
+                right: 28,
+                background: '#e26a73',
+                width: "20px",
+                height: "20px",
+                "fontSize": "11px"
+              }}
+            >
+              <IconButton>
+                <NotificationsIcon className="notifications" />
+              </IconButton>
+            </Badge>
+            <button className="header__group__username" onTouchTap={this.handleShowDropdownMenu}>
+              {name}
+            </button>
+            <AvatarProgress src={avatar} progress={75} size="48px" />
+            <Popover
+              className="header__group__dropdownmenu"
+              open={dropdownMenu.open}
+              anchorEl={dropdownMenu.anchorEl}
+              anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+              targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+              onRequestClose={this.handleCloseDropdownMenu}
+            >
+              <Menu>
+                <MenuItem><Link to="#"><i
+                  className="material-icons">notifications</i>Notifications</Link></MenuItem>
+                <MenuItem><Link to="#"><i
+                  className="material-icons">sms</i>Blog</Link></MenuItem>
+                <MenuItem><Link to="#"><i
+                  className="material-icons">account_circle</i>My Profile</Link></MenuItem>
+                <MenuItem><Link to="#"><i
+                  className="material-icons">mail_outline</i>Transactions</Link></MenuItem>
+                <MenuItem className="divider"><Link to="#"><i
+                  className="material-icons">settings</i>Settings</Link></MenuItem>
+                <MenuItem><Link to="#"><i
+                  className="material-icons">question_answer</i>Support</Link></MenuItem>
+                <MenuItem className="divider"><Link to="#"><i
+                  className="material-icons">power_settings_new</i>Sign Out
+                  <span>Switch User</span></Link></MenuItem>
+              </Menu>
+            </Popover>
+          </div>
+
+          <div className="header__group header__group--filter float_right">
+            <div className="select_wrapper">
+              <SelectField
+                value={filter.post}
+                onChange={this.handleSelectPost}
+                className="select_filter"
+                maxHeight={400}
+                fullWidth={true}
+                autoWidth={true}
+              >
+                <MenuItem value={1} key={1} primaryText="all posts" />
+                <MenuItem value={2} key={2} primaryText="my posts" />
+              </SelectField>
+            </div>
+            <div className="select_wrapper">
+              <SelectField
+                value={filter.category}
+                onChange={this.handleSelectCategory}
+                className="select_filter"
+                maxHeight={400}
+                fullWidth={true}
+                autoWidth={true}
+              >
+                <MenuItem value={1} key={1} primaryText="videos only" />
+                <MenuItem value={2} key={2} primaryText="articles only" />
+              </SelectField>
+            </div>
+            <div className="select_wrapper select_wrapper--country">
+              <SelectField
+                value={filter.country}
+                onChange={this.handleSelectCountry}
+                className="select_filter"
+                fullWidth={true}
+                autoWidth={true}
+              >
+                {countriesItems}
+              </SelectField>
+            </div>
+          </div>
+        </div>
+      </header>
+    )
+  }
 }
-
-const onSelectChange = (event, index, value) => {
-  console.log('event', event);
-  this.setState(state => { state.filter.category = value })
-};
-
-const Header = ({dataFilter, handleSelectPost, handleSelectCategory, handleSelectCountry, handleCreatePost, accountMetadata}) => {
-  return (
-    <header className="header clearfix">
-      <div className="header__group float_left">
-        <Link to="/" id="logo">
-          <img src={logo} alt="logo"/>
-        </Link>
-        <div className="search">
-          <i className="search__icon material-icons">search</i>
-          <input className="search__input" type="text" placeholder="Search for posts" />
-        </div>
-      </div>
-
-      <div className="header__group header__group--function float_right">
-        <button className="btn_default" onClick={handleCreatePost}>Create a Post</button>
-        <Badge
-          badgeContent={10}
-          secondary={true}
-          style={{padding: '2px', margin: '0 1rem 0 2rem'}}
-          badgeStyle={{top: 31, right: 28, background: '#e26a73' }}
-        >
-          <IconButton>
-            <NotificationsIcon className="notifications" />
-          </IconButton>
-        </Badge>
-        <AvatarProgress src={!isEmpty(accountMetadata) ? accountMetadata.profile.profile_image : ''} progress={75} size="48px" />
-      </div>
-
-      <div className="header__group header__group--filter float_right">
-        <div className="select_wrapper">
-          <SelectField
-            value={dataFilter.post}
-            onChange={onSelectChange}
-            className="select_filter"
-            maxHeight={400}
-            fullWidth={true}
-            autoWidth={true}
-          >
-            <MenuItem value={1} key={1} primaryText="all posts" />
-            <MenuItem value={2} key={2} primaryText="my posts" />
-          </SelectField>
-        </div>
-        <div className="select_wrapper">
-          <SelectField
-            value={dataFilter.category}
-            onChange={handleSelectCategory}
-            className="select_filter"
-            maxHeight={400}
-            fullWidth={true}
-            autoWidth={true}
-          >
-            <MenuItem value={1} key={1} primaryText="all" />
-            <MenuItem value={2} key={2} primaryText="videos only" />
-            <MenuItem value={3} key={3} primaryText="articles only" />
-          </SelectField>
-        </div>
-        <div className="select_wrapper">
-          <SelectField
-            value={dataFilter.country}
-            onChange={handleSelectCountry}
-            className="select_filter"
-            maxHeight={400}
-            fullWidth={true}
-            autoWidth={true}
-          >
-            {countriesItems}
-          </SelectField>
-        </div>
-      </div>
-    </header>
-  )
-};
-
-Header.propTypes = {
-  dataFilter: PropTypes.object, // object save data filter
-  handleSelectPost: PropTypes.func, // handle filter after select Category
-  handleSelectCategory: PropTypes.func, // handle filter after select Category
-  handleSelectCountry: PropTypes.func, // handle filter after select Country
-  handleCreatePost: PropTypes.func, // handle create post
-  accountMetadata: PropTypes.object, // source of avatar
-};
-
-Header.defaultProps = {
-  dataFilter: {
-    post: 1,
-    category: 1,
-    country: "1",
-  }, // object save data filter
-  handleSelectPost: undefined, // handle filter after select Category
-  handleSelectCategory: undefined, // handle filter after select Category
-  handleSelectCountry: undefined, // handle filter after select Country
-  handleCreatePost: undefined, // handle create post
-  accountMetadata: {}, // source of avatar
-};
-
-export default Header;

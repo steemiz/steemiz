@@ -6,14 +6,20 @@
 	border-radius: $app_radius $app_radius 0 0;
 	z-index: $index_header;
 
+	@media screen and (max-width: 1200px) {
+		box-shadow: 0 0 10px 1px #c3c2c2;	
+	}
+
 	#logo {
 		display: inline-block;
 		float: left;
 	}
 
-	.icon_flag {
+	.selected_flag {
 		background-position: 0 center !important;
-		padding-left: 30px !important;
+		padding-left: 28px !important;
+		background-repeat: no-repeat !important;
+		background-size: 20px auto !important;
 		text-transform: uppercase;
 	}
 
@@ -21,20 +27,31 @@
 		color: #999999 !important;
 	}
 
-	&__group:nth-child(1) {
+	.btn_default {
+		padding: 0 1.5rem;
+	}
+
+	&__group--search {
 		padding: 0.5rem 0 0.3rem;
 	}
 
 	&__group--filter {
 		.select_wrapper {
-			margin: 0 1rem 0 0;
+			margin: 0 0.5rem 0 0;
 			float: left;
 			height: 3.8rem;
+			max-width: 10rem;
+			@media screen and (min-width: 1600px) {
+				max-width: 18rem;
+				&.select_wrapper--country {
+					max-width: 10rem;
+				}
+			}
 
 			.select_filter {
-				padding: 0 0 0 1.5rem;
+				padding: 0 0 0 1.2rem;
 				margin: 2px 0 0 0;
-				background: url(styles/assets/imgs/icons/arrow_down.png) transparent no-repeat 87% center/14px;
+				background: url(styles/assets/imgs/icons/arrow_down.png) transparent no-repeat calc(100% - 17px) center/14px;
 				
 				svg {
 					path {
@@ -65,17 +82,104 @@
 		display: flex;
 	}
 
+	&__group__username {
+		cursor: pointer;
+		color: #999;
+		padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+		border: 0;
+		background: url(styles/assets/imgs/icons/arrow_down.png) transparent no-repeat calc(100% - 15px) center/12px;
+		@include ellipsis(10rem);
+		@media screen and (min-width: 1600px) {
+			max-width: 18rem;
+		}
+	}
+
+	&__group__dropdownmenu {
+		min-width: 20rem;
+		border-radius: 0.5rem !important;
+
+		a {
+			display: flex;
+			align-items: center;
+			color: #999;
+
+			&:hover {
+				color: $blue;
+				i, span {
+					color: $blue;
+					transition: 0s ease;
+				}
+			}
+
+			i {
+				margin: 0 1.2rem 0 0.2rem;
+				color: #e6e6e6;
+			}
+			span {
+				margin-left: 4.5rem;
+				font-size: 0.9rem;
+			}
+		}
+
+		.divider {
+			border-top: 1px solid #eee !important;
+		}
+	}
+
+	&__collapse {
+		max-height: none;
+		overflow: initial;
+		@media screen and (max-width: 1200px) {
+			max-height: 0;
+			width: 100%;
+			overflow: hidden;
+
+			.avatar_progress {
+				opacity: 0;
+				transition: 0.4s ease;
+			}
+
+			&.in {
+				overflow: initial;
+				.avatar_progress {
+					opacity: 1;
+				}
+			}
+		}
+
+		@media screen and (max-width: 480px) {
+			.avatar_progress {
+				display: none;
+			}
+		}
+	}
+
+	&__collapse__control {
+		display: none;
+		float: right;
+		@media screen and (max-width: 1200px) {
+			display: block;
+		}
+
+		button {
+			top: 3px;
+			color: #606060;
+		}
+	}
+
 	.search {
 		$height_search: 2.9rem;
 		$width_icon: 3rem;
 		float: left;
-		margin: 0 1rem;
+		margin: 0 0.4rem 0 1rem;
 		@include size(20rem #{$height_search});
 		background: $white;
 		border-radius: 2rem;
 		border: 1px solid #f0f0f2;
 		position: relative;
-		overflow: hidden;
+		@media screen and (max-width: 480px) {
+			width: 10rem;
+		}
 
 		&__icon {
 			float: left;
@@ -84,6 +188,7 @@
 			line-height: calc(#{$height_search} - 2px);
 			text-align: center;
 			color: $gray;
+			cursor: pointer;
 		}
 
 		&__input {
@@ -94,8 +199,83 @@
 			line-height: calc(#{$height_search} - 2px);
 			padding: 0 0.5rem 0 0;
 			border: 0;
+			border-radius: 2rem;
 			&:focus {
 				outline: 0;
+			}
+		}
+
+		&__overlay {
+			@include position(fixed, 0 0 0 0);
+			background: rgba(#333, 0.4);
+			z-index: $index_search;
+		}
+
+		&__result {
+			$height_head: 7rem;
+
+			background: $white;
+			border-radius: 1rem;
+			max-width: 65rem;
+			border: 1px solid #eeeeee;
+			@include position(absolute, 5.5rem 5.5rem 5.5rem 5.5rem);
+			z-index: $index_search;
+			overflow: hidden;
+
+			@media screen and (max-width: 600px) {
+				@include position(absolute, 1rem 1rem 1rem 1rem);
+			}
+
+			&__head {
+				min-height: $height_head;
+				padding: 2rem 2rem 1rem;
+				position: relative;
+				@include clearfix();
+
+				.btn_close_search {
+					background: #e6e6e6;
+					color: #fff;
+					border-radius: 3rem;
+					@include size(1.8rem);
+					line-height: 1.8rem;
+					text-align: center;
+					display: inline-block;
+					cursor: pointer;
+					margin-left: 1.5rem;
+					&:hover {
+						background: $light_red;
+						transition: 0.2s ease;
+					}
+				}
+
+				.key_search {
+					float: left;
+					h2 {
+						font-weight: normal;
+						color: #545050;
+						margin: 0;
+					}
+					p {
+						margin: 0.5rem 0 0;
+						color: #999;
+					}
+				}
+
+				.filter {
+					float: right;
+					.custom_select {
+						margin-left: 2rem;
+					}
+				}
+			}
+
+			&__body {
+				overflow-y: auto;
+				height: calc(100% - #{$height_head} - 1rem);
+				.comment_card  {
+					margin: 0;
+					border-top: 1px solid #eeeeee;
+				}
 			}
 		}
 	}

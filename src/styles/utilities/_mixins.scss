@@ -169,3 +169,13 @@
     color: $color;
   }
 }
+
+@mixin overflowLine ($lineHeight, $numLine) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $numLine; /* number of lines to show */
+  line-height: $lineHeight;        /* fallback */
+  max-height: $lineHeight*$numLine;       /* fallback */
+}

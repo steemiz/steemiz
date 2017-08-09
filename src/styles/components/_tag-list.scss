@@ -1,0 +1,17 @@
+.TagList {
+	@include clearfix();
+	&__tag {
+		float: left;
+		padding: 9px 12px;
+		background: #f9f9fb;
+		border-radius: 0.3rem;
+		color: $gray;
+		margin: 0 8px 8px 0;
+		cursor: pointer;
+		box-shadow: 0px 0px 1px 1px #e8e8e8;
+		&:hover {
+			color: $blue;
+			background: $white;
+		}
+	}
+}

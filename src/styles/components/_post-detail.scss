@@ -1,0 +1,164 @@
+.PostDetail {
+	background: $white;
+	border-radius: 2px;
+	padding: 2rem 1.5rem;
+	color: #8a8a8a;
+	font-size: 14px;
+
+	@media screen and (min-width: 1400px) {
+		font-size: 17px;
+	}
+
+	p {
+		font-size: 1em;
+		line-height: 1.6em;
+	}
+
+	&__content {
+		max-width: 50rem;
+		margin: 0 auto;
+	}
+
+	&__large {
+		max-width: 60rem;
+		margin: 2rem auto 0 auto;
+	}
+
+	&__comments__control {
+		margin: 0 0 1rem;
+		@include clearfix();
+	}
+
+	.article {
+		&__post {
+			font-size: 21px;
+			line-height: 1.58;
+			letter-spacing: -.003em;
+
+			h1 {
+				color: #333;
+			}
+
+			&__author {
+				padding: 1rem 0;
+				margin-bottom: 2rem;
+				display: flex;
+				align-items: center;
+
+				&>img {
+					margin-right: 1rem;
+				}
+				&>* {
+					margin-right: 0.3rem;
+				}
+			}
+
+			&__author__avatar {
+				width: 2.5rem;
+				img {
+					width: 100%;
+				}
+			}
+
+			&__author__link {
+				font-weight: 600;
+				color: #8a8a8a;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+
+			&__detail {
+				margin: 0 0 3rem;
+			}
+		}
+
+		&__content {
+			img {
+				margin: 0 auto;
+				display: block;
+				max-width: 100%;
+			}
+		}
+
+		&__footer {
+			padding: 1rem 0;
+			display: flex;
+			justify-content: space-between;
+
+			@media screen and (max-width: 860px) {
+				flex-direction: column;
+			}
+
+			&>div {
+				display: flex;
+				align-items: center;
+			}
+
+			&__right {
+				&>div {
+					padding: 0 8px;
+					border-left: 1px solid #8a8a8a;
+
+					a {
+						color: #8a8a8a;
+						padding: 0 2px;
+						&:hover {
+							color: $blue;
+						}
+					}
+
+					&:first-child {
+						border-left: 0;
+					}
+				}
+
+				.btn_resteem {
+					&:hover i {
+						color: $blue;
+					}
+					i {
+						font-size: 16px;
+						color: #8a8a8a;
+					}	
+				}
+
+				.btn_reply {
+					line-height: 1.5rem;
+					cursor: pointer;
+					&:hover {
+						color: $blue;
+					}
+				}
+
+				.statistics {
+					a i {
+						margin: 0 5px;
+					}
+				}
+			}
+		}
+	}
+
+	.time_author {
+		display: flex;
+		align-items: center;
+		&>* {
+			margin-right: 4px;
+		}
+
+		&__icon {
+			font-size: 18px;
+		}
+	}
+
+	&__signup {
+		text-align: center;
+		padding: 1rem 0 2.2rem;
+		border-top: 1px solid #d5d5d5;
+		border-bottom: 1px solid #d5d5d5;
+		p {
+			font-style: italic;
+		}
+	}
+}

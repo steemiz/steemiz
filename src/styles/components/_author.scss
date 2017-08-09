@@ -1,0 +1,67 @@
+.Author {
+	color: #8a8a8a;
+	display: flex;
+	align-items: center;
+	
+	&__name {
+		margin-right: 4px;
+		font-weight: 600;
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	&__reputation {
+		padding: 3px;
+		color: #a7abae;
+		font-size: 0.85rem;
+	}
+}
+
+.AuthorCard {
+	$width_avatar: 5rem;
+	
+	max-width: 20rem;
+	padding: 1.5rem;
+	color: #8a8a8a;
+	@include clearfix();
+
+	&__avatar {
+		width: $width_avatar;
+		float: left;
+		img {
+			width: 100%;
+			border-radius: 100%;
+		}
+	}
+
+	&__content {
+		width: calc(100% - #{$width_avatar});
+		float: left;
+		padding: 0.2rem 1rem;
+
+		p {
+			margin-top: 0;
+		}
+
+		button {
+			@include gradientHorizontal();
+			border: 0;
+			color: $white;
+			border-radius: 2rem;
+			padding: 0.7rem 1.5rem;
+
+			&:hover {
+				opacity: 0.8;
+				transition: 0.4s ease;
+			}
+		}
+	}
+
+	&__slogan {
+		width: 100%;
+		float: left;
+		margin-bottom: 0;
+	}
+}

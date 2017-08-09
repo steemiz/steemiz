@@ -37,6 +37,12 @@ input, select, textarea, a, button {
 #app_content {
 	background: #f8f8fb;
 	padding: $height_header $width_rightsidebar 0 $width_leftsidebar;
+	transition: 0.4s ease;
+	
+	@media screen and (max-width: 1200px) {
+		padding-right: 0 !important;
+	}
+
 	.content__inner {
 		@include size(100%);
 		padding: 1rem 0;
@@ -62,6 +68,26 @@ input:-webkit-autofill {
 .hidden {
 	display: none;
 }
+
+.input__group {
+	margin: 0 0 0.5rem !important;
+	width: 100% !important;
+}
+
+.rotate__90 {
+	transform: rotate(90deg); 
+}
+/*
+|--------------------------------------------------
+| Font Awesome
+|--------------------------------------------------
+*/
+.fa {
+	@include size(1.5rem);
+	display: inline-block;
+	font-size: 1.4rem;
+}
+
 /*
 |--------------------------------------------------
 | Select
@@ -127,15 +153,16 @@ input:-webkit-autofill {
 |--------------------------------------------------
 */
 // flag icon
-$_countryArr: afg afr ala;
-
+$_countryArr: afg afr ala albania alderney algeria american_samoa andorra angola anguilla antarctica antigua_barbuda arab_league argentina armenia aruba asean australia austria azerbaijan bahamas bahrain bangladesh barbados basque_country belarus belgium belize benin bermuda bhutan bolivia bosnia_herzegovina botswana bouvet brazil british_indian_ocean_territory brunei bulgaria burkina_faso burundi cambodja cameroon canada cape_verde caricom catalonia cayman_islands central_african_republic chad chile china christmas cis cocos_keeling colombia commonwealth comoros congo-brazzaville congo-kinshasazaire cook_islands costa_rica cote_divoire croatia cuba curacao cyprus czech_republic denmark djibouti dominica dominican_republic ecuador egypt el_salvador england equatorial_guinea eritrea estonia ethiopia european_union falkland_malvinas fao faroes fiji finland france french-guiana french_southern_and_antarctic_lands gabon galicia gambia georgia germany ghana gibraltar greece greenland grenada guadeloupe guademala guam guernsey guinea-bissau guinea guyana haiti heard_island_and_mcdonald honduras hong_kong hungary iaea iceland iho india indonesia iran iraq ireland islamic_conference isle_of_man israel italy jamaica japan jersey jordan kazakhstan kenya kiribati kosovo kuwait kyrgyzstan laos latvia lebanon lesotho liberia libya liechtenstein lithuania luxembourg macao macedonia madagascar malawi malaysia maldives mali malta marshall_islands martinique mauritania mauritius mayotte mexico micronesia moldova monaco mongolia montenegro montserrat morocco mozambique myanmarburma namibia nato nauru nepal netherlands netherlands_antilles new_caledonia new_zealand nicaragua niger nigeria niue norfolk north_korea northern_cyprus northern_ireland northern_mariana norway oas oecd olimpic_movement oman opec pakistan palau palestine panama papua_new_guinea paraguay peru philippines pitcairn poland portugal puerto_rico qatar red_cross reunion romania russian_federation rwanda saint_barthelemy saint_helena saint_lucia saint_martin_french saint_pierre_and_miquelon samoa san_marino sao_tome_principe saudi_arabia scotland senegal serbia seyshelles sierra_leone singapore sint-maarten slovakia slovenia solomon_islands somalia somaliland south_afriica south_georgia_and_south_sandwich south_korea southern-sudan spain sri_lanka st_kitts_nevis st_vincent_the_grenadines sudan suriname svalbard_and_jan_mayen swaziland sweden switzerland syria tahitifrench_polinesia taiwan tajikistan tanzania thailand timor-leste togo tokelau tonga trinidad_tobago tristan-da-cunha tunisia turkey turkmenistan turks_and_caicos_islands tuvalu uganda ukraine unesco unicef united_arab_emirates united_kingdomgreat_britain united_nations united_states_minor_outlying united_states_of_america uruguay uzbekistan vanutau vatican_city venezuela viet_nam virgin_islands_british virgin_islands_us wales wallis_and_futuna western_sahara who wto yemen zambia zimbabwe;
+.icon_flag {
+	background-repeat: no-repeat !important;
+	background-position: 15px center !important;
+	background-size: 20px auto !important;
+	padding-left: 20px !important;
+	text-transform: uppercase;
+}
 @each $country in $_countryArr {
 	.icon_flag_#{$country} {
 		background-image: url(styles/assets/imgs/icons/flags/#{$country}.png) !important;
-		background-repeat: no-repeat !important;
-		background-position: 15px center !important;
-		background-size: 20px auto !important;
-		padding-left: 20px !important;
-		text-transform: uppercase;
 	}
 }
