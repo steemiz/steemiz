@@ -34,7 +34,6 @@
     "reselect": "^3.0.1",
     "sanitize-html": "^1.14.1",
     "steem": "^0.5.20",
-    "striptags": "^3.0.1",
     "xmldom": "^0.1.27"
   },
   "scripts": {

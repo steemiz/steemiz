@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import truncate from 'lodash/truncate';
-import striptags from 'striptags';
+import extractDesc from '../utils/helpers/extractDesc';
 import { FormattedRelative } from 'react-intl';
 import ReactMarkdown from 'react-markdown';
 
@@ -30,7 +29,7 @@ export default class ContentItem extends PureComponent {
         <div className="post_card__block post_card__block--content">
           <Link to={{ pathname: content.url, state: { postId: content.id } }} className="post_card__block">
             <h3>{content.title || content.root_title} ({content.id})</h3>
-            <ReactMarkdown source={truncate(striptags(content.body), { length: 250, separator: ' ' })}
+            <ReactMarkdown source={extractDesc(content)}
                            disallowedTypes={['Image', 'Link', 'Heading', 'BlockQuote', 'ThematicBreak', 'List', 'Item']} />
           </Link>
           <div className="post_card__block post_card__block--info">

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import truncate from 'lodash/truncate';
-import striptags from 'striptags';
+import extractDesc from '../../utils/helpers/extractDesc';
 import { FormattedRelative } from 'react-intl';
 import ReactMarkdown from 'react-markdown';
 
@@ -12,10 +11,9 @@ import {
   calculateContentPayout,
   displayContentNbComments,
   formatAmount,
-  hasVoted
 } from '../../utils/helpers/steemitHelpers';
 
-const PostCard = ({ me, post, styleShow = '' }) => {
+const PostCard = ({ post, styleShow = '' }) => {
   const payout = calculateContentPayout(post);
   return (
     <div className="post_card" data-style={styleShow}>
@@ -23,7 +21,7 @@ const PostCard = ({ me, post, styleShow = '' }) => {
       <div className="post_card__block post_card__block--content">
         <Link to={{ pathname: post.url, state: { postId: post.id } }} className="post_card__block">
           <h3>{post.title}</h3>
-          <ReactMarkdown source={truncate(striptags(post.body), { length: 250, separator: ' ' })}
+          <ReactMarkdown source={extractDesc(post)}
                          disallowedTypes={['Image', 'Link', 'Heading', 'BlockQuote', 'ThematicBreak', 'List', 'Item']} />
         </Link>
         <div className="post_card__block post_card__block--info">
