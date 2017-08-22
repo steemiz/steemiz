@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getClassName } from '../../../components/__utilities'
+import { getClassName } from '../../../components/__utilities/index'
 
 const TabSearchComponent = ({
                               className,

@@ -1,6 +1,5 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects';
+import { all, put, takeLatest } from 'redux-saga/effects';
 import steem from 'steem';
-import request from '../../../utils/request';
 
 /*--------- CONSTANTS ---------*/
 const GET_APP_CONFIG_BEGIN = 'GET_APP_CONFIG_BEGIN';

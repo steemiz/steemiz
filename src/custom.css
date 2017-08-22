@@ -2335,8 +2335,10 @@ input:hover, input:active, input:focus, select:hover, select:active, select:focu
 
 #app_content {
   background: #f8f8fb;
-  padding: 6rem 22rem 0 5.5rem;
+  padding: 6rem 0 0 5.5rem;
   transition: 0.4s ease; }
+  #app_content.sidebar_open {
+    padding-right: 22rem; }
   @media screen and (max-width: 1200px) {
     #app_content {
       padding-right: 0 !important; } }
@@ -3588,6 +3590,7 @@ input:-webkit-autofill {
   padding: 1rem;
   z-index: 1;
   transition: 0.4s ease;
+  overflow-y: auto;
   /*
 	|--------------------------------------------------
 	| Resize ChatList on different device
@@ -3595,6 +3598,12 @@ input:-webkit-autofill {
 	*/ }
   #right_sidebar.-is-open {
     right: 0rem; }
+  #right_sidebar .link_wrapper {
+    transition: 0.4s ease;
+    max-height: 208px;
+    overflow: hidden; }
+    #right_sidebar .link_wrapper.show_all {
+      max-height: 1000px; }
   #right_sidebar .btn_toggle_sidebar {
     padding: 0.5rem;
     background: #ffffff;
@@ -3613,24 +3622,21 @@ input:-webkit-autofill {
       right: 0rem;
       transition: 0.5s ease;
       box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 45px, rgba(0, 0, 0, 0.22) 0px 10px 18px; }
+  #right_sidebar .btn__show_more {
+    margin: 0 auto;
+    display: block; }
+  #right_sidebar .btn__options, #right_sidebar .btn__show_more {
+    background: transparent;
+    border: 0;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #a2a2a3; }
+    #right_sidebar .btn__options:hover, #right_sidebar .btn__show_more:hover {
+      color: #4aa7f4; }
   #right_sidebar .tab {
     position: relative;
     padding: 0 0 2rem 0; }
-    #right_sidebar .tab .btn__options, #right_sidebar .tab .btn__show_more {
-      background: transparent;
-      border: 0;
-      font-size: 1.2rem;
-      padding: 0.5rem;
-      cursor: pointer;
-      color: #a2a2a3; }
-      #right_sidebar .tab .btn__options:hover, #right_sidebar .tab .btn__show_more:hover {
-        color: #4aa7f4; }
-    #right_sidebar .tab .btn__show_more {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -10px;
-      padding: 5px 10px; }
     #right_sidebar .tab__title {
       border-bottom: 1px solid #e7e7e8;
       width: 100%; }
@@ -3706,7 +3712,7 @@ input:-webkit-autofill {
       height: 162px;
       overflow-y: auto; }
     #right_sidebar .tab__result--link {
-      float: left;
+      display: inline-block;
       padding: 9px 12px;
       background: #f9f9fb;
       border-radius: 0.3rem;
@@ -3717,120 +3723,114 @@ input:-webkit-autofill {
       #right_sidebar .tab__result--link:hover {
         color: #4aa7f4;
         background: #ffffff; }
-    #right_sidebar .tab .chat_list {
-      padding: 0;
-      margin-bottom: 0; }
-      #right_sidebar .tab .chat_list li {
-        list-style-type: none;
-        position: relative; }
-        #right_sidebar .tab .chat_list li .user_contact {
-          display: inline-block;
-          padding: 0.5rem 0.7rem;
-          border-radius: 0.5rem;
-          width: 100%; }
-          #right_sidebar .tab .chat_list li .user_contact::after {
-            clear: both;
-            content: "";
-            display: table; }
-          #right_sidebar .tab .chat_list li .user_contact[data-show="false"] {
-            opacity: 0.5; }
-          #right_sidebar .tab .chat_list li .user_contact:hover {
-            background: #ffffff;
-            opacity: 1; }
-            #right_sidebar .tab .chat_list li .user_contact:hover .btn_unfollow {
-              display: inline-block; }
-            #right_sidebar .tab .chat_list li .user_contact:hover .user_contact__data h3, #right_sidebar .tab .chat_list li .user_contact:hover .user_contact__data p {
-              display: inline-block;
-              max-width: 55%;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              word-wrap: normal; }
-          #right_sidebar .tab .chat_list li .user_contact__avatar {
-            float: left;
-            width: 40px; }
-          #right_sidebar .tab .chat_list li .user_contact__data {
-            float: left;
-            width: calc(100% - 40px);
-            padding: 0 1rem 0 0.7rem;
-            position: relative; }
-            #right_sidebar .tab .chat_list li .user_contact__data h3 {
-              color: #666666;
-              margin: 0;
-              display: inline-block;
-              max-width: 75%;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              word-wrap: normal;
-              line-height: 1.4rem;
-              margin-top: 3px;
-              position: relative;
-              padding: 0 2rem 0 0; }
-              #right_sidebar .tab .chat_list li .user_contact__data h3 span {
-                font-family: 'nunito_sansregular';
-                position: absolute;
-                top: 0px;
-                right: 0px;
-                border-radius: 0.3rem;
-                background: #f8f8fb;
-                color: #b3b3b3;
-                height: 1.3rem;
-                width: 1.3rem;
-                line-height: 1.3rem;
-                text-align: center;
-                font-size: 0.7rem;
-                font-weight: normal; }
-            #right_sidebar .tab .chat_list li .user_contact__data p {
-              color: #89898a;
-              margin: 0;
-              display: inline-block;
-              max-width: 85%;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              word-wrap: normal;
-              position: relative; }
-              #right_sidebar .tab .chat_list li .user_contact__data p .user_contact__status {
-                display: inline-block;
-                border-radius: 100%; }
-                #right_sidebar .tab .chat_list li .user_contact__data p .user_contact__status.active {
-                  background: #4aa7f4;
-                  height: 7px;
-                  width: 7px;
-                  margin-right: 5px; }
-            #right_sidebar .tab .chat_list li .user_contact__data .user_contact__new_message {
-              background: #e26a73;
-              height: 1.2rem;
-              width: 1.2rem;
-              line-height: 1.2rem;
-              border-radius: 100%;
-              font-size: 0.7rem;
-              text-align: center;
-              display: inline-block;
-              position: absolute;
-              top: 0px;
-              right: 0px;
-              color: #ffffff; }
-          #right_sidebar .tab .chat_list li .user_contact .btn_unfollow {
-            border: 1px solid #f0f0f2;
-            border-radius: 0.3rem;
-            background: #ffffff;
-            padding: 0.7rem 0.5rem;
-            color: #4aa7f4;
-            position: absolute;
-            top: 10px;
-            right: 30px;
-            display: none; }
-            #right_sidebar .tab .chat_list li .user_contact .btn_unfollow:hover {
-              background: #4aa7f4;
-              color: #ffffff;
-              transition: 0.4s ease; }
   #right_sidebar .tab--bottom {
     height: calc(100% - 295px); }
     #right_sidebar .tab--bottom .tab__result {
       height: calc(100% - 110px);
       overflow-y: auto; }
+
+.chat_list {
+  padding: 0;
+  margin-bottom: 0; }
+  .chat_list .user_contact {
+    display: flex;
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.5rem;
+    width: 100%; }
+    .chat_list .user_contact[data-show="false"] {
+      opacity: 0.5; }
+    .chat_list .user_contact:hover {
+      background: #ffffff;
+      opacity: 1; }
+      .chat_list .user_contact:hover .btn_unfollow {
+        display: inline-block; }
+      .chat_list .user_contact:hover .user_contact__data h3, .chat_list .user_contact:hover .user_contact__data p {
+        display: inline-block;
+        max-width: 55%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal; }
+    .chat_list .user_contact__avatar {
+      float: left;
+      width: 40px; }
+    .chat_list .user_contact__data {
+      float: left;
+      width: calc(100% - 40px);
+      padding: 0 1rem 0 0.7rem;
+      position: relative; }
+      .chat_list .user_contact__data h3 {
+        color: #666666;
+        margin: 0;
+        display: inline-block;
+        max-width: 75%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+        line-height: 1.4rem;
+        margin-top: 3px;
+        position: relative;
+        padding: 0 2rem 0 0; }
+        .chat_list .user_contact__data h3 span {
+          font-family: 'nunito_sansregular';
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          border-radius: 0.3rem;
+          background: #f8f8fb;
+          color: #b3b3b3;
+          height: 1.3rem;
+          width: 1.3rem;
+          line-height: 1.3rem;
+          text-align: center;
+          font-size: 0.7rem;
+          font-weight: normal; }
+      .chat_list .user_contact__data p {
+        color: #89898a;
+        margin: 0;
+        display: inline-block;
+        max-width: 85%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+        position: relative; }
+        .chat_list .user_contact__data p .user_contact__status {
+          display: inline-block;
+          border-radius: 100%; }
+          .chat_list .user_contact__data p .user_contact__status.active {
+            background: #4aa7f4;
+            height: 7px;
+            width: 7px;
+            margin-right: 5px; }
+      .chat_list .user_contact__data .user_contact__new_message {
+        background: #e26a73;
+        height: 1.2rem;
+        width: 1.2rem;
+        line-height: 1.2rem;
+        border-radius: 100%;
+        font-size: 0.7rem;
+        text-align: center;
+        display: inline-block;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        color: #ffffff; }
+    .chat_list .user_contact .btn_unfollow {
+      border: 1px solid #f0f0f2;
+      border-radius: 0.3rem;
+      background: #ffffff;
+      padding: 0.7rem 0.5rem;
+      color: #4aa7f4;
+      position: absolute;
+      top: 10px;
+      right: 30px;
+      display: none; }
+      .chat_list .user_contact .btn_unfollow:hover {
+        background: #4aa7f4;
+        color: #ffffff;
+        transition: 0.4s ease; }
 
 .avatar_progress[data-size="24px"] {
   height: 24px;

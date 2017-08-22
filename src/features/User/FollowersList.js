@@ -6,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import { selectFollowersAccounts } from './selectors';
 import { getFollowersBegin } from './actions/getFollowers';
+import UserContact from './components/UserContact';
 
 class FollowersList extends Component {
   static propTypes = {
@@ -28,8 +29,7 @@ class FollowersList extends Component {
     const { followersAccounts } = this.props;
     return (
       <div>
-        <h2>FollowersList</h2>
-        {!isEmpty(followersAccounts) && followersAccounts.map(account => <p key={account.name}>{account.name}</p>)}
+        {!isEmpty(followersAccounts) && followersAccounts.map(account => <UserContact key={account.name} account={account} />)}
       </div>
     );
   }

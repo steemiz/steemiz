@@ -13,8 +13,6 @@ import getOnePost, { getOnePostReducer } from './actions/getOnePost';
 const initialState = {
   posts: {},
   currentPostId: undefined,
-  currentCategory: '',
-  currentTopic: '',
   categories: {
     created: {},
     feed: {},

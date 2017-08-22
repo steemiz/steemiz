@@ -14,3 +14,13 @@ export const selectAppRate = () => createSelector(
   selectAppConfig(),
   state => state.rate,
 );
+
+export const selectTrendingTags = () => createSelector(
+  selectAppConfig(),
+  state => state.trendingTags || [],
+);
+
+export const selectIsSidebarOpen = () => createSelector(
+  selectAppConfig(),
+  state => state.sidebar.open,
+);

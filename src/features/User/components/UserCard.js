@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { formatter } from 'steem';
 import AvatarSteemit from '../../../components/AvatarSteemit';
-import Author from '../../../components/Author';
 import UserSteemPower from '../UserSteemPower';
 
 
 const UserCard = ({ user }) => {
   return (
     <div className="user_profile">
-      <button className="user_profile__delete" onClick={this.handleDeleteUser}>×</button>
+      <button className="user_profile__delete">×</button>
       <div className="user_profile__avatar">
         <AvatarSteemit name={user.name} size={140} />
       </div>

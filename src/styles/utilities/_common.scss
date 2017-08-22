@@ -36,8 +36,12 @@ input, select, textarea, a, button {
 
 #app_content {
 	background: #f8f8fb;
-	padding: $height_header $width_rightsidebar 0 $width_leftsidebar;
+	padding: $height_header 0 0 $width_leftsidebar;
 	transition: 0.4s ease;
+
+	&.sidebar_open {
+		padding-right: 22rem;
+	}
 	
 	@media screen and (max-width: 1200px) {
 		padding-right: 0 !important;

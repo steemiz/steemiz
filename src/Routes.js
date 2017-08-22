@@ -12,13 +12,10 @@ import { selectMe } from './features/User/selectors';
 import isEmpty from 'lodash/isEmpty';
 
 const Home = asyncComponent(() => import('./pages/Home'));
-const Feed = asyncComponent(() => import('./pages/Feed'));
 const MyFeed = asyncComponent(() => import('./pages/MyFeed'));
 const MyBlog = asyncComponent(() => import('./pages/MyBlog'));
 const PostRead = asyncComponent(() => import('./features/Post/PostRead'));
 const Profile = asyncComponent(() => import('./features/User/Profile'));
-const ProfilePage = asyncComponent(() => import('./pages/ProfilePage'));
-const Test = asyncComponent(() => import('./Test'));
 
 
 
