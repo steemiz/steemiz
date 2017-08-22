@@ -1,5 +1,4 @@
 import combine from '../../utils/combine';
-
 /*
  * EXPORTING REDUCERS and SAGAS
  */
@@ -11,13 +10,19 @@ import commentsReducer from './reducer';
 export const initialState = {
   commentsChild: {},
   commentsData: {},
-  commentsByPost: {},
-  commentsByUser: {},
+  commentsFromPost: {},
+  commentsFromUser: {},
   repliesToUser: {},
+  isLoading: false,
 };
 
 export const reducer = (state = initialState, action) => combine(
-  [ getCommentsFromPostReducer, getRepliesToUserReducer, getCommentsFromUserReducer, commentsReducer ],
+  [
+    getCommentsFromPostReducer,
+    getRepliesToUserReducer,
+    getCommentsFromUserReducer,
+    commentsReducer,
+  ],
   state,
   action,
 );

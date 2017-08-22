@@ -4,27 +4,26 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
-import { selectMyAccount } from './selectors';
-import Profile from './Profile';
+import { selectMe } from '../features/User/selectors';
+import Profile from '../features/User/Profile';
 
 class MyProfile extends Component {
   static propTypes = {
-    account: PropTypes.object.isRequired,
+    me: PropTypes.string.isRequired,
   };
 
   render() {
-    const { account } = this.props;
+    const { me } = this.props;
     return (
       <div>
-        <h1>My Profile</h1>
-        {!isEmpty(account) ? <Profile account={account} /> : <div/>}
+        {!isEmpty(me) ? <Profile accountName={me} /> : <div/>}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => createStructuredSelector({
-  account: selectMyAccount(),
+  me: selectMe(),
 });
 
 export default connect(mapStateToProps, null)(MyProfile);

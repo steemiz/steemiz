@@ -1,3 +1,15 @@
+export const COUNTRIES = {
+  1 : {
+    name: 'FRA',
+    flag: 'france'
+  },
+  2 : {
+    name: 'USA',
+    flag: 'united_states_of_america'
+  },
+};
+
+/*
 // All countries will be saved in an object, key of object is Id of country
 export const COUNTRIES = {
 	1 : {
@@ -1132,4 +1144,4 @@ export const COUNTRIES = {
 	    name: 'ZIM',
 	    flag: 'zimbabwe'
 		},
-}
+}*/

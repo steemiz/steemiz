@@ -1,38 +1,19 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
-import isEmpty from 'lodash/isEmpty';
-
-import { selectCommentsDomain } from './selectors';
-import { getCommentsFromPostBegin } from './actions/getCommentsFromPost';
 import CommentItem from './CommentItem';
 
-class CommentPost extends Component {
+export default class CommentPost extends PureComponent {
   static propTypes = {
-    getCommentsFromPost: PropTypes.func.isRequired,
-    comments: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired,
-    allComments: PropTypes.string,
+    currentComments: PropTypes.object.isRequired,
+    commentsData: PropTypes.object.isRequired,
+    commentsChild: PropTypes.object.isRequired,
     openCommentingDraft: PropTypes.string,
     sortOrder: PropTypes.string,
   };
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    this.props.getCommentsFromPost(this.props.post);
-  }
-
   render() {
-    const { comments, post, openCommentingDraft, sortOrder } = this.props;
-    if (isEmpty(comments.commentsByPost[post.id])) {
-      return <div />;
-    }
-    const list = comments.commentsByPost[post.id].list;
-    const commentsData = comments.commentsData;
+    const { commentsChild, currentComments, commentsData, openCommentingDraft, sortOrder } = this.props;
+    const list = currentComments.list;
 
     return (
       <div>
@@ -40,7 +21,8 @@ class CommentPost extends Component {
           <CommentItem
             key={commentId}
             comment={commentsData[commentId]}
-            allComments={comments}
+            commentsData={commentsData}
+            commentsChild={commentsChild}
             openCommentingDraft={openCommentingDraft}
             sortOrder={sortOrder}
           />
@@ -49,13 +31,3 @@ class CommentPost extends Component {
     );
   }
 }
-
-const mapStateToProps = (state, props) => createStructuredSelector({
-  comments: selectCommentsDomain(),
-});
-
-const mapDispatchToProps = dispatch => ({
-  getCommentsFromPost: post => dispatch(getCommentsFromPostBegin(post)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CommentPost);

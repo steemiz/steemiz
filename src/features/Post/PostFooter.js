@@ -1,25 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import numeral from 'numeral';
 import { Link } from 'react-router-dom';
 import { IconButton } from 'material-ui';
 import { FormattedRelative } from 'react-intl';
 
 import ContentPayoutAndVotes from '../../components/ContentPayoutAndVotes';
 import Author from '../../components/Author';
+import { displayContentNbComments } from '../../utils/helpers/steemitHelpers';
 
 const PostFooter = ({ post }) => {
-  const numberOfComments = numeral(post.children).format('0,0');
   return (
     <div className="article__footer">
       <div className="article__footer__left">
         <div className="time_author">
           <i className="time_author__icon material-icons">watch_later</i>
-          <span className="timestamp"><FormattedRelative value={post.created} /></span>
+          <span className="timestamp">
+            <FormattedRelative value={`${post.created}Z`} />
+          </span>
           <span>by</span>
           <Author name={post.author} reputation={post.author_reputation} />
         </div>
-        <ContentPayoutAndVotes content={post} />
+        <ContentPayoutAndVotes type="post" content={post} />
       </div>
 
       <div className="article__footer__right">
@@ -32,8 +33,12 @@ const PostFooter = ({ post }) => {
           <span className="btn_reply" title="Reply" onClick={this.handleReply}>Reply</span>
         </div>
         <div>
-          <Link to="" title="Responses"><i className="fa fa-comments" />{numberOfComments}</Link>
-          <Link to="" title="Views"><i className="fa fa-eye" />186</Link>
+          <Link to="" title="Responses">
+            <i className="fa fa-comments" />
+            {displayContentNbComments(post)}
+          </Link>
+          {/* No page view method in api */}
+          {/*<Link to="" title="Views"><i className="fa fa-eye" />186</Link>*/}
         </div>
         <div>
           <Link to="#" target="_blank" title="Share on Facebook"><i

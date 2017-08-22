@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from 'material-ui/Avatar';
 
-const AvatarSteemit = ({ author, size }) => {
+const AvatarSteemit = ({ name, size }) => {
   return (
     <Avatar
-      src={`${process.env.REACT_APP_STEEMCONNECT_IMG_HOST}/@${author}?s=${size}`}
+      src={`${process.env.REACT_APP_STEEMCONNECT_IMG_HOST}/@${name}?s=${size}`}
+      backgroundColor="#999"
+      size={size}
     />
   )
 };
 
 AvatarSteemit.propTypes = {
-  author: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   size: PropTypes.number,
 };
 

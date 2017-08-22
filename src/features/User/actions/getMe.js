@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { setToken, removeToken } from '../../../utils/token';
+import update from 'immutability-helper';
+import { removeToken, setToken } from '../../../utils/token';
 import steemconnect from '../../../utils/steemconnect';
 
 /*--------- CONSTANTS ---------*/
@@ -23,15 +24,15 @@ export function getMeFailure(message) {
 /*--------- REDUCER ---------*/
 export function getMeReducer(state, action) {
   switch (action.type) {
-    case GET_ME_SUCCESS:
-      return {
-        ...state,
-        me: action.me.user,
+    case GET_ME_SUCCESS: {
+      const { account, user } = action.me;
+      return update(state, {
+        me: { $set: user },
         accounts: {
-          ...action.accounts,
-          [action.me.user]: action.me.account,
-        }
-      };
+          [user]: {$auto: { $merge: account }},
+        },
+      });
+    }
     default:
       return state;
   }

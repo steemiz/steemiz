@@ -1,5 +1,6 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
+import update from 'immutability-helper';
 
 /*--------- CONSTANTS ---------*/
 const GET_ACCOUNTS_BEGIN = 'GET_ACCOUNTS_BEGIN';
@@ -26,15 +27,12 @@ export function getAccountsFailure(message) {
 /*--------- REDUCER ---------*/
 export function getAccountsReducer(state, action) {
   switch (action.type) {
-    case GET_ACCOUNTS_SUCCESS:
+    case GET_ACCOUNTS_SUCCESS: {
       const { profiles } = action;
-      return {
-        ...state,
-        accounts: {
-          ...state.accounts,
-          ...profiles,
-        }
-      };
+      return update(state, {
+        accounts: { $merge: profiles },
+      });
+    }
     default:
       return state;
   }

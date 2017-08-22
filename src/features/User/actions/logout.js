@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { removeToken, getToken } from '../../../utils/token';
+import { getToken, removeToken } from '../../../utils/token';
 import steemconnect from '../../../utils/steemconnect';
 
 /*--------- CONSTANTS ---------*/
@@ -23,10 +23,10 @@ export function logoutFailure(message) {
 /*--------- REDUCER ---------*/
 export function logoutReducer(state, action) {
   switch (action.type) {
-    case LOGOUT_SUCCESS:
+    case LOGOUT_BEGIN:
       return {
         ...state,
-        me: {},
+        me: '',
       };
     default:
       return state;

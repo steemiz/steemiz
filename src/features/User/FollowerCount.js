@@ -3,36 +3,44 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
-import { selectAccount } from './selectors';
+import { selectFollowersCount, selectFollowingsCount } from './selectors';
 
 import { getFollowerCountBegin } from './actions/getFollowerCount';
 
 class FollowerCount extends Component {
   static propTypes = {
     accountName: PropTypes.string.isRequired,
-    unit: PropTypes.oneOf(['follower_count', 'following_count']).isRequired,
+    unit: PropTypes.oneOf(['followers', 'followings']).isRequired,
     getFollowerCount: PropTypes.func.isRequired,
-    account: PropTypes.object.isRequired,
+    count: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.oneOf([undefined]),
+    ]),
+  };
+
+  static defaultProps = {
+    count: undefined,
   };
 
   componentDidMount() {
-    if (this.props.account.follower_count === undefined) {
-      this.props.getFollowerCount(this.props.accountName);
+    const { count, accountName } = this.props;
+    if (count === undefined) {
+      this.props.getFollowerCount(accountName);
     }
   }
 
   render() {
-    const { account, unit } = this.props;
+    const { count } = this.props;
     return (
       <span>
-        {!isEmpty(account) ? account[unit] : 0}
+        {count || 0}
       </span>
     );
   }
 }
 
 const mapStateToProps = (state, props) => createStructuredSelector({
-  account: selectAccount(props.accountName),
+  count: props.unit === 'followers' ? selectFollowersCount(props.accountName) : selectFollowingsCount(props.accountName),
 });
 
 const mapDispatchToProps = dispatch => ({

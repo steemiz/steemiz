@@ -1,4 +1,5 @@
 /* eslint-disable camelcase,no-param-reassign,consistent-return,no-console,new-cap */
+import numeral from 'numeral';
 
 /**
  * https://github.com/steemit/steemit.com/blob/47fd0e0846bd8c7c941ee4f95d5f971d3dc3981d/app/utils/ParsersAndFormatters.js
@@ -61,3 +62,13 @@ export const calculatePayout = (post) => {
 
   return payoutDetails;
 };
+
+export const calculateContentPayout = content => {
+  const pendingPayoutValue = parseFloat(content.pending_payout_value);
+  const totalPayoutValue = parseFloat(content.total_payout_value);
+  return totalPayoutValue || pendingPayoutValue;
+};
+
+export const displayContentNbComments = content => numeral(content.children).format('0,0');
+export const hasVoted = (content, name) => !!content.active_votes.find(vote => vote.voter === name && vote.percent > 0);
+export const formatAmount = amount => numeral(amount).format('$0,0.00');

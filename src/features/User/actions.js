@@ -1,5 +1,4 @@
 import combine from '../../utils/combine';
-
 /*
  * EXPORTING REDUCERS and SAGAS
  */
@@ -7,14 +6,17 @@ import getMe, { getMeReducer } from './actions/getMe';
 import getAccounts, { getAccountsReducer } from './actions/getAccounts';
 import getFollowerCount, { getFollowerCountReducer } from './actions/getFollowerCount';
 import getFollowers, { getFollowersReducer } from './actions/getFollowers';
-import getFollowing, { getFollowingReducer } from './actions/getFollowing';
+import getFollowings, { getFollowingsReducer } from './actions/getFollowings';
 import getVoteHistory, { getVoteHistoryReducer } from './actions/getVoteHistory';
-import getRewards, { getRewardsReducer } from './actions/getRewards';
+import getTransferHistory, { getTransferHistoryReducer } from './actions/getTransferHistory';
+import setCurrentUser, { setCurrentUserReducer } from './actions/setCurrentUser';
 import logout, { logoutReducer } from './actions/logout';
 
 export const initialState = {
   me: '',
   accounts: {},
+  followers: {},
+  followings: {},
 };
 
 export const reducer = (state = initialState, action) => combine(
@@ -23,10 +25,11 @@ export const reducer = (state = initialState, action) => combine(
     getAccountsReducer,
     getFollowerCountReducer,
     getFollowersReducer,
-    getFollowingReducer,
+    getFollowingsReducer,
     getVoteHistoryReducer,
-    getRewardsReducer,
+    getTransferHistoryReducer,
     logoutReducer,
+    setCurrentUserReducer,
   ],
   state,
   action,
@@ -38,8 +41,9 @@ export default [
   getAccounts,
   getFollowerCount,
   getFollowers,
-  getFollowing,
+  getFollowings,
   getVoteHistory,
-  getRewards,
+  getTransferHistory,
   logout,
+  setCurrentUser,
 ];

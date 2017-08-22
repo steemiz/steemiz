@@ -1,13 +1,10 @@
 /* eslint-disable no-param-reassign,no-empty */
 import React from 'react';
-import filter from 'lodash/filter';
 import sanitizeHtml from 'sanitize-html';
 import Remarkable from 'remarkable';
 import emojione from 'emojione';
 import embedjs from 'embedjs';
 import sanitizeConfig from './helpers/SanitizeConfig';
-import { imageRegex } from './helpers/regexHelpers';
-import ProgressiveImage from 'react-progressive-image';
 import htmlReady from './helpers/steemitHtmlReady';
 import PostFeedEmbed from './PostFeedEmbed';
 

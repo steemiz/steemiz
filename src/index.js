@@ -6,10 +6,11 @@ import { ConnectedRouter } from 'react-router-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { BrowserRouter as Router } from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import './utils/helpers/immutabilityHelpers';
 
 import store, { history } from './store';
 import './index.css';
-import App from './App';
+import App from './features/App/App';
 import registerServiceWorker from './registerServiceWorker';
 
 injectTapEventPlugin();

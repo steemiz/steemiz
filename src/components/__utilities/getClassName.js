@@ -5,10 +5,10 @@
  * @return string -- string of classes
  */
 export default function getClassName(classObject, classDefault = null) {
-	let classList = []
+	let classList = [];
 
 	if(classDefault) 
-		classList.push(classDefault)
+		classList.push(classDefault);
 
 	for(let className in classObject) {
 		if(classObject[className]) classList.push(className)

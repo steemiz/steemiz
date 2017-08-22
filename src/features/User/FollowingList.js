@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
-import { selectFollowingAccounts } from './selectors';
+import { selectFollowingsAccounts } from './selectors';
 import { getFollowingBegin } from './actions/getFollowing';
 
 class FollowingList extends Component {
@@ -36,7 +36,7 @@ class FollowingList extends Component {
 }
 
 const mapStateToProps = (state, props) => createStructuredSelector({
-  followingAccounts: selectFollowingAccounts(props.accountName),
+  followingAccounts: selectFollowingsAccounts(props.accountName),
 });
 
 const mapDispatchToProps = dispatch => ({

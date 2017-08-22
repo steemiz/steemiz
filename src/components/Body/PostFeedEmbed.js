@@ -16,7 +16,7 @@ export default class PostFeedEmbed extends Component {
         <div className="postFeedEmbed-icon">
           <PlayIcon style={{ width: 60, height: 60 }} />
         </div>
-        <img src={thumb} />
+        <img src={thumb} alt="" />
       </a>
     );
   }

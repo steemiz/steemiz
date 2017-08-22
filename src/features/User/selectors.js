@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
+import { selectAppProps } from '../App/selectors';
+import { formatter } from 'steem';
 
 const selectUserDomain = () => state => state.user;
 
@@ -11,9 +12,25 @@ export const selectMe = () => createSelector(
   state => state.me,
 );
 
+// ACCOUNTS
 export const selectAccounts = () => createSelector(
   selectUserDomain(),
   state => state.accounts || {},
+);
+
+export const selectAccount = accountName => createSelector(
+  selectAccounts(),
+  accounts => { return accounts[accountName] || {}; },
+);
+
+export const selectCurrentUser = () => createSelector(
+  selectUserDomain(),
+  state => state.currentUser,
+);
+
+export const selectCurrentAccount = () => createSelector(
+  [selectCurrentUser(), selectAccounts()],
+  (currentUser, accounts) => accounts[currentUser] || {},
 );
 
 export const selectMyAccount = () => createSelector(
@@ -23,67 +40,148 @@ export const selectMyAccount = () => createSelector(
 
 export const selectIsConnected = () => createSelector(
   selectMe(),
-  profile => !isEmpty(profile),
-);
-
-export const selectMyAccountMetadata = () => createSelector(
-  selectMyAccount(),
-  account => account && account.json_metadata ? JSON.parse(account.json_metadata) : {},
-);
-
-export const selectAccount = accountName => createSelector(
-  selectAccounts(),
-  accounts => accounts[accountName] || {},
+  me => !!me,
 );
 
 export const selectVoteHistory = accountName => createSelector(
   selectAccount(accountName),
-  account => account.vote_history,
+  account => account.votes,
 );
 
-export const selectFollowers = accountName => createSelector(
-  selectAccount(accountName),
-  account => account.followers,
+// FOLLOWERS
+export const selectFollowers = () => createSelector(
+  selectUserDomain(),
+  state => state.followers,
+);
+
+export const selectFollowersFromUser = accountName => createSelector(
+  selectFollowers(),
+  state => state[accountName] || {},
+);
+
+export const selectFollowersCount = accountName => createSelector(
+  selectFollowersFromUser(accountName),
+  state => state.count,
+);
+
+export const selectFollowersList = accountName => createSelector(
+  selectFollowersFromUser(accountName),
+  state =>  state.list || [],
+);
+
+export const selectLastFollower = accountName => createSelector(
+  selectFollowersList(accountName),
+  state => state[state.length - 1],
 );
 
 export const selectFollowersAccounts = accountName => createSelector(
-  [selectAccounts(), selectFollowers(accountName)],
+  [selectAccounts(), selectFollowersList(accountName)],
   (accounts, followers) => {
-    if (!followers) {
+    if (!followers.length) {
       return [];
     }
     const followersAccounts = [];
     followers.forEach(follow => {
-      if (accounts[follow.followers]) {
-        followersAccounts.push(accounts[follow.followers]);
+      if (accounts[follow.follower]) {
+        followersAccounts.push(accounts[follow.follower]);
       }
     });
     return followersAccounts;
   },
 );
 
-export const selectFollowing = accountName => createSelector(
-  selectAccount(accountName),
-  account => account.following,
+// FOLLOWING
+export const selectFollowings = () => createSelector(
+  selectUserDomain(),
+  state => state.followings,
 );
 
-export const selectFollowingAccounts = accountName => createSelector(
-  [selectAccounts(), selectFollowing(accountName)],
-  (accounts, following) => {
-    if (!following) {
+export const selectFollowingsFromUser = accountName => createSelector(
+  selectFollowings(),
+  state => state[accountName] || {},
+);
+
+export const selectFollowingsCount = accountName => createSelector(
+  selectFollowingsFromUser(accountName),
+  state => state.count,
+);
+
+export const selectFollowingsList = accountName => createSelector(
+  selectFollowingsFromUser(accountName),
+  state =>  state.list || [],
+);
+
+export const selectLastFollowing = accountName => createSelector(
+  selectFollowingsList(accountName),
+  state => state[state.length - 1],
+);
+
+export const selectFollowingsAccounts = accountName => createSelector(
+  [selectAccounts(), selectFollowingsList(accountName)],
+  (accounts, followings) => {
+    if (!followings.length) {
       return [];
     }
-    const followingAccounts = [];
-    following.forEach(follow => {
+    const followingsAccounts = [];
+    followings.forEach(follow => {
       if (accounts[follow.following]) {
-        followingAccounts.push(accounts[follow.following]);
+        followingsAccounts.push(accounts[follow.following]);
       }
     });
-    return followingAccounts;
+    return followingsAccounts;
   },
 );
 
-export const selectRewardsCuration = accountName => createSelector(
+// REWARDS
+export const selectTransferHistory = accountName => createSelector(
   selectAccount(accountName),
-  account => account.rewards_curation,
+  account => account.transfer_history,
+);
+
+export const selectRewardsCuration = accountName => createSelector(
+  [selectTransferHistory(accountName), selectAppProps()],
+  (transferHistory, appProps) => {
+    if (!appProps) {
+      return [];
+    }
+    return transferHistory
+      .filter(transfer => transfer.type === 'curation_reward').map(transfer => ({
+        ...transfer,
+        steemPower: formatter.vestToSteem(transfer.reward, appProps.total_vesting_shares, appProps.total_vesting_fund_steem),
+      }));
+  },
+);
+
+export const selectLastWeekRewardsCuration = accountName => createSelector(
+  selectRewardsCuration(accountName),
+  curation => {
+    const timestampOneWeekAgo = Date.now() - 604800000;
+    return curation
+      .filter(transfer => Date.parse(transfer.timestamp) > timestampOneWeekAgo)
+      .reduce((total, transfer) => total += transfer.steemPower, 0);
+  },
+);
+
+export const selectRewardsAuthor = accountName => createSelector(
+  [selectTransferHistory(accountName), selectAppProps()],
+  (transferHistory, appProps) => {
+    if (!appProps) {
+      return [];
+    }
+    return transferHistory
+      .filter(transfer => transfer.type === 'author_reward').map(transfer => ({
+        ...transfer,
+        steemPower: formatter.vestToSteem(transfer.vesting_payout, appProps.total_vesting_shares, appProps.total_vesting_fund_steem),
+      }));
+  },
+);
+
+export const selectLastWeekRewardsAuthor = accountName => createSelector(
+  selectRewardsAuthor(accountName),
+  curation => {
+    const timestampOneWeekAgo = Date.now() - 604800000;
+    return curation
+      .filter(transfer => Date.parse(transfer.timestamp) > timestampOneWeekAgo)
+      .reduce((total, transfer) => total += transfer.steemPower, 0);
+  },
 );

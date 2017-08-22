@@ -266,7 +266,7 @@ function isEmbedable(child, links, images, resolveIframe) {
 }
 
 /** @return {id, url} or <b>null</b> */
-function youTubeId(data) {
+/*function youTubeId(data) {
   if (!data) return null;
 
   const m1 = data.match(linksRe.youTube);
@@ -278,4 +278,4 @@ function youTubeId(data) {
   if (!id) return null;
 
   return { id, url };
-}
+}*/

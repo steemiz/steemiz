@@ -1,7 +1,7 @@
 html, body {
 	font-family: 'nunito_sansregular';
 	font-weight: normal;
-	font-size: 14px;
+	font-size: 16px;
 	background: $bg_default;
 	margin: 0; 
 	padding: 0;
@@ -114,8 +114,6 @@ input:-webkit-autofill {
 |--------------------------------------------------
 */
 .collapse {
-	max-height: 0px;
-	display: block;
 	overflow: hidden;
 	transition: max-height 0.4s ease-out;
 	&.in {

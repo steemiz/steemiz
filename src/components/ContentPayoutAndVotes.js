@@ -1,16 +1,21 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import Popover from 'material-ui/Popover';
-import numeral from 'numeral';
 
+import { selectMe } from '../features/User/selectors';
 import { getUpvotes, sortVotes } from '../utils/helpers/voteHelpers';
 import Payout from '../features/Comment/Payout';
 import VoteButton from '../features/Vote/VoteButton';
+import { calculateContentPayout, formatAmount, hasVoted } from '../utils/helpers/steemitHelpers';
 
-export default class ContentPayoutAndVotes extends PureComponent {
+class ContentPayoutAndVotes extends Component {
   static propTypes = {
     content: PropTypes.object.isRequired, // Post or comment
+    type: PropTypes.string.isRequired, // post or comment
+    me: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -50,6 +55,9 @@ export default class ContentPayoutAndVotes extends PureComponent {
   handleViewVoteCard = (event) => {
     // This prevents ghost click.
     event.preventDefault();
+    if (this.props.content.net_votes <= 0) {
+      return;
+    }
 
     this.setState({
       voteCard: {
@@ -68,12 +76,10 @@ export default class ContentPayoutAndVotes extends PureComponent {
   };
 
   render() {
-    const { content } = this.props;
+    const { content, type, me } = this.props;
     const { payoutCard, voteCard } = this.state;
 
-    const pendingPayoutValue = parseFloat(content.pending_payout_value);
-    const totalPayoutValue = parseFloat(content.total_payout_value);
-    const payout = totalPayoutValue || pendingPayoutValue;
+    const payout = calculateContentPayout(content);
 
     const fiveLastVotes =
       sortVotes(getUpvotes(content.active_votes), 'rshares')
@@ -86,10 +92,10 @@ export default class ContentPayoutAndVotes extends PureComponent {
     return (
       <div className="Voting">
         <div className="Voting__button">
-          <VoteButton content={content} type="comment" />
+          <VoteButton contentId={content.id} type={type} />
         </div>
         <div className="Voting__money">
-          <span onClick={this.handleViewMoneyCard}>{numeral(payout).format('$0,0.000')}</span>
+          <span onClick={this.handleViewMoneyCard}>{formatAmount(payout)}</span>
           <Popover
             open={payoutCard.open}
             anchorEl={payoutCard.anchorEl}
@@ -98,7 +104,7 @@ export default class ContentPayoutAndVotes extends PureComponent {
             onRequestClose={this.handleCloseMoneyCard}
           >
             <div className="MoneyCard">
-              <Payout post={content} />
+              <Payout content={content} />
             </div>
           </Popover>
         </div>
@@ -122,3 +128,9 @@ export default class ContentPayoutAndVotes extends PureComponent {
     )
   }
 }
+
+const mapStateToProps = (state, props) => createStructuredSelector({
+  me: selectMe(),
+});
+
+export default connect(mapStateToProps, null)(ContentPayoutAndVotes);

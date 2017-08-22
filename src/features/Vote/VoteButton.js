@@ -5,15 +5,24 @@ import { connect } from 'react-redux';
 
 import IconButton from 'material-ui/IconButton';
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
-import { blue500, blue400, grey500, grey400 } from 'material-ui/styles/colors';
+import { blue400, blue500, grey400, grey500 } from 'material-ui/styles/colors';
 
-import { selectMyAccount, selectIsConnected } from '../User/selectors';
-import { voteBegin } from'./actions/vote';
+import { selectIsConnected, selectMyAccount } from '../User/selectors';
+import { selectPostById } from '../Post/selectors';
+import { selectCommentById } from '../Comment/selectors';
+import { voteBegin } from './actions/vote';
+import {
+  hasVoted
+} from '../../utils/helpers/steemitHelpers';
 
 class VoteButton extends Component {
   static propTypes = {
+    contentId: PropTypes.number.isRequired,
     content: PropTypes.object.isRequired,
+    myAccount: PropTypes.object.isRequired,
+    isConnected: PropTypes.bool.isRequired,
     type: PropTypes.string.isRequired,
+    vote: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -24,19 +33,20 @@ class VoteButton extends Component {
   vote(weight) {
     const { isConnected, content, vote, type } = this.props;
     if (isConnected) {
-      vote(content, weight, { type: type });
+      vote(content, weight, { type });
     } else {
       console.log('Not logged');
     }
   }
 
   render() {
-    const { account, content, isConnected } = this.props;
-    const hasVoted = !!content.active_votes.find(vote => vote.voter === account.name && vote.percent > 0);
+    const { myAccount, isConnected, content } = this.props;
+    const contentUpvoted = hasVoted(content, myAccount.name);
+
     return (
       <IconButton
-        tooltip={hasVoted ? 'Unvote' : 'Vote'}
-        onClick={!hasVoted ? () => this.vote(account.voting_power) : () => this.vote(0)}
+        tooltip={contentUpvoted ? 'Unvote' : 'Vote'}
+        onClick={!contentUpvoted ? () => this.vote(myAccount.voting_power) : () => this.vote(0)}
         disabled={!isConnected}
         iconStyle={{
           width: 18,
@@ -48,19 +58,20 @@ class VoteButton extends Component {
           padding: 0,
         }}
       >
-        <ThumbUp color={hasVoted ? blue500 : grey500} hoverColor={hasVoted ? blue400 : grey400} />
+        <ThumbUp color={contentUpvoted ? blue500 : grey500} hoverColor={contentUpvoted ? blue400 : grey400} />
       </IconButton>
     )
   }
 }
 
 const mapStateToProps = (state, props) => createStructuredSelector({
-  account: selectMyAccount(),
+  content: props.type === 'post' ? selectPostById(props.contentId) : selectCommentById(props.contentId),
+  myAccount: selectMyAccount(),
   isConnected: selectIsConnected(),
 });
 
 const mapDispatchToProps = dispatch => ({
-  vote: (post, weight, params) => dispatch(voteBegin(post, weight, params)),
+  vote: (content, weight, params) => dispatch(voteBegin(content, weight, params)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VoteButton);

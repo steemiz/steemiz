@@ -4,12 +4,11 @@
 	$border_radius: 0.3rem;
 
 	position: relative;
+	display: flex;
 	background: $white;
-	border-radius: $border_radius;
 	margin: 1rem 1rem 1.5rem 0;
 	transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 	@include clearfix();
-	overflow: hidden;
 
 	&:hover {
 		box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 45px, rgba(0, 0, 0, 0.22) 0px 10px 18px;
@@ -35,12 +34,19 @@
 
 		.post_card__block {
 			width: 100% !important;
+			flex-direction: column-reverse;
 		}
 
 		.post_card__block--img {
 			border-radius: $border_radius $border_radius 0 0;
 			position: relative;
 			height: $height_img;
+		}
+
+		.post_card__block--info {
+			.info {
+				flex-direction: column;
+			}
 		}
 
 		.author, .datetime {
@@ -89,18 +95,14 @@
 	}
 
 	&__block--img {
-		float: left;
-		overflow: hidden;
-		@include position(absolute, 0 null 0 0);
-		width: $width_img;
-		border-radius: $border_radius 0 0 $border_radius;
+		display: block;
+		width: 20%;
 	}
 
 	&__block--content {
-		margin-left: $width_img;
-		width: calc(100% - #{$width_img});
 		padding: 1.3rem 1.5rem;
-		overflow: hidden;
+		color: #999999;
+		width: 80%;
 
 		h3 {
 			color: #6f6f6f;
@@ -111,39 +113,30 @@
 		p {
 			color: #999999;
 			margin: 0 0 0.4rem;
-			line-height: 1.5rem;
 			@include overflowLine(1.4rem, 2);
 		}
 	}
 
 	&__block--info {
-		@include clearfix();
-		float: left;
+		display: flex;
+		align-items: center;
 
 		p {
 			margin: 0;
 		}
 
+		.info {
+			display: flex;
+			align-items: center;
+		}
+
 		.author {
 			margin: 0.3rem 1rem;
-			p {
-				span {
-					opacity: 0.8;
-					margin-right: 4px;
-				}
-
-				i {
-					color: #cccccc;
-					// border: 1px solid #cccccc;
-					border-radius: 0.3rem;
-					padding: 0 4px;
-					font-size: 0.8rem;
-					height: 1.5rem;
-					display: inline-block;
-					font-style: normal;
-					line-height: 1.5rem;
-					margin-left: 4px;
-				}
+			display: flex;
+			align-items: center;
+			span {
+				opacity: 0.8;
+				margin-right: 4px;
 			}
 		}
 
@@ -224,10 +217,19 @@
 		}
 	}
 
+	@media screen and (max-width: 800px) {
+		.post_card__block {
+			flex-direction: column-reverse;
+		}
+	}
+
 	@media screen and (max-width: 600px) {
 		margin-bottom: 1rem;
 		.post_card__block {
 			width: 100% !important;
+			.info {
+				flex-direction: column;
+			}
 		}
 		.post_card__block--content {
 			margin-left: 0 !important;

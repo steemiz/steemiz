@@ -1,4 +1,4 @@
-import { select, put, takeEvery } from 'redux-saga/effects';
+import { put, select, takeEvery } from 'redux-saga/effects';
 import steemconnect from '../../../utils/steemconnect';
 import { selectMe } from '../../User/selectors';
 
@@ -9,32 +9,33 @@ export const VOTE_SUCCESS = 'VOTE_SUCCESS';
 export const VOTE_FAILURE = 'VOTE_FAILURE';
 
 /*--------- ACTIONS ---------*/
-export function voteBegin(post, weight, params = {}) {
-  return { type: VOTE_BEGIN, post, weight, params };
+export function voteBegin(content, weight, params = {}) {
+  return { type: VOTE_BEGIN, content, weight, params };
 }
 
-function voteOptimistic(postId, accountName, weight, params) {
-  return { type: VOTE_OPTIMISTIC, postId, accountName, weight, params };
+function voteOptimistic(contentId, accountName, weight, params) {
+  return { type: VOTE_OPTIMISTIC, contentId, accountName, weight, params };
 }
 
 export function voteSuccess() {
   return { type: VOTE_SUCCESS };
 }
 
-export function voteFailure(category, index, user, message) {
-  return { type: VOTE_FAILURE, category, index, user, message };
+export function voteFailure(contentId, accountName, message) {
+  return { type: VOTE_FAILURE, contentId, accountName, message };
 }
 
 /*--------- SAGAS ---------*/
-function* vote({ post, weight, params }) {
+function* vote({ content, weight, params }) {
   const accountName = yield select(selectMe());
-  yield put(voteOptimistic(post.id, accountName, weight, params));
+  yield put(voteOptimistic(content.id, accountName, weight, params));
 
   try {
-    const result = yield steemconnect.vote(accountName, post.author, post.permlink, weight);
+    const result = yield steemconnect.vote(accountName, content.author, content.permlink, weight);
+    console.log('result', result);
     yield put(voteSuccess());
   } catch(e) {
-    yield put(voteFailure(params.category, params.index, accountName, e.message));
+    yield put(voteFailure(content.id, accountName, e.message));
   }
 }
 

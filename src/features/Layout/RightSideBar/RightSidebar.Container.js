@@ -7,7 +7,7 @@ export default class RightSidebar extends React.Component {
     super(props);
 
     this.state = {
-      isOpenSideBar: true,
+      isOpenSideBar: false,
     }
   }
 
@@ -18,15 +18,15 @@ export default class RightSidebar extends React.Component {
   };
 
   componentWillMount() {
-    this.updatePositionSideBar()
+    //this.updatePositionSideBar()
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.updatePositionSideBar);
+    //window.addEventListener("resize", this.updatePositionSideBar);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updatePositionSideBar);
+    //window.removeEventListener("resize", this.updatePositionSideBar);
   }
 
   handleToggleSideBar = () => {

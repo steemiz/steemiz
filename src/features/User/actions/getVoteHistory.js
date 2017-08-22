@@ -1,5 +1,6 @@
-import { takeEvery, call, put, select } from 'redux-saga/effects';
+import { put, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
+import update from 'immutability-helper';
 
 /*--------- CONSTANTS ---------*/
 const GET_VOTE_HISTORY_BEGIN = 'GET_VOTE_HISTORY_BEGIN';
@@ -22,18 +23,18 @@ export function getVoteHistoryFailure(message) {
 /*--------- REDUCER ---------*/
 export function getVoteHistoryReducer(state, action) {
   switch (action.type) {
-    case GET_VOTE_HISTORY_SUCCESS:
+    case GET_VOTE_HISTORY_SUCCESS: {
       const { accountName, votes } = action;
-      return {
-        ...state,
+      return update(state, {
         accounts: {
-          ...state.accounts,
-          [accountName]: {
-            ...state.accounts[accountName],
-            vote_history: votes,
-          }
-        }
-      };
+          [accountName]: {$auto: {
+            votes: {$autoArray: {
+              $push: votes,
+            }},
+          }},
+        },
+      });
+    }
     default:
       return state;
   }
@@ -42,7 +43,7 @@ export function getVoteHistoryReducer(state, action) {
 /*--------- SAGAS ---------*/
 function* getVoteHistory({ accountName }) {
   try {
-    const votes = yield steem.api.getAccountVotes(accountName);
+    const votes = yield steem.api.getAccountVotesAsync(accountName);
     yield put(getVoteHistorySuccess(accountName, votes));
   } catch(e) {
     yield put(getVoteHistoryFailure(e.message));

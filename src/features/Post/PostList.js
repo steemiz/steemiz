@@ -3,37 +3,43 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import InfiniteScroll from 'react-infinite-scroller';
 
-import { selectPostsByCat } from './selectors';
+import {
+  selectAllPostsFromCategory,
+  selectCategoryTagHasMore,
+  selectPostsIsLoading
+} from './selectors';
+import { selectMe } from '../User/selectors';
 import { getPostsByBegin } from './actions/getPostsBy';
-import { voteBegin } from '../Vote/actions/vote';
-import { selectIsConnected, selectMyAccount } from '../User/selectors';
-import PostCard from '../../components/PostCard';
+import PostCard from './PostCard';
 
 class PostList extends Component {
   static propTypes = {
     posts: PropTypes.array.isRequired,
     category: PropTypes.string.isRequired,
-    query: PropTypes.object.isRequired,
-    vote: PropTypes.func.isRequired,
-    isConnected: PropTypes.bool.isRequired,
-    account: PropTypes.object.isRequired,
+    query: PropTypes.shape({
+      tag: PropTypes.string,
+    }).isRequired,
+    postsIsLoading: PropTypes.bool.isRequired,
+    categoryHasMore: PropTypes.bool.isRequired,
+    me: PropTypes.string.isRequired,
+    getPostsBy: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.handleChangeTypeShow = this.handleChangeTypeShow.bind(this);
-    this.vote = this.vote.bind(this);
+    this.loadPosts = this.loadPosts.bind(this);
     this.state = {
-      typeShowPostCard: 'row',
+      typeShowPostCard: '',
     };
   }
 
   componentDidMount() {
     // POSTS BY CATEGORY
     if (isEmpty(this.props.posts)) {
-      this.props.getPostsBy(this.props.category, this.props.query);
+      this.props.getPostsBy(this.props.query);
     }
   }
 
@@ -43,20 +49,31 @@ class PostList extends Component {
     });
   };
 
-  vote(post, weight, index) {
-    const { category, isConnected, vote } = this.props;
-    if (isConnected) {
-      vote(post, weight, { type: 'post', category, index });
-    } else {
-      console.log('Not logged');
+  loadPosts() {
+    const { query, posts, postsIsLoading, categoryHasMore } = this.props;
+    if (postsIsLoading === false && categoryHasMore === true) {
+      this.props.getPostsBy({
+        ...query,
+        limit: query.limit + 1,
+        start_author: posts[posts.length - 1].author,
+        start_permlink: posts[posts.length - 1].permlink,
+      });
     }
   }
 
   render() {
-    const { posts, category, account } = this.props;
+    const { posts, me, categoryHasMore, postsIsLoading } = this.props;
+    const items = posts.map(post => (
+      <PostCard
+        key={post.id}
+        post={post}
+        me={me}
+        styleShow={this.state.typeShowPostCard}
+      />
+    ));
     return (
-      <div className="post_container clearfix">
-        <div>
+      <div>
+        {/*<div>
           <RadioButtonGroup
             name="typeShow"
             defaultSelected={this.state.typeShowPostCard}
@@ -83,32 +100,43 @@ class PostList extends Component {
               labelStyle={{color: "#999"}}
             />
           </RadioButtonGroup>
-        </div>
-        {posts && posts.map((post, index) =>
-          <PostCard
-            key={post.id}
-            post={post}
-            index={index}
-            account={account}
-            category={category}
-            styleShow={this.state.typeShowPostCard}
-            vote={(post, weight) => this.vote(post, weight, index)}
-          />
+        </div>*/}
+        {posts.length > 0 && (
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={this.loadPosts}
+            hasMore={categoryHasMore}
+            loader={<div className="loader">Loading ...</div>}
+          >
+            {items}
+          </InfiniteScroll>
+        )}
+        {posts.length === 0 && postsIsLoading === false &&(
+          <div>
+            There is no posts here yet.
+          </div>
         )}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state, props) => createStructuredSelector({
-  posts: selectPostsByCat(props.category),
-  isConnected: selectIsConnected(),
-  account: selectMyAccount(),
-});
+const mapStateToProps = (state, props) => {
+  const { category, query } = props;
+  const tag = query.tag || 'all';
+  return createStructuredSelector({
+    posts: selectAllPostsFromCategory(category, tag),
+    postsIsLoading: selectPostsIsLoading(category, tag),
+    categoryHasMore: selectCategoryTagHasMore(category, tag),
+    me: selectMe(),
+  })
+};
 
-const mapDispatchToProps = (dispatch, props) => ({
-  getPostsBy: (category, query) => dispatch(getPostsByBegin(category, query)),
-  vote: (post, weight, params) => dispatch(voteBegin(post, weight, params)),
-});
+const mapDispatchToProps = (dispatch, props) => {
+  const { category } = props;
+  return {
+    getPostsBy: query => dispatch(getPostsByBegin(category, query)),
+  }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);

@@ -37,20 +37,22 @@ class CommentItem extends Component {
   }
 
   render() {
-    const { comment, allComments, sortOrder } = this.props;
+    const { comment, commentsChild, commentsData, sortOrder } = this.props;
 
     return (
       <div className="CommentComponent">
         <div className="CommentItem">
           <div className="CommentComponent__avatar">
             <Link to={`/@${comment.author}`}>
-              <AvatarSteemit author={comment.author} />
+              <AvatarSteemit name={comment.author} />
             </Link>
           </div>
           <div className="CommentComponent__detail">
             <div className="CommentComponent__head">
               <Author name={comment.author} reputation={comment.author_reputation} />
-              <span className="timestamp"><FormattedRelative value={comment.created} /></span>
+              <span className="timestamp">
+                <FormattedRelative value={`${comment.created}Z`} />
+              </span>
             </div>
             <div className="CommentComponent__body">
               <div className="CommentComponent__content">
@@ -58,7 +60,7 @@ class CommentItem extends Component {
               </div>
             </div>
             <div className="CommentComponent__footer">
-              <ContentPayoutAndVotes content={comment} />
+              <ContentPayoutAndVotes type="comment" content={comment} />
               <span className="CommentComponent__reply" onClick={this.props.onReply}>Reply</span>
             </div>
             {/*<div className="CommentActionButtons">
@@ -109,15 +111,15 @@ class CommentItem extends Component {
           </div>
         </div>
         <div className="Comment__child">
-          {allComments.commentsChild[comment.id] && sortCommentsFromSteem(
-            allComments.commentsChild[comment.id],
-            allComments,
+          {commentsChild[comment.id] && sortCommentsFromSteem(
+            commentsChild[comment.id],
+            commentsData,
             sortOrder
           ).map(commentId =>
             <CommentItem
               {...this.props}
               key={commentId}
-              comment={allComments.commentsData[commentId]}
+              comment={commentsData[commentId]}
             />
           )}
         </div>

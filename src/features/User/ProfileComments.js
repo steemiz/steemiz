@@ -2,57 +2,70 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { formatter } from 'steem';
-import { selectMyAccount } from './selectors';
+import isEmpty from 'lodash/isEmpty';
+import { getCommentsFromUserBegin } from '../Comment/actions/getCommentsFromUser';
+import { selectListCommentsFromUser, selectHasMoreCommentsFromUser, selectIsLoadingCommentsFromUser } from '../Comment/selectors';
 
-import FollowerCount from './FollowerCount';
-import PostList from '../Post/PostList';
+import CommentList from '../Comment/CommentList';
 
 class ProfileComments extends Component {
   static propTypes = {
-  };
-
-  static defaultProps = {
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        accountName: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    listCommentsFromUser: PropTypes.array.isRequired,
+    getCommentsFromUser: PropTypes.func.isRequired,
+    hasMoreCommentsFromUser: PropTypes.bool.isRequired,
+    commentsIsLoading: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
     super(props);
+    this.loadMore = this.loadMore.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const nextAccountName = nextProps.account.name;
-    const accountName = this.props.account.name;
-    if (nextAccountName && accountName !== nextAccountName) {
-      //this.props.getBlogPosts({ limit: 10, tag: 'aggroed' });
+  componentDidMount() {
+    const { commentsIsLoading, listCommentsFromUser } = this.props;
+    if (commentsIsLoading === false && isEmpty(listCommentsFromUser)) {
+      this.props.getCommentsFromUser();
+    }
+  }
+
+  loadMore() {
+    const { commentsIsLoading, hasMoreCommentsFromUser } = this.props;
+    if (commentsIsLoading === false && hasMoreCommentsFromUser === true) {
+      this.props.getCommentsFromUser({
+        addMore: true,
+      });
     }
   }
 
   render() {
-    const { account } = this.props;
-    const { reputation, post_count } = account;
+    const { listCommentsFromUser, hasMoreCommentsFromUser } = this.props;
     return (
       <div>
-        <h1>ProfileComments</h1>
-        <p>Steem power: {formatter.reputation(reputation)}</p>
-        <p>Post count: {post_count}</p>
-        <p>
-          Followers: {account.name ? <FollowerCount accountName="me" unit="follower_count" /> : 0}
-        </p>
-        <p>
-          Following: {account.name ? <FollowerCount accountName="me" unit="following_count" /> : 0}
-        </p>
-        {account.name ? <PostList category="blog" query={{ limit: 5, tag: 'aggroed' }} /> : <div/>}
+        {!isEmpty(listCommentsFromUser) && (
+          <CommentList
+            commentsList={listCommentsFromUser}
+            hasMoreComments={hasMoreCommentsFromUser}
+            loadMore={this.loadMore}
+          />
+        )}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => createStructuredSelector({
-  account: selectMyAccount(),
+const mapStateToProps = (state, props) => createStructuredSelector({
+  listCommentsFromUser: selectListCommentsFromUser(props.match.params.accountName),
+  hasMoreCommentsFromUser: selectHasMoreCommentsFromUser(props.match.params.accountName),
+  commentsIsLoading: selectIsLoadingCommentsFromUser(props.match.params.accountName),
 });
 
-const mapDispatchToProps = dispatch => ({
-  getComments: query => dispatch(getCommentsBegin(query)),
+const mapDispatchToProps = (dispatch, props) => ({
+  getCommentsFromUser: query => dispatch(getCommentsFromUserBegin(props.match.params.accountName, query)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileComments);

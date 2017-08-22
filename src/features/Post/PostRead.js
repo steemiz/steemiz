@@ -9,8 +9,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Body from '../../components/Body';
 import AvatarSteemit from '../../components/AvatarSteemit';
 import Author from '../../components/Author';
-import { selectPostFromCategory, selectRead } from './selectors';
-import { getOnePostBegin } from './actions/getOnePost';
+import { getCommentsFromPostBegin } from '../Comment/actions/getCommentsFromPost';
+import { selectCommentsChild, selectCommentsData, selectCommentsIsLoading } from '../Comment/selectors';
+import { selectCurrentPost, selectCurrentComments } from './selectors';
+import { getOnePostBegin, setCurrentPostId } from './actions/getOnePost';
 import PostTags from './PostTags';
 import PostFooter from './PostFooter';
 import CommentPost from '../Comment/CommentPost';
@@ -20,11 +22,12 @@ class PostRead extends Component {
   static propTypes = {
     location: PropTypes.shape({
       state: PropTypes.shape({
-        category: PropTypes.string,
-        index: PropTypes.number,
+        postId: PropTypes.number,
       }),
     }).isRequired,
     getOnePost: PropTypes.func.isRequired,
+    setCurrentPostId: PropTypes.func.isRequired,
+    getCommentsFromPost: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -34,57 +37,71 @@ class PostRead extends Component {
   };
 
   componentDidMount() {
-    if (isEmpty(this.props.postFromList)) {
-      const { author, permlink } = this.props.match.params;
+    const { post, location: { state }, match: { params : { author, permlink }} } = this.props;
+    if (isEmpty(post)) {
+      // FETCH POST
       this.props.getOnePost(author, permlink);
+    } else if (state && state.postId) {
+      // READING FROM INTERNAL LINK
+      this.props.setCurrentPostId(state.postId);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (isEmpty(nextProps.currentComments) && nextProps.commentsIsLoading === false) {
+      const { match: { params : { topic, author, permlink }}} = nextProps;
+      this.props.getCommentsFromPost(topic, author, permlink);
     }
   }
 
   render() {
-    const { postFromList, read } = this.props;
-    let post = !isEmpty(postFromList) ? postFromList : read;
+    const { post, currentComments, commentsData, commentsChild } = this.props;
 
     return (
-      <div>
+      <div className="single_post_container clearfix">
         {!isEmpty(post) && (
-          <div className="single_post_container clearfix">
-            <div className="PostDetail">
-              <div className="PostDetail__content">
-                <article className="article">
-                  <div className="article__post">
-                    <h1>{post.title}</h1>
-                    <div className="article__post__author">
-                      <AvatarSteemit author={post.author} />
-                      <Author name={post.author} reputation={post.author_reputation} />
-                      <span>in</span>
-                      <Link className="article__post__author__link" to="#">{post.category}</Link>
-                    </div>
-                    <div className="article__content">
-                      <Body post={post} jsonMetadata={post.json_metadata} />
-                    </div>
+          <div className="PostDetail">
+            <div className="PostDetail__content">
+              <article className="article">
+                <div className="article__post">
+                  <h1>{post.title}</h1>
+                  <div className="article__post__author">
+                    <AvatarSteemit name={post.author} />
+                    <Author name={post.author} reputation={post.author_reputation} />
+                    <span>in</span>
+                    <Link className="article__post__author__link" to="#">{post.category}</Link>
                   </div>
-                </article>
-              </div>
-              <div className="PostDetail__large">
-                {post.json_metadata.tags ? <PostTags post={post} /> : <div />}
-                <PostFooter post={post} />
-              </div>
-              <div className="PostDetail__signup">
-                <p>Authors get paid when people like you upvote their post.</p>
-                <p>Join our amazing community to comment and reward others.</p>
-                <Link to="/signup">
-                  <RaisedButton
-                    label="Sign up now to receive FREE STEEM"
-                    primary={true}
-                    labelStyle={{ textTransform: 'initial' }}
-                    buttonStyle={{ background: "#368dd2" }}
-                  >
-                  </RaisedButton>
-                </Link>
-              </div>
-              <div className="PostDetail__large">
-                <CommentPost post={post} />
-              </div>
+                  <div className="article__content">
+                    <Body post={post} jsonMetadata={post.json_metadata} />
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div className="PostDetail__large">
+              {post.json_metadata.tags ? <PostTags post={post} /> : <div />}
+              <PostFooter post={post} />
+            </div>
+            <div className="PostDetail__signup">
+              <p>Authors get paid when people like you upvote their post.</p>
+              <p>Join our amazing community to comment and reward others.</p>
+              <Link to="/signup">
+                <RaisedButton
+                  label="Sign up now to receive FREE STEEM"
+                  primary={true}
+                  labelStyle={{ textTransform: 'initial' }}
+                  buttonStyle={{ background: "#368dd2" }}
+                >
+                </RaisedButton>
+              </Link>
+            </div>
+            <div className="PostDetail__large">
+              {!isEmpty(currentComments) && (
+                <CommentPost
+                  currentComments={currentComments}
+                  commentsData={commentsData}
+                  commentsChild={commentsChild}
+                />
+              )}
             </div>
           </div>
         )}
@@ -93,18 +110,20 @@ class PostRead extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  const { location } = props;
-  const category = location.state && location.state.category ? location.state.category : '';
-  const index = location.state && location.state.index !== undefined ? location.state.index : '';
+const mapStateToProps = () => {
   return createStructuredSelector({
-    postFromList: selectPostFromCategory(category, index),
-    read: selectRead(),
+    post: selectCurrentPost(),
+    commentsData: selectCommentsData(),
+    commentsChild: selectCommentsChild(),
+    currentComments: selectCurrentComments(),
+    commentsIsLoading: selectCommentsIsLoading(),
   });
 };
 
 const mapDispatchToProps = dispatch => ({
   getOnePost: (author, permlink) => dispatch(getOnePostBegin(author, permlink)),
+  setCurrentPostId: id => dispatch(setCurrentPostId(id)),
+  getCommentsFromPost: (category, author, permlink) => dispatch(getCommentsFromPostBegin(category, author, permlink)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostRead);

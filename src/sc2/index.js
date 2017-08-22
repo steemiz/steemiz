@@ -1,5 +1,3 @@
-'use strict';
-
 var fetch = require('isomorphic-fetch');
 
 var sc2 = {

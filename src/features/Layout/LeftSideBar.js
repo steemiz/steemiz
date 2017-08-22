@@ -1,53 +1,66 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { NavLink, withRouter } from 'react-router-dom';
 
-const LeftSidebar = () => {
-  return (
-    <aside id="left_sidebar">
-      <div className="link">
-        <NavLink className="link__inner" activeClassName="active" to="/">
-          <i className="material-icons">view_quilt</i>
-          <span>View Quilt</span>
-        </NavLink>
-      </div>
-      <div className="link">
-        <NavLink className="link__inner" activeClassName="active" to="/users/1/profile">
-          <i className="material-icons">star</i>
-          <span>Star Rate</span>
-        </NavLink>
-      </div>
-      <div className="link">
-        <NavLink className="link__inner" activeClassName="active" to="/1">
-          <i className="material-icons">rss_feed</i>
-          <span>Rss Feed</span>
-        </NavLink>
-      </div>
-      <div className="link">
-        <NavLink className="link__inner" activeClassName="active" to="/1">
+import { selectMe } from '../User/selectors';
+
+class LeftSideBar extends Component {
+  render() {
+    const { me } = this.props;
+    return (
+      <aside id="left_sidebar">
+        <div className="link">
+          <NavLink className="link__inner" activeClassName="active" to="/" exact>
+            <i className="material-icons">view_quilt</i>
+            <span>All post</span>
+          </NavLink>
+        </div>
+        <div className="link">
+          <NavLink className="link__inner" activeClassName="active" to="/feed" exact>
+            <i className="material-icons">star</i>
+            <span>Following Feed</span>
+          </NavLink>
+        </div>
+        <div className="link">
+          <NavLink className="link__inner" activeClassName="active" to="/blog" exact>
+            <i className="material-icons">rss_feed</i>
+            <span>My Blog</span>
+          </NavLink>
+        </div>
+        {/*<div className="link">
+        <NavLink className="link__inner" activeClassName="active" to="/1" exact>
           <i className="material-icons">group_work</i>
-          <span>Group</span>
+          <span>Followed Tags</span>
         </NavLink>
-      </div>
-      <div className="link">
+      </div>*/}
+        {/*<div className="link">
         <NavLink className="link__inner" activeClassName="active" to="/2">
           <i className="material-icons rotate__90">local_offer</i>
           <span>Local offer</span>
         </NavLink>
-      </div>
-      <div className="link link--account">
-        <NavLink className="link__inner" activeClassName="active" to="/3">
-          <i className="material-icons">account_circle</i>
-          <span>Account</span>
-        </NavLink>
-      </div>
-      <div className="link link--setting">
-        <NavLink className="link__inner" activeClassName="active" to="/4">
-          <i className="material-icons">settings</i>
-          <span>Settings</span>
-        </NavLink>
-      </div>
-    </aside>
-  )
-};
+      </div>*/}
+        {me && (
+          <div className="link link--account">
+            <NavLink className="link__inner" activeClassName="active" to={`/@${me}`}>
+              <i className="material-icons">account_circle</i>
+              <span>Profile</span>
+            </NavLink>
+          </div>
+        )}
+        <div className="link link--setting">
+          <NavLink className="link__inner" activeClassName="active" to="/4">
+            <i className="material-icons">settings</i>
+            <span>Settings</span>
+          </NavLink>
+        </div>
+      </aside>
+    );
+  }
+}
 
-export default LeftSidebar;
+const mapStateToProps = createStructuredSelector({
+  me: selectMe(),
+});
+
+export default withRouter(connect(mapStateToProps)(LeftSideBar));

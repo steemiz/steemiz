@@ -19,6 +19,7 @@ import { Editor } from 'react-draft-wysiwyg'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 import { getRegExp } from '../__utilities'
+import GreenButton from '../../components/GreenButton';
 
 const CreatePostComponent = ({
                                stateOpen,
@@ -49,7 +50,7 @@ const CreatePostComponent = ({
   ];
   return (
     <div className="create_post">
-      <button className="btn_default" onClick={handleOpenCreatePost}>Create a Post</button>
+      <GreenButton onClick={handleOpenCreatePost}>Create a Post</GreenButton>
 
       <Dialog
         title="Write a new post"

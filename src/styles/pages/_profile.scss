@@ -3,7 +3,6 @@
 
     // User Informations
     .user {
-        border-radius: 5px;
         overflow: hidden;
         position: relative;
 
@@ -55,21 +54,21 @@
                 font-size: 2.5rem;
                 font-family: 'nunito_sanslight';
                 font-weight: normal;
-                position: relative;
-                display: inline-block;
+                display: flex;
+                align-items: center;
 
                 span {
                     border: 1px solid white;
                     border-radius: 0.5rem;
                     font-size: 0.9rem;
-                    @include position(relative, -7px 0px null null);
                     padding: 0.52rem 0.45rem 0.33rem;
+                    margin-left: .5rem;
                 }
             }
 
             &__position {
                 font-size: 15px;
-                margin: 5px 0 10px;
+                margin: 10px 0;
             }
 
             &__statistics {
@@ -484,7 +483,7 @@
                 margin: 0rem 0rem;
             }
 
-            p.tab__key {
+            .tab__key {
                 float: left;
                 font-family: 'nunito_sanssemibold';
                 color: #d4d4d4;
@@ -496,8 +495,7 @@
                 line-height: 5rem;
 
                 &.active {
-                    color: #a2a2a3;
-                    border-bottom: 1px solid #a2a2a3;
+                    color: #4aa7f4;
                 }
 
                 &:hover {
@@ -548,6 +546,7 @@
                 line-height: 2rem;
                 color: #a2a2a3;
                 padding-left: 1rem;
+                text-transform: capitalize;
             }
 
             .custom_select {
@@ -645,6 +644,11 @@
                         margin: 0rem 0rem;
                         color: #99d570;
                         font-size: 1.3rem;
+
+                        .label {
+                            font-size: 0.8rem;
+                            color: #b9e09f;
+                        }
                     }
                 }
 
@@ -660,12 +664,15 @@
         }
 
         &__body {
-            list-style-type: none;
             padding: 0rem;
             border-top: 1px solid #e6e6e6;
 
             &__row {
                 padding: 1.2rem 1.2rem 1rem 1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
                 h3 {
                     margin: 0;
                 }
@@ -679,8 +686,7 @@
                 }
 
                 .text {
-                    float: left;
-                    width: 60%;
+                    flex-basis: 90%;
                     color: $gray;
 
                     @media screen and (max-width: 400px) {
@@ -700,17 +706,17 @@
                 }
 
                 .number {
-                    width: 10%;
-                    float: right;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    flex-basis: 10%;
 
                     h3 {
-                        float: right;
                         color: #99d570;
                         font-size: 1.3rem;
                     }
 
-                    p {
-                        float: right;
+                    .label {
                         font-size: 0.8rem;
                         color: #b9e09f;
                         margin: 0;

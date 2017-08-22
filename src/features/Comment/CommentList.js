@@ -3,35 +3,44 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
+import InfiniteScroll from 'react-infinite-scroller';
 
-import { selectCommentsDomain, selectCommentsData } from './selectors';
-import CommentItem from './CommentItem';
+import { selectCommentsData } from './selectors';
+import ContentItem from '../../components/ContentItem';
 import { sortCommentsFromSteem } from '../../utils/helpers/stateHelpers';
 
 class CommentList extends Component {
   static propTypes = {
-    account: PropTypes.object.isRequired,
-    comments: PropTypes.object.isRequired,
-    commentsDomain: PropTypes.object.isRequired,
+    commentsList: PropTypes.array.isRequired,
     commentsData: PropTypes.object.isRequired,
+    hasMoreComments: PropTypes.bool.isRequired,
+    loadMore: PropTypes.func.isRequired,
   };
 
   render() {
-    const { comments, commentsDomain, commentsData, account } = this.props;
-    if (isEmpty(comments)) {
+    const { commentsList, commentsData, hasMoreComments, loadMore } = this.props;
+    if (isEmpty(commentsList)) {
       return <div />;
     }
-    const visibleList = sortCommentsFromSteem(comments.list, commentsData).slice(0, 5);
+    //const sortedComments = sortCommentsFromSteem(commentsList, commentsData, 'new');
+    const items = commentsList.map(commentId => (
+      <ContentItem
+        key={commentId}
+        content={commentsData[commentId]}
+        type="comment"
+      />
+    ));
     return (
       <div className="Comment">
-        { visibleList.map(commentId =>
-          <CommentItem
-            key={commentId}
-            comment={commentsData[commentId]}
-            allComments={commentsDomain}
-            vote={this.vote}
-            account={account}
-          />
+        {commentsList.length > 0 && (
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={loadMore}
+            hasMore={hasMoreComments}
+            loader={<div className="loader">Loading ...</div>}
+          >
+            {items}
+          </InfiniteScroll>
         )}
       </div>
     );
@@ -39,8 +48,7 @@ class CommentList extends Component {
 }
 
 const mapStateToProps = (state, props) => createStructuredSelector({
-  commentsDomain: selectCommentsDomain(),
   commentsData: selectCommentsData(),
 });
 
-export default connect(mapStateToProps, null)(CommentList);
+export default connect(mapStateToProps)(CommentList);

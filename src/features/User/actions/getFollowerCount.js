@@ -1,4 +1,5 @@
-import { takeLatest, call, put, select } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import update from 'immutability-helper';
 import steem from 'steem';
 
 /*--------- CONSTANTS ---------*/
@@ -22,19 +23,21 @@ export function getFollowerCountFailure(message) {
 /*--------- REDUCER ---------*/
 export function getFollowerCountReducer(state, action) {
   switch (action.type) {
-    case GET_FOLLOWER_COUNT_SUCCESS:
+    case GET_FOLLOWER_COUNT_SUCCESS: {
       const { accountName, count } = action;
-      return {
-        ...state,
-        accounts: {
-          ...state.accounts,
-          [accountName]: {
-            ...state.accounts[accountName],
-            follower_count: count.follower_count,
-            following_count: count.following_count,
-          }
-        }
-      };
+      return update(state, {
+        followers: {
+          [accountName]: {$auto: {$merge: {
+            count: count.follower_count,
+          }}},
+        },
+        followings: {
+          [accountName]: {$auto: {$merge: {
+            count: count.following_count,
+          }}},
+        },
+      });
+    }
     default:
       return state;
   }
