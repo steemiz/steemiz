@@ -8,7 +8,7 @@ import numeral from 'numeral';
 
 import { selectTransferHistory, selectLastWeekRewardsAuthor, selectLastWeekRewardsCuration } from './selectors';
 import { getTransferHistoryBegin } from './actions/getTransferHistory';
-import asyncComponent from '../../utils/asyncComponent';
+import asyncComponent from 'utils/asyncComponent';
 
 const ProfileRewardsCuration = asyncComponent(() => import('./ProfileRewardsCuration'));
 const ProfileRewardsAuthor = asyncComponent(() => import('./ProfileRewardsAuthor'));

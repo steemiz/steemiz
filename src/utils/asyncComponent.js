@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable';
-import LoadingComponent from '../components/LoadingComponent';
+import LoadingComponent from 'components/LoadingComponent';
 
 export default function asyncComponent(importComponent) {
   return Loadable({

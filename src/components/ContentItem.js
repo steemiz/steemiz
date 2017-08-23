@@ -1,17 +1,21 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import extractDesc from '../utils/helpers/extractDesc';
+import extractDesc from 'utils/helpers/extractDesc';
 import { FormattedRelative } from 'react-intl';
-import ReactMarkdown from 'react-markdown';
+import IconFavorite from 'material-ui/svg-icons/action/favorite';
+import IconSms from 'material-ui/svg-icons/notification/sms';
 
 import Author from './Author';
-import VoteButton from '../features/Vote/VoteButton';
+import VoteButton from 'features/Vote/VoteButton';
 import {
   calculateContentPayout,
   displayContentNbComments,
   formatAmount,
-} from '../utils/helpers/steemitHelpers';
+} from 'utils/helpers/steemitHelpers';
+import { COLOR, COLOR_HOVER, SIZE_SMALL } from 'styles/icons';
+
+const IMG_SERVICE_RESIZER = 'https://steemitimages.com/256x512/';
 
 export default class ContentItem extends PureComponent {
   static propTypes = {
@@ -26,11 +30,19 @@ export default class ContentItem extends PureComponent {
     const payout = calculateContentPayout(content);
     return (
       <div className="post_card">
+        {type === 'post' && (
+          <Link
+            to={{ pathname: content.url, state: { postId: content.id } }}
+            className="post_card__block post_card__block--img"
+            style={{background: `url(${IMG_SERVICE_RESIZER}${content.main_img}) no-repeat #999 center center / cover`}}
+          />
+        )}
         <div className="post_card__block post_card__block--content">
           <Link to={{ pathname: content.url, state: { postId: content.id } }} className="post_card__block">
             <h3>{content.title || content.root_title} ({content.id})</h3>
-            <ReactMarkdown source={extractDesc(content)}
-                           disallowedTypes={['Image', 'Link', 'Heading', 'BlockQuote', 'ThematicBreak', 'List', 'Item']} />
+            <p>
+              {extractDesc(content)}
+            </p>
           </Link>
           <div className="post_card__block post_card__block--info">
             <div className="details">
@@ -39,11 +51,11 @@ export default class ContentItem extends PureComponent {
                 {formatAmount(payout)}
               </div>
               <Link to="/" title="Favorites" className="social_area social_area--like">
-                <i className="material-icons">favorite</i>
+                <IconFavorite color={COLOR} hoverColor={COLOR_HOVER} style={{ width: SIZE_SMALL, margin: '0 0.3rem' }} />
                 <span>{content.net_votes}</span>
               </Link>
               <Link title="Responses" to={{ pathname: content.url, state: { postId: content.id } }} className="social_area social_area--comment">
-                <i className="material-icons">sms</i>
+                <IconSms color={COLOR} hoverColor={COLOR_HOVER} style={{ width: SIZE_SMALL, margin: '0 0.3rem' }} />
                 <span>{displayContentNbComments(content)}</span>
               </Link>
             </div>

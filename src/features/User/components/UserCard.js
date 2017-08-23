@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
-import { formatter } from 'steem';
-import AvatarSteemit from '../../../components/AvatarSteemit';
+import AvatarSteemit from 'components/AvatarSteemit';
 import UserSteemPower from '../UserSteemPower';
 
 
@@ -14,7 +13,7 @@ const UserCard = ({ user }) => {
         <AvatarSteemit name={user.name} size={140} />
       </div>
       {/*<Author name={user.name} reputation={user.reputation}/>*/}
-      <span className="user_profile__rate">{formatter.reputation(user.reputation)}</span>
+      <span className="user_profile__rate">{user.reputation}</span>
       <h3 className="user_profile__name">{user.name}</h3>
       {/*<span className="user_profile__rate">{formatter.reputation(user.reputation)}</span>
       <h3 className="user_profile__name">{user.name}</h3>*/}

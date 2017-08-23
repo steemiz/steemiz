@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import isNumber from 'lodash/isNumber';
 import { FormattedRelative } from 'react-intl';
 
-import { calculatePayout, formatAmount } from "../../utils/helpers/steemitHelpers";
+import { calculatePayout, formatAmount } from "utils/helpers/steemitHelpers";
 
 const AmountWithLabel = ({ label, amount }) => (
   isNumber(amount)

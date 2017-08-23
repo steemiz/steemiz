@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import steemconnect from '../../utils/steemconnect';
+import steemconnect from 'utils/steemconnect';
 
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-import IconButton from 'material-ui/IconButton'
-import Popover from 'material-ui/Popover'
-import Menu from 'material-ui/Menu'
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import Popover from 'material-ui/Popover';
+import IconMenu from 'material-ui/svg-icons/navigation/menu';
+import IconClose from 'material-ui/svg-icons/navigation/close';
+
 
 import { selectMe } from '../User/selectors';
 import { logoutBegin } from '../User/actions/logout';
 
-import logo from '../../styles/assets/imgs/logos/logo.png'
-import CreatePost from '../../components/__common/CreatePost'
-import AvatarSteemit from '../../components/AvatarSteemit';
-import GreenButton from '../../components/GreenButton';
+import logo from 'styles/assets/imgs/logos/logo.png'
+import CreatePost from 'components/__common/CreatePost'
+import AvatarSteemit from 'components/AvatarSteemit';
+import GreenButton from 'components/GreenButton';
 
-import { COUNTRIES } from '../../constants/constants'
+import { COUNTRIES } from 'constants/constants'
+import HeaderMenu from './HeaderMenu';
 
 const countriesItems = Object.keys(COUNTRIES).map(index => (
   <MenuItem
@@ -109,7 +112,7 @@ class Header extends Component {
         {me && (
           <div className="header__collapse__control">
             <IconButton onTouchTap={this.handleControlCollapse}>
-              <i className="material-icons">{collapseOpen ? "close" : "menu"}</i>
+              {collapseOpen ? <IconClose /> : <IconMenu />}
             </IconButton>
           </div>
         )}
@@ -162,43 +165,7 @@ class Header extends Component {
               targetOrigin={{ horizontal: 'left', vertical: 'top' }}
               onRequestClose={this.handleCloseDropdownMenu}
             >
-              <Menu>
-                <MenuItem>
-                  <Link to="#">
-                    <i className="material-icons">notifications</i>Notifications
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="#">
-                    <i className="material-icons">sms</i>Blog
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="/profile">
-                    <i className="material-icons">account_circle</i>My Profile
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="#">
-                    <i className="material-icons">mail_outline</i>Transactions
-                  </Link>
-                </MenuItem>
-                <MenuItem className="divider">
-                  <Link to="#">
-                    <i className="material-icons">settings</i>Settings
-                  </Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link to="#">
-                    <i className="material-icons">question_answer</i>Support
-                  </Link>
-                </MenuItem>
-                <MenuItem className="divider">
-                  <Link to="#" onClick={this.props.logout}>
-                    <i className="material-icons">power_settings_new</i>Sign Out
-                  </Link>
-                </MenuItem>
-              </Menu>
+              <HeaderMenu me={me} logout={this.props.logout} />
             </Popover>
           </div>
         )}

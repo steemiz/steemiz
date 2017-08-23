@@ -6,8 +6,8 @@ import isEmpty from 'lodash/isEmpty';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { selectCommentsData } from './selectors';
-import ContentItem from '../../components/ContentItem';
-import { sortCommentsFromSteem } from '../../utils/helpers/stateHelpers';
+import ContentItem from 'components/ContentItem';
+import CircularProgress from 'components/CircularProgress';
 
 class CommentList extends Component {
   static propTypes = {
@@ -37,7 +37,7 @@ class CommentList extends Component {
             pageStart={0}
             loadMore={loadMore}
             hasMore={hasMoreComments}
-            loader={<div className="loader">Loading ...</div>}
+            loader={<CircularProgress />}
           >
             {items}
           </InfiniteScroll>

@@ -1,9 +1,9 @@
 import { select, put, takeEvery } from 'redux-saga/effects';
 import update from 'immutability-helper';
-import { VOTE_FAILURE, VOTE_OPTIMISTIC } from '../../Vote/actions/vote';
-import { manageContentVote } from '../../Vote/utils';
+import { VOTE_FAILURE, VOTE_OPTIMISTIC } from 'features/Vote/actions/vote';
+import { manageContentVote } from 'features/Vote/utils';
 import format from '../utils/format';
-import { getDiscussionsFromAPI } from '../../../utils/helpers/apiHelpers';
+import { getDiscussionsFromAPI } from 'utils/helpers/apiHelpers';
 import { selectPosts } from '../selectors';
 
 /*--------- CONSTANTS ---------*/

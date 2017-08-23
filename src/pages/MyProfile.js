@@ -4,8 +4,8 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
-import { selectMe } from '../features/User/selectors';
-import Profile from '../features/User/Profile';
+import { selectMe } from 'features/User/selectors';
+import Profile from 'features/User/Profile';
 
 class MyProfile extends Component {
   static propTypes = {

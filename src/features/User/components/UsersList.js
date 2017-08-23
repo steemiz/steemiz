@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import UserCard from './UserCard';
+import CircularProgress from 'components/CircularProgress';
 
 class UsersList extends Component {
   static propTypes = {
@@ -24,13 +25,13 @@ class UsersList extends Component {
       />
     ));
     return (
-      <div className="usercard_container clearfix">
+      <div className="usercard_container">
         {usersList.length > 0 && (
           <InfiniteScroll
             pageStart={0}
             loadMore={loadMore}
             hasMore={hasMore}
-            loader={<div className="loader">Loading ...</div>}
+            loader={<CircularProgress />}
           >
             {items}
           </InfiniteScroll>

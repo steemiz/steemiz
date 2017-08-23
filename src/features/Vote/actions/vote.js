@@ -1,6 +1,6 @@
 import { put, select, takeEvery } from 'redux-saga/effects';
-import steemconnect from '../../../utils/steemconnect';
-import { selectMe } from '../../User/selectors';
+import steemconnect from 'utils/steemconnect';
+import { selectMe } from 'features/User/selectors';
 
 /*--------- CONSTANTS ---------*/
 const VOTE_BEGIN = 'VOTE_BEGIN';

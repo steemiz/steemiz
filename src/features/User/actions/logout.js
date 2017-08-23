@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { getToken, removeToken } from '../../../utils/token';
-import steemconnect from '../../../utils/steemconnect';
+import { getToken, removeToken } from 'utils/token';
+import steemconnect from 'utils/steemconnect';
 
 /*--------- CONSTANTS ---------*/
 const LOGOUT_BEGIN = 'LOGOUT_BEGIN';

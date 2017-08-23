@@ -6,11 +6,11 @@ import isEmpty from 'lodash/isEmpty';
 
 import { selectAppProps, selectIsSidebarOpen } from './selectors';
 import { getAppConfigBegin } from './actions/getAppConfig';
-import '../../custom.css';
+import 'custom.css';
 import Header from './Header';
 import LeftSideBar from './LeftSideBar';
 import RightSideBar from './RightSideBar';
-import Routes from '../../Routes';
+import Routes from 'Routes';
 
 class App extends Component {
 

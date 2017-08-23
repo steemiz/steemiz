@@ -5,11 +5,11 @@ import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import Popover from 'material-ui/Popover';
 
-import { selectMe } from '../features/User/selectors';
-import { getUpvotes, sortVotes } from '../utils/helpers/voteHelpers';
-import Payout from '../features/Comment/Payout';
-import VoteButton from '../features/Vote/VoteButton';
-import { calculateContentPayout, formatAmount, hasVoted } from '../utils/helpers/steemitHelpers';
+import { selectMe } from 'features/User/selectors';
+import { getUpvotes, sortVotes } from 'utils/helpers/voteHelpers';
+import Payout from 'features/Comment/Payout';
+import VoteButton from 'features/Vote/VoteButton';
+import { calculateContentPayout, formatAmount, hasVoted } from 'utils/helpers/steemitHelpers';
 
 class ContentPayoutAndVotes extends Component {
   static propTypes = {

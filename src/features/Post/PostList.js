@@ -10,9 +10,9 @@ import {
   selectCategoryTagHasMore,
   selectPostsIsLoading
 } from './selectors';
-import { selectMe } from '../User/selectors';
 import { getPostsByBegin } from './actions/getPostsBy';
-import PostCard from './PostCard';
+import CircularProgress from 'components/CircularProgress';
+import ContentItem from 'components/ContentItem';
 
 class PostList extends Component {
   static propTypes = {
@@ -23,17 +23,12 @@ class PostList extends Component {
     }).isRequired,
     postsIsLoading: PropTypes.bool.isRequired,
     categoryHasMore: PropTypes.bool.isRequired,
-    me: PropTypes.string.isRequired,
     getPostsBy: PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
-    this.handleChangeTypeShow = this.handleChangeTypeShow.bind(this);
     this.loadPosts = this.loadPosts.bind(this);
-    this.state = {
-      typeShowPostCard: '',
-    };
   }
 
   componentDidMount() {
@@ -42,12 +37,6 @@ class PostList extends Component {
       this.props.getPostsBy(this.props.query);
     }
   }
-
-  handleChangeTypeShow = (event, value) => {
-    this.setState({
-      typeShowPostCard: value,
-    });
-  };
 
   loadPosts() {
     const { query, posts, postsIsLoading, categoryHasMore } = this.props;
@@ -62,51 +51,22 @@ class PostList extends Component {
   }
 
   render() {
-    const { posts, me, categoryHasMore, postsIsLoading } = this.props;
+    const { posts, categoryHasMore, postsIsLoading } = this.props;
     const items = posts.map(post => (
-      <PostCard
+      <ContentItem
         key={post.id}
-        post={post}
-        me={me}
-        styleShow={this.state.typeShowPostCard}
+        content={post}
+        type="post"
       />
     ));
     return (
       <div>
-        {/*<div>
-          <RadioButtonGroup
-            name="typeShow"
-            defaultSelected={this.state.typeShowPostCard}
-            onChange={this.handleChangeTypeShow}
-            className="clearfix"
-            style={{margin: "0 0 1.5rem 0"}}
-          >
-            <RadioButton
-              value="column"
-              label="Type Column"
-              style={{float: "left", width: "auto", "minWidth": "12rem"}}
-              labelStyle={{color: "#999"}}
-            />
-            <RadioButton
-              value="row"
-              label="Type Row"
-              style={{float: "left", width: "auto", "minWidth": "10rem"}}
-              labelStyle={{color: "#999"}}
-            />
-            <RadioButton
-              value=""
-              label="Type Default"
-              style={{float: "left", width: "auto", "minWidth": "12rem"}}
-              labelStyle={{color: "#999"}}
-            />
-          </RadioButtonGroup>
-        </div>*/}
         {posts.length > 0 && (
           <InfiniteScroll
             pageStart={0}
             loadMore={this.loadPosts}
             hasMore={categoryHasMore}
-            loader={<div className="loader">Loading ...</div>}
+            loader={<CircularProgress />}
           >
             {items}
           </InfiniteScroll>
@@ -128,7 +88,6 @@ const mapStateToProps = (state, props) => {
     posts: selectAllPostsFromCategory(category, tag),
     postsIsLoading: selectPostsIsLoading(category, tag),
     categoryHasMore: selectCategoryTagHasMore(category, tag),
-    me: selectMe(),
   })
 };
 

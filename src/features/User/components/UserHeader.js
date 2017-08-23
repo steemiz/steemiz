@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { formatter } from 'steem';
 import isEmpty from 'lodash/isEmpty';
-import background_url from '../../../styles/assets/imgs/bg.jpg';
-import AvatarSteemit from '../../../components/AvatarSteemit';
+import IconSms from 'material-ui/svg-icons/notification/sms';
+import background_url from 'styles/assets/imgs/bg.jpg';
+import AvatarSteemit from 'components/AvatarSteemit';
 import UserSteemPower from '../UserSteemPower';
 import FollowerCount from '../FollowerCount';
+
+const IMG_SERVICE_RESIZER = 'https://steemitimages.com/1920x1080/';
 
 class UserHeader extends PureComponent {
   static propTypes = {
@@ -19,10 +21,10 @@ class UserHeader extends PureComponent {
     }
     const accountName = account.name;
     const { reputation, post_count } = account;
-    const metadata = JSON.parse(account.json_metadata);
+    const metadata = account.json_metadata;
     const about = metadata.profile.about;
     const coverImageData = metadata.profile.cover_image;
-    const coverImage = coverImageData ? `https://steemitimages.com/1920x1080/${coverImageData}` : background_url;
+    const coverImage = coverImageData ? `${IMG_SERVICE_RESIZER}${coverImageData}` : background_url;
     return (
       <div className="user"
            style={{ background: `url(${coverImage}) transparent no-repeat center center/cover` }}>
@@ -34,7 +36,7 @@ class UserHeader extends PureComponent {
           <div className="user__info">
             <h2 className="user__info__name">
               {accountName}
-              <span>{formatter.reputation(reputation)}</span>
+              <span>{reputation}</span>
             </h2>
             <p className="user__info__position">{about}</p>
             <div className="user__info__statistics">
@@ -56,7 +58,7 @@ class UserHeader extends PureComponent {
               </div>
               <div className="statistic statistic--buttons">
                 <button className="statistic--buttons__message">
-                  <i className="material-icons">sms</i>
+                  <IconSms color="#ffffff" />
                 </button>
                 <button className="btn_default" onClick={this.handleFollow}>Follow</button>
               </div>

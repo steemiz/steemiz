@@ -6,9 +6,9 @@ import isEmpty from 'lodash/isEmpty';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import Body from '../../components/Body';
-import AvatarSteemit from '../../components/AvatarSteemit';
-import Author from '../../components/Author';
+import Body from 'components/Body';
+import AvatarSteemit from 'components/AvatarSteemit';
+import Author from 'components/Author';
 import { getCommentsFromPostBegin } from '../Comment/actions/getCommentsFromPost';
 import { selectCommentsChild, selectCommentsData, selectCommentsIsLoading } from '../Comment/selectors';
 import { selectCurrentPost, selectCurrentComments } from './selectors';

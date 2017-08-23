@@ -1,9 +1,10 @@
 import React from 'react';
+import CircularProgress from './CircularProgress';
 
 const LoadingComponent = ({isLoading, error}) => {
   // Handle the loading state
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CircularProgress />;
   }
   // Handle the error state
   else if (error) {

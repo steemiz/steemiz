@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { FormattedRelative } from 'react-intl';
-import Body from '../../components/Body';
-import { sortCommentsFromSteem } from '../../utils/helpers/stateHelpers';
-import ContentPayoutAndVotes from '../../components/ContentPayoutAndVotes';
-import AvatarSteemit from '../../components/AvatarSteemit';
-import Author from '../../components/Author';
+import Body from 'components/Body';
+import { sortCommentsFromSteem } from 'utils/helpers/stateHelpers';
+import ContentPayoutAndVotes from 'components/ContentPayoutAndVotes';
+import AvatarSteemit from 'components/AvatarSteemit';
+import Author from 'components/Author';
 
 class CommentItem extends Component {
   constructor(props) {

@@ -19,7 +19,7 @@ import { Editor } from 'react-draft-wysiwyg'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 import { getRegExp } from '../__utilities'
-import GreenButton from '../../components/GreenButton';
+import GreenButton from 'components/GreenButton';
 
 const CreatePostComponent = ({
                                stateOpen,

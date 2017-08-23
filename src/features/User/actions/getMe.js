@@ -1,7 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import update from 'immutability-helper';
-import { removeToken, setToken } from '../../../utils/token';
-import steemconnect from '../../../utils/steemconnect';
+import { removeToken, setToken } from 'utils/token';
+import steemconnect from 'utils/steemconnect';
+import format from '../utils/format';
 
 /*--------- CONSTANTS ---------*/
 const GET_ME_BEGIN = 'GET_ME_BEGIN';
@@ -43,7 +44,10 @@ function* getMe({ token }) {
   steemconnect.setAccessToken(token);
   try {
     const me = yield call(steemconnect.me);
-    yield put(getMeSuccess(me));
+    yield put(getMeSuccess({
+      ...me,
+      account: format(me.account),
+    }));
     setToken(token);
   } catch(e) {
     removeToken();

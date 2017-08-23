@@ -4,7 +4,7 @@ import update from 'immutability-helper';
 import isEmpty from 'lodash/isEmpty';
 import { selectLastObjectRepliesToUser } from '../selectors';
 import { getRootCommentsList, mapCommentsBasedOnId } from '../utils/comments';
-import { sortCommentsFromSteem } from '../../../utils/helpers/stateHelpers';
+import { sortCommentsFromSteem } from 'utils/helpers/stateHelpers';
 
 /*--------- CONSTANTS ---------*/
 const GET_REPLIES_TO_USER_BEGIN = 'GET_REPLIES_TO_USER_BEGIN';

@@ -13,7 +13,7 @@ import { selectCommentById } from '../Comment/selectors';
 import { voteBegin } from './actions/vote';
 import {
   hasVoted
-} from '../../utils/helpers/steemitHelpers';
+} from 'utils/helpers/steemitHelpers';
 
 class VoteButton extends Component {
   static propTypes = {

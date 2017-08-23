@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import { Tab } from 'material-ui/Tabs';
-import CustomTabs from '../../components/CustomTabs';
+import IconDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import IconLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import IconRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
+import CustomTabs from 'components/CustomTabs';
 import FollowersList from '../User/FollowersList';
 import FollowingsList from '../User/FollowingsList';
 import { selectIsSidebarOpen, selectTrendingTags } from './selectors';
@@ -70,7 +73,7 @@ class RightSideBar extends Component {
                 )}
               </div>
               <button className="btn__show_more" onClick={this.toggleAllTags}>
-                <i className="material-icons">keyboard_arrow_down</i>
+                <IconDown color={colorInactive} hoverColor={colorActive} />
               </button>
             </div>
           </Tab>
@@ -108,7 +111,7 @@ class RightSideBar extends Component {
           </Tab>
         </CustomTabs>
         <button className="btn_toggle_sidebar" onClick={this.props.toggleSidebar}>
-          <i className="material-icons">{isSidebarOpen ? "keyboard_arrow_right" : "keyboard_arrow_left"}</i>
+          {isSidebarOpen ? <IconRight color={colorInactive} hoverColor={colorActive} /> : <IconLeft color={colorInactive} hoverColor={colorActive} />}
         </button>
       </aside>
     );

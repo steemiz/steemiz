@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
 import update from 'immutability-helper';
+import format from '../utils/format';
 
 /*--------- CONSTANTS ---------*/
 const GET_ACCOUNTS_BEGIN = 'GET_ACCOUNTS_BEGIN';
@@ -43,7 +44,7 @@ function* getAccounts({ accounts }) {
   try {
     const res = yield call(() => new Promise(resolve => resolve(steem.api.getAccountsAsync(accounts))));
     const profiles = res.reduce((profiles, account) => {
-      profiles[account.name] = account;
+      profiles[account.name] = format(account);
       return profiles;
     }, {});
     yield put(getAccountsSuccess(profiles));

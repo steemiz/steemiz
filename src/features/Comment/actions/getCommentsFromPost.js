@@ -2,7 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
 import update from 'immutability-helper';
 import { getRootCommentsList, mapCommentsBasedOnId } from '../utils/comments';
-import { sortCommentsFromSteem } from '../../../utils/helpers/stateHelpers';
+import { sortCommentsFromSteem } from 'utils/helpers/stateHelpers';
 
 /*--------- CONSTANTS ---------*/
 const GET_COMMENTS_FROM_POST_BEGIN = 'GET_COMMENTS_FROM_POST_BEGIN';

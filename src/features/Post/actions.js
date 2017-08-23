@@ -1,4 +1,4 @@
-import combine from '../../utils/combine';
+import combine from 'utils/combine';
 /*
  * EXPORTING REDUCERS and SAGAS
  */

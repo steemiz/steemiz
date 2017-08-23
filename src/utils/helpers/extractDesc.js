@@ -2,6 +2,7 @@ import remarkableStripper from './RemarkableStripper';
 import sanitize from 'sanitize-html';
 import { htmlDecode } from './Html';
 
+// FROM STEEMIT CONDENSER
 export default function extractDesc(content) {
   let desc;
 

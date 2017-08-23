@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import PostList from '../features/Post/PostList';
+import PostList from 'features/Post/PostList';
 
 export default class Feed extends PureComponent {
   render() {
