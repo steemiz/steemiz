@@ -15,8 +15,7 @@ import TextField from 'material-ui/TextField'
 import draftToHtml from 'draftjs-to-html'
 import { convertToRaw, EditorState } from 'draft-js'
 
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+import TagsInput from 'components/TagsInput';
 
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -35,6 +34,7 @@ class PostCreate extends Component {
       dialogOpen: false,
       editorState: EditorState.createEmpty(),
       dataTag: '',
+      tags: [],
     }
   }
 
@@ -60,16 +60,8 @@ class PostCreate extends Component {
     });
   };
 
-  handleChangeSelectTag = (tagSelected) => {
-    console.log(tagSelected);
-    console.log(tagSelected.length);
-
-    let maxSelectedOptions = 5;
-    if (tagSelected.length <= maxSelectedOptions) {
-      this.setState(state => {
-        state.dataTag = tagSelected
-      })
-    }
+  handleChangeSelectTag = tags => {
+    this.setState({tags});
   };
 
   render() {
@@ -129,14 +121,7 @@ class PostCreate extends Component {
               <MenuItem value={1} key={1} primaryText="50/50" />
               <MenuItem value={2} key={2} primaryText="49/50" />
             </SelectField>
-
-            <p className="tag_label">Add a maximum of 5 tags</p>
-            <Select
-              name="tag"
-              multi
-              onChange={this.handleChangeSelectTag}
-              placeholder="Tags..."
-            />
+            <TagsInput value={this.state.tags} onChange={this.handleChangeSelectTag} />
 
             <div className="real_time_preview">
               <h2>Real Time Preview</h2>

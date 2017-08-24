@@ -95,7 +95,7 @@ input:hover, input:active, input:focus, select:hover, select:active, select:focu
 
 #app_content {
   background: #f8f8fb;
-  padding: 6rem 0 0 5.5rem;
+  padding: 4.2rem 0 0 5.5rem;
   transition: 0.4s ease; }
   #app_content.sidebar_open {
     padding-right: 22rem; }
@@ -1055,9 +1055,9 @@ input:-webkit-autofill {
   background-image: url(styles/assets/imgs/icons/flags/zimbabwe.png) !important; }
 
 .header {
-  min-height: 6rem;
+  min-height: 4.2rem;
   background: #fcfcfd;
-  padding: 1rem 1.5rem;
+  padding: .3rem 1.5rem;
   position: fixed;
   top: 0rem;
   right: 0rem;
@@ -1120,6 +1120,7 @@ input:-webkit-autofill {
     color: #999;
     padding: 0.5rem 2.5rem 0.5rem 0.5rem;
     border: 0;
+    font-size: 15px;
     background: url(styles/assets/imgs/icons/arrow_down.png) transparent no-repeat calc(100% - 15px) center/12px; }
     @media screen and (min-width: 1600px) {
       .header__group__username {
@@ -1147,7 +1148,7 @@ input:-webkit-autofill {
   .header__collapse {
     display: flex;
     align-items: center;
-    margin-top: 7px;
+    margin-top: 4px;
     overflow: visible;
     float: right;
     max-width: 45rem; }
@@ -1285,7 +1286,7 @@ input:-webkit-autofill {
   flex-direction: column;
   justify-content: space-between;
   position: fixed;
-  top: 6rem;
+  top: 4.2rem;
   bottom: 0rem;
   left: 0rem;
   width: 5.5rem;
@@ -1326,7 +1327,7 @@ input:-webkit-autofill {
 
 #right_sidebar {
   position: fixed;
-  top: 6rem;
+  top: 4.2rem;
   right: -100%;
   bottom: 0rem;
   width: 22rem;
@@ -3287,6 +3288,21 @@ input:-webkit-autofill {
 
 .profile_container {
   padding: 0.71rem 1.42rem 1.5rem 0rem; }
+  .profile_container .content {
+    overflow: hidden; }
+  .profile_container .avatar_progress {
+    background-color: transparent;
+    box-shadow: inset 0px 0px 0px 2px rgba(230, 230, 230, 0.6); }
+    .profile_container .avatar_progress .inset {
+      background: transparent; }
+    .profile_container .avatar_progress .circle .mask .fill {
+      background-color: transparent;
+      border: 2px solid #4aa7f4; }
+    .profile_container .avatar_progress .avatar {
+      height: 134px;
+      width: 134px;
+      margin-left: 6px;
+      margin-top: 6px; }
   .profile_container .user {
     overflow: hidden;
     position: relative; }
@@ -3309,19 +3325,6 @@ input:-webkit-autofill {
     .profile_container .user__containner {
       float: left;
       padding-right: 2.2rem; }
-      .profile_container .user__containner .avatar_progress {
-        background-color: transparent;
-        box-shadow: inset 0px 0px 0px 2px rgba(230, 230, 230, 0.6); }
-        .profile_container .user__containner .avatar_progress .inset {
-          background: transparent; }
-        .profile_container .user__containner .avatar_progress .circle .mask .fill {
-          background-color: transparent;
-          border: 2px solid #4aa7f4; }
-        .profile_container .user__containner .avatar_progress .avatar {
-          height: 134px;
-          width: 134px;
-          margin-left: 6px;
-          margin-top: 6px; }
     .profile_container .user__info {
       float: left;
       color: white; }

@@ -1,7 +1,7 @@
 .header {
   min-height: $height_header;
   background: $bg_header;
-  padding: 1rem 1.5rem;
+  padding: .3rem 1.5rem;
   @include position(fixed, $body_gap $body_gap null $body_gap);
   border-radius: $app_radius $app_radius 0 0;
   z-index: $index_header;
@@ -92,6 +92,7 @@
     color: #999;
     padding: 0.5rem 2.5rem 0.5rem 0.5rem;
     border: 0;
+    font-size: 15px;
     background: url(styles/assets/imgs/icons/arrow_down.png) transparent no-repeat calc(100% - 15px) center/12px;
     @media screen and (min-width: 1600px) {
       max-width: 18rem;
@@ -133,7 +134,7 @@
   &__collapse {
     display: flex;
     align-items: center;
-    margin-top: 7px;
+    margin-top: 4px;
     overflow: visible;
     float: right;
     max-width: 45rem;

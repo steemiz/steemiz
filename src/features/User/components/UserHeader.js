@@ -24,14 +24,14 @@ class UserHeader extends PureComponent {
     const metadata = account.json_metadata;
     const about = metadata.profile.about;
     const coverImageData = metadata.profile.cover_image;
-    const coverImage = coverImageData ? `${IMG_SERVICE_RESIZER}${coverImageData}` : background_url;
+    const coverImage = coverImageData ? `${process.env.REACT_APP_STEEMCONNECT_IMG_HOST}/@${accountName}/cover` : background_url;
     return (
       <div className="user"
            style={{ background: `url(${coverImage}) transparent no-repeat center center/cover` }}>
         <div className="user__overlay" />
         <div className="user__wrapper">
           <div className="user__containner">
-            <AvatarSteemit name={accountName} size={146} />
+            <AvatarSteemit name={accountName} size={140} votingPower={account.voting_power} />
           </div>
           <div className="user__info">
             <h2 className="user__info__name">

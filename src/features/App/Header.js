@@ -11,11 +11,10 @@ import Popover from 'material-ui/Popover';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconClose from 'material-ui/svg-icons/navigation/close';
 
-import { selectMe } from '../User/selectors';
+import { selectMe, selectMyAccount } from '../User/selectors';
 import { logoutBegin } from '../User/actions/logout';
 
 import logo from 'styles/assets/imgs/logos/logo.png'
-import CreatePost from 'components/__common/CreatePost';
 import PostCreate from 'features/Post/PostCreate';
 import AvatarSteemit from 'components/AvatarSteemit';
 import GreenButton from 'components/GreenButton';
@@ -37,6 +36,7 @@ const countriesItems = Object.keys(COUNTRIES).map(index => (
 class Header extends Component {
   static propTypes = {
     me: PropTypes.string.isRequired,
+    myAccount: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
   };
 
@@ -99,7 +99,7 @@ class Header extends Component {
   };
 
   render() {
-    const { me } = this.props;
+    const { me, myAccount } = this.props;
     const { filter, dropdownMenu, collapseOpen } = this.state;
     return (
       <header className="header clearfix">
@@ -154,7 +154,7 @@ class Header extends Component {
               {me}
             </button>
             <div>
-              <AvatarSteemit name={me} />
+              <AvatarSteemit name={me} size={48} votingPower={myAccount.voting_power} />
             </div>
             <Popover
               className="header__group__dropdownmenu"
@@ -169,10 +169,12 @@ class Header extends Component {
           </div>
         )}
         {!me && (
-          <div className="connect">
-            <a href={steemconnect.getLoginURL()}>
-              <GreenButton>Connect</GreenButton>
-            </a>
+          <div>
+            <div className="connect">
+              <a href={steemconnect.getLoginURL()}>
+                <GreenButton>Connect</GreenButton>
+              </a>
+            </div>
           </div>
         )}
       </header>
@@ -182,6 +184,7 @@ class Header extends Component {
 
 const mapStateToProps = createStructuredSelector({
   me: selectMe(),
+  myAccount: selectMyAccount(),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

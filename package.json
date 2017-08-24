@@ -28,6 +28,7 @@
     "react-router-redux": "next",
     "react-scripts": "1.0.10",
     "react-select": "^1.0.0-rc.5",
+    "react-tagsinput": "^3.17.0",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.7.2",
     "redux-saga": "^0.15.4",

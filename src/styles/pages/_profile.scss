@@ -1,6 +1,32 @@
 .profile_container {
     padding: 0.71rem 1.42rem 1.5rem 0rem;
 
+    .content {
+        overflow: hidden;
+    }
+
+    .avatar_progress {
+        background-color: transparent;
+        box-shadow: inset 0px 0px 0px 2px rgba(230, 230, 230, 0.6);
+        .inset {
+            background: transparent;
+        }
+        .circle {
+            .mask {
+                .fill {
+                    background-color: transparent;
+                    border: 2px solid $blue;
+                }
+            }
+        }
+        .avatar {
+            height: 134px;
+            width: 134px;
+            margin-left: 6px;
+            margin-top: 6px;
+        }
+    }
+
     // User Informations
     .user {
         overflow: hidden;
@@ -21,28 +47,6 @@
         &__containner {
             float: left;
             padding-right: 2.2rem;
-            
-            .avatar_progress {
-                background-color: transparent;
-                box-shadow: inset 0px 0px 0px 2px rgba(230, 230, 230, 0.6);
-                .inset {
-                    background: transparent;
-                }
-                .circle {
-                    .mask {
-                        .fill {
-                            background-color: transparent;
-                            border: 2px solid $blue;
-                        }
-                    }
-                }
-                .avatar {
-                    height: 134px;
-                    width: 134px;
-                    margin-left: 6px;
-                    margin-top: 6px;
-                }
-            }
         }
 
         &__info {

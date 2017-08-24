@@ -30,11 +30,11 @@ export default class ContentItem extends PureComponent {
     const payout = calculateContentPayout(content);
     return (
       <div className="post_card">
-        {type === 'post' && (
+        {type === 'post' && content.main_img && (
           <Link
             to={{ pathname: content.url, state: { postId: content.id } }}
             className="post_card__block post_card__block--img"
-            style={{background: `url(${IMG_SERVICE_RESIZER}${content.main_img}) no-repeat #999 center center / cover`}}
+            style={{background: `url(${IMG_SERVICE_RESIZER}${content.main_img}) no-repeat #eee center center / cover`}}
           />
         )}
         <div className="post_card__block post_card__block--content">

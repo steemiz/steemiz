@@ -11,7 +11,7 @@ const UserContact = ({ account }) => {
   const profile = account.json_metadata.profile;
   return (
     <Link to={`/@${name}`} className="user_contact" data-show="false">
-      <AvatarSteemit name={name} />
+      <AvatarSteemit name={name} votingPower={account.voting_power} />
       <div className="user_contact__data">
         {/*<Author name={name} reputation={reputation}/>*/}
         <div className="user_contact__data">

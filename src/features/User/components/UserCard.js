@@ -10,7 +10,7 @@ const UserCard = ({ user }) => {
     <div className="user_profile">
       <button className="user_profile__delete">×</button>
       <div className="user_profile__avatar">
-        <AvatarSteemit name={user.name} size={140} />
+        <AvatarSteemit name={user.name} size={140} votingPower={user.voting_power} />
       </div>
       {/*<Author name={user.name} reputation={user.reputation}/>*/}
       <span className="user_profile__rate">{user.reputation}</span>
