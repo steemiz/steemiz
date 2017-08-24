@@ -4,6 +4,7 @@ import combine from 'utils/combine';
  */
 import getPostsBy, { getPostsByReducer } from './actions/getPostsBy';
 import getOnePost, { getOnePostReducer } from './actions/getOnePost';
+import uploadFile, { uploadFileReducer } from './actions/uploadFile';
 
 /*export const reducer = combineReducers({
   read: getOnePostReducer,
@@ -22,7 +23,7 @@ const initialState = {
 };
 
 export const reducer = (state = initialState, action) => combine(
-  [ getPostsByReducer, getOnePostReducer ],
+  [ getPostsByReducer, getOnePostReducer, uploadFileReducer ],
   state,
   action,
 );
@@ -31,4 +32,5 @@ export const reducer = (state = initialState, action) => combine(
 export default [
   getPostsBy,
   getOnePost,
+  uploadFile,
 ];

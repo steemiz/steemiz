@@ -16,7 +16,7 @@
     "query-string": "^4.3.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-draft-wysiwyg": "^1.10.7",
+    "react-draft-wysiwyg": "^1.10.8",
     "react-icons": "^2.2.5",
     "react-infinite-scroller": "^1.0.15",
     "react-intl": "^2.3.0",

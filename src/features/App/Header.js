@@ -4,7 +4,6 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import steemconnect from 'utils/steemconnect';
-
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
@@ -12,12 +11,12 @@ import Popover from 'material-ui/Popover';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconClose from 'material-ui/svg-icons/navigation/close';
 
-
 import { selectMe } from '../User/selectors';
 import { logoutBegin } from '../User/actions/logout';
 
 import logo from 'styles/assets/imgs/logos/logo.png'
-import CreatePost from 'components/__common/CreatePost'
+import CreatePost from 'components/__common/CreatePost';
+import PostCreate from 'features/Post/PostCreate';
 import AvatarSteemit from 'components/AvatarSteemit';
 import GreenButton from 'components/GreenButton';
 
@@ -149,7 +148,7 @@ class Header extends Component {
             >
               {countriesItems}
             </SelectField>
-            <CreatePost />
+            <PostCreate />
             <button className="header__group__username"
                     onTouchTap={this.handleShowDropdownMenu}>
               {me}

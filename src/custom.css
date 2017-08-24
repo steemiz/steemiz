@@ -2943,6 +2943,12 @@ input:-webkit-autofill {
   border: 1px solid #f1f1f1;
   padding: 0 10px; }
 
+.wysiwyg img {
+  max-width: 100%; }
+
+.real_time_preview img {
+  max-width: 100%; }
+
 .rdw-dropdown-selectedtext {
   color: #333; }
 

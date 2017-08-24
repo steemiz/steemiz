@@ -43,7 +43,7 @@ const CreatePostComponent = ({
       onTouchTap={handleCloseCreatePost}
     />,
     <RaisedButton
-      label="I want to add my post"
+      label="Post"
       primary={true}
       onTouchTap={handleCreatePost}
     />,

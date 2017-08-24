@@ -2060,9 +2060,9 @@ draftjs-to-html@^0.7.4:
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/draftjs-to-html/-/draftjs-to-html-0.7.4.tgz#6932b2ebae5c74bd70bc996f2b51d04f4688a48b"
 
-draftjs-utils@^0.8.03:
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/draftjs-utils/-/draftjs-utils-0.8.4.tgz#b8d6500d71a7b33fcc690c67afa8f3f8c12ff503"
+draftjs-utils@^0.8.06:
+  version "0.8.6"
+  resolved "https://registry.yarnpkg.com/draftjs-utils/-/draftjs-utils-0.8.6.tgz#0c4d9c38508d6ffe492a24687e2b5e4286e01bff"
 
 duplexer2@^0.1.4:
   version "0.1.4"
@@ -5336,12 +5336,12 @@ react-dom@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-draft-wysiwyg@^1.10.7:
-  version "1.10.7"
-  resolved "https://registry.yarnpkg.com/react-draft-wysiwyg/-/react-draft-wysiwyg-1.10.7.tgz#4c9acf9515b125af6b0bfaa22d7b92800d22a418"
+react-draft-wysiwyg@^1.10.8:
+  version "1.10.8"
+  resolved "https://registry.yarnpkg.com/react-draft-wysiwyg/-/react-draft-wysiwyg-1.10.8.tgz#4076eb9a591a78af2280485c21960d606e209091"
   dependencies:
     classnames "^2.2.5"
-    draftjs-utils "^0.8.03"
+    draftjs-utils "^0.8.06"
     prop-types "^15.5.10"
 
 react-error-overlay@^1.0.9:

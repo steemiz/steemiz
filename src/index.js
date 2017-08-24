@@ -9,7 +9,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import './utils/helpers/immutabilityHelpers';
 
 import store, { history } from './store';
-import './index.css';
 import App from './features/App/App';
 import registerServiceWorker from './registerServiceWorker';
 
