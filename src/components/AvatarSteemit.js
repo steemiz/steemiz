@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Avatar from 'material-ui/Avatar';
 
 const AvatarSteemit = ({ name, size, votingPower }) => {
-  const percentVotingPower = votingPower ? parseInt(votingPower / 100) : 0;
+  const percentVotingPower = votingPower ? parseInt(votingPower / 100, 10) : 0;
   return (
     <div className="avatar_progress" data-progress={percentVotingPower} data-size={`${size}px`}>
       <div className="circle">

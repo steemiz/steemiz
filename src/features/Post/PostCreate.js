@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-/*import { selectUser } from './selectors';*/
+import { selectPublishFormOpen, selectIsPublishing } from './selectors';
 
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
-
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -16,38 +15,49 @@ import draftToHtml from 'draftjs-to-html'
 import { convertToRaw, EditorState } from 'draft-js'
 
 import TagsInput from 'components/TagsInput';
+import CircularProgress from 'components/CircularProgress';
 
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import GreenButton from 'components/GreenButton';
 import { uploadFileBegin } from './actions/uploadFile';
+import { publishContentBegin, togglePublishForm } from './actions/publishContent';
 
 class PostCreate extends Component {
   static propTypes = {
-    //myProp: PropTypes.string.isRequired
+    publishContent: PropTypes.func.isRequired,
+    uploadFile: PropTypes.func.isRequired,
+    togglePublishForm: PropTypes.func.isRequired,
+    publishFormOpen: PropTypes.bool.isRequired,
+    isPublishing: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      dialogOpen: false,
+      title: '',
       editorState: EditorState.createEmpty(),
-      dataTag: '',
       tags: [],
     }
   }
 
-  handleCloseCreatePost = () => {
-    this.setState({ dialogOpen: false })
+  toggleForm = () => {
+    this.props.togglePublishForm();
   };
 
-  handleOpenCreatePost = () => {
-    this.setState({ dialogOpen: true })
+  handleTitle = (evt) => {
+    this.setState({ title: evt.target.value });
   };
 
   handleCreatePost = () => {
-
+    //console.log(this.state);
+    const { title, editorState, tags } = this.state;
+    this.props.publishContent({
+      title: title,
+      editorRaw: convertToRaw(editorState.getCurrentContent()),
+      tags: tags,
+    });
   };
 
   handleEditorStateChange = editorState => {
@@ -65,30 +75,34 @@ class PostCreate extends Component {
   };
 
   render() {
-    const { dialogOpen, editorState } = this.state;
+    const { publishFormOpen, isPublishing } = this.props;
+    const { editorState, title } = this.state;
+    const progress = isPublishing ? <CircularProgress size={20} thickness={3} /> : <div/>;
     const actions = [
+      progress,
       <FlatButton
-        label="Cancel"
+        label="Close"
         primary={true}
-        onTouchTap={this.handleCloseCreatePost}
+        onTouchTap={this.toggleForm}
       />,
       <RaisedButton
         label="Post"
         primary={true}
         onTouchTap={this.handleCreatePost}
+        disabled={isPublishing}
       />,
     ];
     return (
       <div className="create_post">
-        <GreenButton onClick={this.handleOpenCreatePost}>Create a Post</GreenButton>
+        <GreenButton onClick={this.toggleForm}>Create a Post</GreenButton>
 
         <Dialog
           className="wysiwyg"
           title="Write a new post"
           actions={actions}
           modal={false}
-          open={dialogOpen}
-          onRequestClose={this.handleCloseCreatePost}
+          open={publishFormOpen}
+          onRequestClose={this.toggleForm}
           contentStyle={{ width: '90%', height: '90%', maxWidth: 'none' }}
           titleStyle={{ padding: '15px 24px 15px' }}
           autoScrollBodyContent={true}
@@ -96,9 +110,11 @@ class PostCreate extends Component {
           <div className="create_post__body">
             <TextField
               className="input__group"
+              onChange={this.handleTitle}
               /*errorText={formError.title || null}*/
               floatingLabelText="Title"
               name="title"
+              value={title}
               /*ref={ref => {
                 formData.InputTitle = ref
               }}*/
@@ -124,7 +140,7 @@ class PostCreate extends Component {
             <TagsInput value={this.state.tags} onChange={this.handleChangeSelectTag} />
 
             <div className="real_time_preview">
-              <h2>Real Time Preview</h2>
+              <h3>Preview</h3>
               <div
                 dangerouslySetInnerHTML={{ __html: editorState && draftToHtml(convertToRaw(editorState.getCurrentContent())) }}
               />
@@ -136,12 +152,15 @@ class PostCreate extends Component {
   }
 }
 
-/*const mapStateToProps = (state, props) => createStructuredSelector({
-  user: selectUser(),
-});*/
+const mapStateToProps = (state, props) => createStructuredSelector({
+  publishFormOpen: selectPublishFormOpen(),
+  isPublishing: selectIsPublishing(),
+});
 
 const mapDispatchToProps = dispatch => ({
   uploadFile: (promise, file) => dispatch(uploadFileBegin(promise, file)),
+  publishContent: content => dispatch(publishContentBegin(content)),
+  togglePublishForm: () => dispatch(togglePublishForm()),
 });
 
-export default connect(null, mapDispatchToProps)(PostCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(PostCreate);

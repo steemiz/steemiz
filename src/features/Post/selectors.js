@@ -6,6 +6,15 @@ const selectPostDomain = () => state => state.post;
 /**
  * Other specific selectors
  */
+export const selectPublishFormOpen = () => createSelector(
+  selectPostDomain(),
+  state => state.publishFormOpen,
+);
+
+export const selectIsPublishing = () => createSelector(
+  selectPostDomain(),
+  state => state.isPublishing,
+);
 
 export const selectPosts = () => createSelector(
   selectPostDomain(),

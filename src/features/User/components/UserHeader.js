@@ -7,8 +7,6 @@ import AvatarSteemit from 'components/AvatarSteemit';
 import UserSteemPower from '../UserSteemPower';
 import FollowerCount from '../FollowerCount';
 
-const IMG_SERVICE_RESIZER = 'https://steemitimages.com/1920x1080/';
-
 class UserHeader extends PureComponent {
   static propTypes = {
     account: PropTypes.object.isRequired,
@@ -22,8 +20,8 @@ class UserHeader extends PureComponent {
     const accountName = account.name;
     const { reputation, post_count } = account;
     const metadata = account.json_metadata;
-    const about = metadata.profile.about;
-    const coverImageData = metadata.profile.cover_image;
+    const about = metadata.profile && metadata.profile.about;
+    const coverImageData = metadata.profile && metadata.profile.cover_image;
     const coverImage = coverImageData ? `${process.env.REACT_APP_STEEMCONNECT_IMG_HOST}/@${accountName}/cover` : background_url;
     return (
       <div className="user"

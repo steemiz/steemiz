@@ -5,11 +5,7 @@ import combine from 'utils/combine';
 import getPostsBy, { getPostsByReducer } from './actions/getPostsBy';
 import getOnePost, { getOnePostReducer } from './actions/getOnePost';
 import uploadFile, { uploadFileReducer } from './actions/uploadFile';
-
-/*export const reducer = combineReducers({
-  read: getOnePostReducer,
-  categories: getPostsByReducer,
-});*/
+import publishContent, { publishContentReducer } from './actions/publishContent';
 
 const initialState = {
   posts: {},
@@ -19,11 +15,13 @@ const initialState = {
     feed: {},
     blog: {},
     trending: {},
-  }
+  },
+  publishFormOpen: false,
+  isPublishing: false,
 };
 
 export const reducer = (state = initialState, action) => combine(
-  [ getPostsByReducer, getOnePostReducer, uploadFileReducer ],
+  [ getPostsByReducer, getOnePostReducer, uploadFileReducer, publishContentReducer ],
   state,
   action,
 );
@@ -33,4 +31,5 @@ export default [
   getPostsBy,
   getOnePost,
   uploadFile,
+  publishContent,
 ];

@@ -10,6 +10,7 @@ import 'custom.css';
 import Header from './Header';
 import LeftSideBar from './LeftSideBar';
 import RightSideBar from './RightSideBar';
+import Notification from 'features/Notification';
 import Routes from 'Routes';
 
 class App extends Component {
@@ -32,6 +33,7 @@ class App extends Component {
             <Routes />
           </div>
         </div>
+        <Notification />
       </div>
     );
   }
