@@ -84,7 +84,7 @@ export const selectLastObjectRepliesToUser = name => createSelector(
 
 export const selectHasMoreRepliesToUser = name => createSelector(
   selectRepliesToUser(name),
-  state => state.hasMore || true,
+  state => state.hasMore || false,
 );
 
 export const selectIsLoadingRepliesToUser = name => createSelector(

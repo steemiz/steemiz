@@ -9,7 +9,6 @@ import asyncComponent from './utils/asyncComponent';
 import { getToken } from './utils/token';
 import { getMeBegin } from './features/User/actions/getMe';
 import { selectMe } from './features/User/selectors';
-import isEmpty from 'lodash/isEmpty';
 
 const Home = asyncComponent(() => import('./pages/Home'));
 const MyFeed = asyncComponent(() => import('./pages/MyFeed'));
@@ -42,16 +41,14 @@ class Routes extends Component {
 
   render() {
     return (
-      <div>
+      <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/:topic/@:author/:permlink" exact component={PostRead} />
         <Route path="/feed" exact component={MyFeed} />
         <Route path="/blog" exact component={MyBlog} />
-        <Switch>
-          <Route path="/@:accountName" component={Profile} />
-          <Route path="/:category/:tag" component={TagPostList} />
-        </Switch>
-      </div>
+        <Route path="/@:accountName" component={Profile} />
+        <Route path="/:topic/@:author/:permlink" exact component={PostRead} />
+        <Route path="/:category/:tag" component={TagPostList} />
+      </Switch>
     );
   }
 }

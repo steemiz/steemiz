@@ -28,7 +28,7 @@ export const selectCurrentCategory = () => createSelector(
 
 export const selectCurrentTag = () => createSelector(
   selectPostDomain(),
-  posts => posts.currentTag,
+  posts => posts.currentTag || 'all',
 );
 
 export const selectCurrentPostId = () => createSelector(

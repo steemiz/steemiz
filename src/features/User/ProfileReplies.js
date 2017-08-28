@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import { getRepliesToUserBegin } from '../Comment/actions/getRepliesToUser';
-import { selectListRepliesToUser, selectHasMoreRepliesToUser, selectIsLoadingRepliesToUser } from '../Comment/selectors';
+import { selectListRepliesToUser, selectHasMoreRepliesToUser, selectIsLoadingRepliesToUser, selectCommentsData } from '../Comment/selectors';
 
 import CommentList from '../Comment/CommentList';
 
@@ -15,6 +15,7 @@ class ProfileReplies extends Component {
         accountName: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
+    commentsData: PropTypes.object.isRequired,
     listRepliesToUser: PropTypes.array.isRequired,
     getRepliesToUser: PropTypes.func.isRequired,
     hasMoreRepliesToUser: PropTypes.bool.isRequired,
@@ -43,11 +44,12 @@ class ProfileReplies extends Component {
   }
 
   render() {
-    const { listRepliesToUser, hasMoreRepliesToUser } = this.props;
+    const { listRepliesToUser, hasMoreRepliesToUser, commentsData } = this.props;
     return (
       <div>
         {!isEmpty(listRepliesToUser) ? (
           <CommentList
+            commentsData={commentsData}
             commentsList={listRepliesToUser}
             hasMoreComments={hasMoreRepliesToUser}
             loadMore={this.loadMore}
@@ -62,6 +64,7 @@ const mapStateToProps = (state, props) => createStructuredSelector({
   listRepliesToUser: selectListRepliesToUser(props.match.params.accountName),
   hasMoreRepliesToUser: selectHasMoreRepliesToUser(props.match.params.accountName),
   repliesIsLoading: selectIsLoadingRepliesToUser(props.match.params.accountName),
+  commentsData: selectCommentsData(),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

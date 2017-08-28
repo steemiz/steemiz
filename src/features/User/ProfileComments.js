@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import { getCommentsFromUserBegin } from '../Comment/actions/getCommentsFromUser';
-import { selectListCommentsFromUser, selectHasMoreCommentsFromUser, selectIsLoadingCommentsFromUser } from '../Comment/selectors';
+import { selectListCommentsFromUser, selectHasMoreCommentsFromUser, selectIsLoadingCommentsFromUser, selectCommentsData } from '../Comment/selectors';
 
 import CommentList from '../Comment/CommentList';
 
@@ -15,6 +15,7 @@ class ProfileComments extends Component {
         accountName: PropTypes.string.isRequired,
       }).isRequired,
     }).isRequired,
+    commentsData: PropTypes.object.isRequired,
     listCommentsFromUser: PropTypes.array.isRequired,
     getCommentsFromUser: PropTypes.func.isRequired,
     hasMoreCommentsFromUser: PropTypes.bool.isRequired,
@@ -43,11 +44,12 @@ class ProfileComments extends Component {
   }
 
   render() {
-    const { listCommentsFromUser, hasMoreCommentsFromUser } = this.props;
+    const { listCommentsFromUser, hasMoreCommentsFromUser, commentsData } = this.props;
     return (
       <div>
         {!isEmpty(listCommentsFromUser) && (
           <CommentList
+            commentsData={commentsData}
             commentsList={listCommentsFromUser}
             hasMoreComments={hasMoreCommentsFromUser}
             loadMore={this.loadMore}
@@ -62,6 +64,7 @@ const mapStateToProps = (state, props) => createStructuredSelector({
   listCommentsFromUser: selectListCommentsFromUser(props.match.params.accountName),
   hasMoreCommentsFromUser: selectHasMoreCommentsFromUser(props.match.params.accountName),
   commentsIsLoading: selectIsLoadingCommentsFromUser(props.match.params.accountName),
+  commentsData: selectCommentsData(),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

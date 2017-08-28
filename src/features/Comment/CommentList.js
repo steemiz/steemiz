@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { selectCommentsData } from './selectors';
 import ContentItem from 'components/ContentItem';
 import CircularProgress from 'components/CircularProgress';
 
-class CommentList extends Component {
+export default class CommentList extends Component {
   static propTypes = {
     commentsList: PropTypes.array.isRequired,
     commentsData: PropTypes.object.isRequired,
@@ -46,9 +43,3 @@ class CommentList extends Component {
     );
   }
 }
-
-const mapStateToProps = (state, props) => createStructuredSelector({
-  commentsData: selectCommentsData(),
-});
-
-export default connect(mapStateToProps)(CommentList);
