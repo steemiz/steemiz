@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
 
+import ScrollToTop from 'components/ScrollToTop';
 import { selectAppProps, selectIsSidebarOpen } from './selectors';
 import { getAppConfigBegin } from './actions/getAppConfig';
 import 'custom.css';
@@ -24,17 +25,19 @@ class App extends Component {
   render() {
     const { isSidebarOpen } = this.props;
     return (
-      <div id="app_container">
-        <Header />
-        <LeftSideBar />
-        <RightSideBar />
-        <div id="app_content" className={isSidebarOpen ? 'sidebar_open' : ''}>
-          <div className="content__inner">
-            <Routes />
-          </div>
+      <ScrollToTop>
+        <div id="app_container">
+            <Header />
+            <LeftSideBar />
+            <RightSideBar />
+            <div id="app_content" className={isSidebarOpen ? 'sidebar_open' : ''}>
+              <div className="content__inner">
+                <Routes />
+              </div>
+            </div>
+            <Notification />
         </div>
-        <Notification />
-      </div>
+      </ScrollToTop>
     );
   }
 }

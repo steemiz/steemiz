@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import { Tab } from 'material-ui/Tabs';
@@ -128,4 +128,4 @@ const mapDispatchToProps = dispatch => ({
   toggleSidebar: () => dispatch(toggleSidebar()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RightSideBar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RightSideBar));

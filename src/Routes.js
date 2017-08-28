@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { replace } from 'react-router-redux';
 import queryString from 'query-string';
 import asyncComponent from './utils/asyncComponent';
@@ -14,6 +14,7 @@ import isEmpty from 'lodash/isEmpty';
 const Home = asyncComponent(() => import('./pages/Home'));
 const MyFeed = asyncComponent(() => import('./pages/MyFeed'));
 const MyBlog = asyncComponent(() => import('./pages/MyBlog'));
+const TagPostList = asyncComponent(() => import('./pages/TagPostList'));
 const PostRead = asyncComponent(() => import('./features/Post/PostRead'));
 const Profile = asyncComponent(() => import('./features/User/Profile'));
 
@@ -42,26 +43,14 @@ class Routes extends Component {
   render() {
     return (
       <div>
-        {/*<Route path="/" children={(props) => {
-          if (props.location.search) {
-            const { access_token } = queryString.parse(props.location.search);
-            if (access_token) {
-              this.props.getMe(access_token);
-              props.history.replace('/');
-            }
-          }
-          const accessToken = getToken();
-          if (accessToken && isEmpty(me)) {
-            this.props.getMe(accessToken);
-          }
-          return <div/>;
-        }} />*/}
         <Route path="/" exact component={Home} />
         <Route path="/:topic/@:author/:permlink" exact component={PostRead} />
-        {/*<Route path="/@:accountName/feed" exact component={Feed} />*/}
         <Route path="/feed" exact component={MyFeed} />
         <Route path="/blog" exact component={MyBlog} />
-        <Route path="/@:accountName" component={Profile} />
+        <Switch>
+          <Route path="/@:accountName" component={Profile} />
+          <Route path="/:category/:tag" component={TagPostList} />
+        </Switch>
       </div>
     );
   }

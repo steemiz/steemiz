@@ -62,14 +62,17 @@ export function getAppConfigReducer(state, action) {
 
 /*--------- SAGAS ---------*/
 function* getAppConfig() {
-  const steemiz = yield steem.api.getStateAsync(`trending/steemiz`);
-  yield all([
-    put(setAppProps(steemiz.props)),
-    put(setAppTrendingTags(steemiz.tag_idx.trending.filter(tag => tag !== ''))),
-    put(setAppDollarRate(parseFloat(steemiz.feed_price.base))),
-  ]);
-
-  yield put(getAppConfigSuccess());
+  try {
+    const steemiz = yield steem.api.getStateAsync(`trending/steemiz`);
+    yield all([
+      put(setAppProps(steemiz.props)),
+      put(setAppTrendingTags(steemiz.tag_idx.trending.filter(tag => tag !== ''))),
+      put(setAppDollarRate(parseFloat(steemiz.feed_price.base))),
+    ]);
+    yield put(getAppConfigSuccess());
+  } catch (e) {
+    yield put(getAppConfigFailure(e.message));
+  }
 }
 
 export default function* getAppConfigManager() {

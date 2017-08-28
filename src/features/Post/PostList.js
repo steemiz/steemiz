@@ -8,9 +8,12 @@ import InfiniteScroll from 'react-infinite-scroller';
 import {
   selectAllPostsFromCategory,
   selectCategoryTagHasMore,
-  selectPostsIsLoading
+  selectPostsIsLoading,
+  selectCurrentTag,
+  selectCurrentCategory,
 } from './selectors';
 import { getPostsByBegin } from './actions/getPostsBy';
+import { setCategoryTag } from './actions/setCategoryTag';
 import CircularProgress from 'components/CircularProgress';
 import ContentItem from 'components/ContentItem';
 
@@ -24,6 +27,7 @@ class PostList extends Component {
     postsIsLoading: PropTypes.bool.isRequired,
     categoryHasMore: PropTypes.bool.isRequired,
     getPostsBy: PropTypes.func.isRequired,
+    setCategoryTag: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -33,8 +37,25 @@ class PostList extends Component {
 
   componentDidMount() {
     // POSTS BY CATEGORY
-    if (isEmpty(this.props.posts)) {
+    const { category, query, currentTag, currentCategory, posts } = this.props;
+    if (currentCategory !== category || currentTag !== query.tag) {
+      this.props.setCategoryTag(category, query.tag);
+    }
+    if (isEmpty(posts) && (currentCategory !== category || currentTag !== query.tag)) {
       this.props.getPostsBy(this.props.query);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentTag !== nextProps.query.tag) {
+      this.props.setCategoryTag(nextProps.category, nextProps.query.tag);
+    }
+    if (
+      isEmpty(nextProps.posts) &&
+      !nextProps.postsIsLoading &&
+      (nextProps.query.tag !== this.props.currentTag || nextProps.category !== this.props.currentCategory)
+    ) {
+      this.props.getPostsBy(nextProps.query);
     }
   }
 
@@ -61,6 +82,7 @@ class PostList extends Component {
     ));
     return (
       <div>
+        {postsIsLoading && <CircularProgress />}
         {posts.length > 0 && (
           <InfiniteScroll
             pageStart={0}
@@ -71,7 +93,7 @@ class PostList extends Component {
             {items}
           </InfiniteScroll>
         )}
-        {posts.length === 0 && postsIsLoading === false &&(
+        {posts.length === 0 && postsIsLoading === false && (
           <div>
             There is no posts here yet.
           </div>
@@ -81,20 +103,21 @@ class PostList extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  const { category, query } = props;
-  const tag = query.tag || 'all';
+const mapStateToProps = () => {
   return createStructuredSelector({
-    posts: selectAllPostsFromCategory(category, tag),
-    postsIsLoading: selectPostsIsLoading(category, tag),
-    categoryHasMore: selectCategoryTagHasMore(category, tag),
-  })
+    posts: selectAllPostsFromCategory(),
+    postsIsLoading: selectPostsIsLoading(),
+    categoryHasMore: selectCategoryTagHasMore(),
+    currentTag: selectCurrentTag(),
+    currentCategory: selectCurrentCategory(),
+  });
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   const { category } = props;
   return {
     getPostsBy: query => dispatch(getPostsByBegin(category, query)),
+    setCategoryTag: (category, tag) => dispatch(setCategoryTag(category, tag)),
   }
 };
 

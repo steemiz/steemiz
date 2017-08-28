@@ -21,6 +21,16 @@ export const selectPosts = () => createSelector(
   state => state.posts,
 );
 
+export const selectCurrentCategory = () => createSelector(
+  selectPostDomain(),
+  posts => posts.currentCategory,
+);
+
+export const selectCurrentTag = () => createSelector(
+  selectPostDomain(),
+  posts => posts.currentTag,
+);
+
 export const selectCurrentPostId = () => createSelector(
   selectPostDomain(),
   posts => posts.currentPostId,
@@ -44,32 +54,32 @@ export const selectCurrentComments = () => createSelector(
   }
 );
 
-export const selectCategory = category => createSelector(
-  selectPostDomain(),
-  state => { return state.categories[category]; },
+export const selectCategory = () => createSelector(
+  [selectPostDomain(), selectCurrentCategory()],
+  (state, category) => { return state.categories[category]; },
 );
 
-export const selectCategoryTag = (category, tag) => createSelector(
-  selectCategory(category),
-  category => { return category[tag] || {} }
+export const selectCategoryTag = () => createSelector(
+  [selectCurrentTag(), selectCategory()],
+  (tag, category) => { return category && category[tag] || {} }
 );
 
-export const selectCategoryTagList = (category, tag) => createSelector(
-  selectCategoryTag(category, tag),
+export const selectCategoryTagList = () => createSelector(
+  selectCategoryTag(),
   categoryTag => {
     return categoryTag.list || [];
   },
 );
 
-export const selectAllPostsFromCategory = (category, tag) => createSelector(
-  [selectCategoryTagList(category, tag), selectPosts()],
+export const selectAllPostsFromCategory = () => createSelector(
+  [selectCategoryTagList(), selectPosts()],
   (categoryTagList, posts) => {
     return categoryTagList.map(id => posts[id]);
   }
 );
 
-export const selectPostsIsLoading = (category, tag) => createSelector(
-  selectCategoryTag(category, tag),
+export const selectPostsIsLoading = () => createSelector(
+  selectCategoryTag(),
   categoryTag => categoryTag.isLoading || false,
 );
 
@@ -78,8 +88,8 @@ export const selectPostsIsLoading = (category, tag) => createSelector(
   state => state.filter(post => post.json_metadata && !isEmpty(post.json_metadata.links) && post.json_metadata.links.find(link => link.match(/youtube/))) || [],
 );*/
 
-export const selectCategoryTagHasMore = (category, tag) => createSelector(
-  selectCategoryTag(category, tag),
+export const selectCategoryTagHasMore = () => createSelector(
+  selectCategoryTag(),
   categoryTag => categoryTag.hasMore || false,
 );
 

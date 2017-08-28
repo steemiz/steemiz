@@ -6,10 +6,13 @@ import getPostsBy, { getPostsByReducer } from './actions/getPostsBy';
 import getOnePost, { getOnePostReducer } from './actions/getOnePost';
 import uploadFile, { uploadFileReducer } from './actions/uploadFile';
 import publishContent, { publishContentReducer } from './actions/publishContent';
+import { setCategoryTagReducer } from './actions/setCategoryTag';
 
 const initialState = {
   posts: {},
   currentPostId: undefined,
+  currentCategory: '',
+  currentTag: '',
   categories: {
     created: {},
     feed: {},
@@ -21,7 +24,7 @@ const initialState = {
 };
 
 export const reducer = (state = initialState, action) => combine(
-  [ getPostsByReducer, getOnePostReducer, uploadFileReducer, publishContentReducer ],
+  [ getPostsByReducer, getOnePostReducer, uploadFileReducer, publishContentReducer, setCategoryTagReducer ],
   state,
   action,
 );

@@ -15,8 +15,6 @@ import {
 } from 'utils/helpers/steemitHelpers';
 import { COLOR, COLOR_HOVER, SIZE_SMALL } from 'styles/icons';
 
-const IMG_SERVICE_RESIZER = 'https://steemitimages.com/256x512/';
-
 export default class ContentItem extends PureComponent {
   static propTypes = {
     type: PropTypes.oneOf([
@@ -34,7 +32,7 @@ export default class ContentItem extends PureComponent {
           <Link
             to={{ pathname: content.url, state: { postId: content.id } }}
             className="post_card__block post_card__block--img"
-            style={{background: `url(${IMG_SERVICE_RESIZER}${content.main_img}) no-repeat #eee center center / cover`}}
+            style={{background: `url(${content.main_img}) no-repeat #eee center center / cover`}}
           />
         )}
         <div className="post_card__block post_card__block--content">
