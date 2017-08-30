@@ -17,8 +17,6 @@ const TagPostList = asyncComponent(() => import('./pages/TagPostList'));
 const PostRead = asyncComponent(() => import('./features/Post/PostRead'));
 const Profile = asyncComponent(() => import('./features/User/Profile'));
 
-
-
 class Routes extends Component {
   static propTypes = {
     me: PropTypes.string.isRequired,
@@ -47,7 +45,7 @@ class Routes extends Component {
         <Route path="/blog" exact component={MyBlog} />
         <Route path="/@:accountName" component={Profile} />
         <Route path="/:topic/@:author/:permlink" exact component={PostRead} />
-        <Route path="/:category/:tag" component={TagPostList} />
+        <Route path="/:category/:tag" exact component={TagPostList} />
       </Switch>
     );
   }

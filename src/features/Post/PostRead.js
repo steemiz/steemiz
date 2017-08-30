@@ -12,7 +12,7 @@ import Author from 'components/Author';
 import { getCommentsFromPostBegin } from '../Comment/actions/getCommentsFromPost';
 import { selectCommentsChild, selectCommentsData, selectCommentsIsLoading } from '../Comment/selectors';
 import { selectCurrentPost, selectCurrentComments } from './selectors';
-import { getOnePostBegin, setCurrentPostId } from './actions/getOnePost';
+import { getOnePostBegin, setCurrentPostPermlink } from './actions/getOnePost';
 import PostTags from './PostTags';
 import PostFooter from './PostFooter';
 import CommentPost from '../Comment/CommentPost';
@@ -37,14 +37,8 @@ class PostRead extends Component {
   };
 
   componentDidMount() {
-    const { post, location: { state }, match: { params : { author, permlink }} } = this.props;
-    if (isEmpty(post)) {
-      // FETCH POST
-      this.props.getOnePost(author, permlink);
-    } else if (state && state.postId) {
-      // READING FROM INTERNAL LINK
-      this.props.setCurrentPostId(state.postId);
-    }
+    const { match: { params : { author, permlink }} } = this.props;
+    this.props.getOnePost(author, permlink);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,9 +48,12 @@ class PostRead extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.setCurrentPostId(undefined);
+  }
+
   render() {
     const { post, currentComments, commentsData, commentsChild } = this.props;
-
     return (
       <div className="single_post_container clearfix">
         {!isEmpty(post) && (
@@ -122,7 +119,7 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = dispatch => ({
   getOnePost: (author, permlink) => dispatch(getOnePostBegin(author, permlink)),
-  setCurrentPostId: id => dispatch(setCurrentPostId(id)),
+  setCurrentPostId: id => dispatch(setCurrentPostPermlink(id)),
   getCommentsFromPost: (category, author, permlink) => dispatch(getCommentsFromPostBegin(category, author, permlink)),
 });
 

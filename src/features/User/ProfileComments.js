@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import isEmpty from 'lodash/isEmpty';
 import { getCommentsFromUserBegin } from '../Comment/actions/getCommentsFromUser';
 import { selectListCommentsFromUser, selectHasMoreCommentsFromUser, selectIsLoadingCommentsFromUser, selectCommentsData } from '../Comment/selectors';
 
-import CommentList from '../Comment/CommentList';
+import InfiniteList from 'components/InfiniteList';
+import ContentItem from 'components/ContentItem';
 
 class ProfileComments extends Component {
   static propTypes = {
@@ -22,40 +22,23 @@ class ProfileComments extends Component {
     commentsIsLoading: PropTypes.bool.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.loadMore = this.loadMore.bind(this);
-  }
-
-  componentDidMount() {
-    const { commentsIsLoading, listCommentsFromUser } = this.props;
-    if (commentsIsLoading === false && isEmpty(listCommentsFromUser)) {
-      this.props.getCommentsFromUser();
-    }
-  }
-
-  loadMore() {
-    const { commentsIsLoading, hasMoreCommentsFromUser } = this.props;
-    if (commentsIsLoading === false && hasMoreCommentsFromUser === true) {
-      this.props.getCommentsFromUser({
-        addMore: true,
-      });
-    }
-  }
-
   render() {
-    const { listCommentsFromUser, hasMoreCommentsFromUser, commentsData } = this.props;
+    const { getCommentsFromUser, listCommentsFromUser, hasMoreCommentsFromUser, commentsIsLoading, commentsData } = this.props;
     return (
-      <div>
-        {!isEmpty(listCommentsFromUser) && (
-          <CommentList
-            commentsData={commentsData}
-            commentsList={listCommentsFromUser}
-            hasMoreComments={hasMoreCommentsFromUser}
-            loadMore={this.loadMore}
+      <InfiniteList
+        list={listCommentsFromUser}
+        hasMore={hasMoreCommentsFromUser}
+        isLoading={commentsIsLoading}
+        initLoad={getCommentsFromUser}
+        loadMoreCb={() => getCommentsFromUser({ addMore: true })}
+        itemMappingCb={commentId => (
+          <ContentItem
+            key={commentId}
+            content={commentsData[commentId]}
+            type="comment"
           />
         )}
-      </div>
+      />
     );
   }
 }

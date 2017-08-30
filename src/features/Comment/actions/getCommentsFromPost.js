@@ -50,9 +50,7 @@ export function getCommentsFromPostReducer(state, action) {
 function* getCommentsFromPost({ category, author, permlink }) {
   try {
     const state = yield steem.api.getStateAsync(`/${category}/@${author}/${permlink}`);
-
-    const id = state.content[`${author}/${permlink}`].id;
-    yield put(getCommentsFromPostSuccess(id, state));
+    yield put(getCommentsFromPostSuccess(`${author}/${permlink}`, state));
   } catch(e) {
     yield put(getCommentsFromPostFailure(e.message));
   }

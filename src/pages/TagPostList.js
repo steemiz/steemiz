@@ -12,6 +12,7 @@ export default class TagPostList extends PureComponent {
 
   render() {
     const { match: { params: { category, tag }} } = this.props;
+    console.log(this.props.match);
     return (
       <PostList category={category} query={{ limit: 10, tag: tag }} />
     );

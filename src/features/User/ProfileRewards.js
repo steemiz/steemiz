@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Route, NavLink } from 'react-router-dom';
-import isEmpty from 'lodash/isEmpty';
 import numeral from 'numeral';
 
-import { selectTransferHistory, selectLastWeekRewardsAuthor, selectLastWeekRewardsCuration } from './selectors';
-import { getTransferHistoryBegin } from './actions/getTransferHistory';
+import { selectLastWeekRewardsAuthor, selectLastWeekRewardsCuration } from './selectors';
 import asyncComponent from 'utils/asyncComponent';
 
 const ProfileRewardsCuration = asyncComponent(() => import('./ProfileRewardsCuration'));
@@ -29,18 +27,9 @@ const RewardStat = (props) => {
 
 class ProfileRewards extends Component {
   static propTypes = {
-    getTransferHistory: PropTypes.func.isRequired,
-    transferHistory: PropTypes.array.isRequired,
     lastWeekRewardsAuthor: PropTypes.number.isRequired,
     lastWeekRewardsCuration: PropTypes.number.isRequired,
   };
-
-  componentDidMount() {
-    const { transferHistory } = this.props;
-    if (isEmpty(transferHistory)) {
-      this.props.getTransferHistory();
-    }
-  }
 
   render() {
     const { lastWeekRewardsCuration, lastWeekRewardsAuthor, match } = this.props;
@@ -63,13 +52,8 @@ class ProfileRewards extends Component {
 }
 
 const mapStateToProps = (state, props) => createStructuredSelector({
-  transferHistory: selectTransferHistory(props.match.params.accountName),
   lastWeekRewardsAuthor: selectLastWeekRewardsAuthor(props.match.params.accountName),
   lastWeekRewardsCuration: selectLastWeekRewardsCuration(props.match.params.accountName),
 });
 
-const mapDispatchToProps = (dispatch, props) => ({
-  getTransferHistory: () => dispatch(getTransferHistoryBegin(props.match.params.accountName)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileRewards);
+export default connect(mapStateToProps)(ProfileRewards);

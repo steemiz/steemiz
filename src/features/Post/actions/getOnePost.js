@@ -1,14 +1,17 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { select, put, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
 import update from 'immutability-helper';
+import isEmpty from 'lodash/isEmpty';
 
 import format from '../utils/format';
+import { selectPostByPermlink } from '../selectors';
 
 /*--------- CONSTANTS ---------*/
 const GET_ONE_POST_BEGIN = 'GET_ONE_POST_BEGIN';
 const GET_ONE_POST_SUCCESS = 'GET_ONE_POST_SUCCESS';
 const GET_ONE_POST_FAILURE = 'GET_ONE_POST_FAILURE';
 const SET_CURRENT_POST_ID = 'SET_CURRENT_POST_ID';
+const GET_ONE_POST_ALREADY_IN_STATE = 'GET_ONE_POST_ALREADY_IN_STATE';
 
 /*--------- ACTIONS ---------*/
 export function getOnePostBegin(author, permlink) {
@@ -23,8 +26,12 @@ export function getOnePostFailure(message) {
   return { type: GET_ONE_POST_FAILURE, message };
 }
 
-export function setCurrentPostId(id) {
+export function setCurrentPostPermlink(id) {
   return { type: SET_CURRENT_POST_ID, id };
+}
+
+export function getOnePostAlreadyInState() {
+  return { type: GET_ONE_POST_ALREADY_IN_STATE };
 }
 
 /*--------- REDUCER ---------*/
@@ -34,7 +41,7 @@ export function getOnePostReducer(state, action) {
       const { post } = action;
       return update(state, {
         posts: {$merge: {
-          [post.id]: post,
+          [`${post.author}/${post.permlink}`]: post,
         }},
       });
     }
@@ -52,9 +59,15 @@ export function getOnePostReducer(state, action) {
 /*--------- SAGAS ---------*/
 function* getOnePost({ author, permlink }) {
   try {
-    const post = yield steem.api.getContentAsync(author, permlink);
-    yield put(setCurrentPostId(post.id));
-    yield put(getOnePostSuccess(format(post)));
+    const postByPermlink = yield select(selectPostByPermlink(author, permlink));
+    yield put(setCurrentPostPermlink(`${author}/${permlink}`));
+
+    if (isEmpty(postByPermlink)) {
+      const post = yield steem.api.getContentAsync(author, permlink);
+      yield put(getOnePostSuccess(format(post)));
+    } else {
+      yield put(getOnePostAlreadyInState());
+    }
   } catch(e) {
     yield put(getOnePostFailure(e.message));
   }

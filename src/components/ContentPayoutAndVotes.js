@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import Popover from 'material-ui/Popover';
 
-import { selectMe } from 'features/User/selectors';
 import { getUpvotes, sortVotes } from 'utils/helpers/voteHelpers';
 import Payout from 'features/Comment/Payout';
 import VoteButton from 'features/Vote/VoteButton';
-import { calculateContentPayout, formatAmount, hasVoted } from 'utils/helpers/steemitHelpers';
+import { calculateContentPayout, formatAmount } from 'utils/helpers/steemitHelpers';
 
-class ContentPayoutAndVotes extends Component {
+export default class ContentPayoutAndVotes extends Component {
   static propTypes = {
     content: PropTypes.object.isRequired, // Post or comment
-    type: PropTypes.string.isRequired, // post or comment
-    me: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['post', 'comment']).isRequired, // post or comment
   };
 
   constructor(props) {
@@ -76,7 +72,7 @@ class ContentPayoutAndVotes extends Component {
   };
 
   render() {
-    const { content, type, me } = this.props;
+    const { content, type } = this.props;
     const { payoutCard, voteCard } = this.state;
 
     const payout = calculateContentPayout(content);
@@ -92,7 +88,7 @@ class ContentPayoutAndVotes extends Component {
     return (
       <div className="Voting">
         <div className="Voting__button">
-          <VoteButton contentId={content.id} type={type} />
+          <VoteButton content={content} type={type} />
         </div>
         <div className="Voting__money">
           <span onClick={this.handleViewMoneyCard}>{formatAmount(payout)}</span>
@@ -128,9 +124,3 @@ class ContentPayoutAndVotes extends Component {
     )
   }
 }
-
-const mapStateToProps = (state, props) => createStructuredSelector({
-  me: selectMe(),
-});
-
-export default connect(mapStateToProps, null)(ContentPayoutAndVotes);

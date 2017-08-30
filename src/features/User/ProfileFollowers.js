@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import { withRouter } from 'react-router-dom';
 
-import UsersList from './components/UsersList';
+import UserCard from './components/UserCard';
+import InfiniteList from 'components/InfiniteList';
 import { selectFollowersAccounts, selectFollowersFromUser } from './selectors';
 import { getFollowersBegin } from './actions/getFollowers';
 
@@ -16,35 +17,23 @@ class ProfileFollowers extends Component {
     followersFromUser: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.loadMore = this.loadMore.bind(this);
-  }
-
-  componentDidMount() {
-    if (isEmpty(this.props.followersAccounts)) {
-      this.props.getFollowers();
-    }
-  }
-
-  loadMore() {
-    const { followersFromUser } = this.props;
-    if (followersFromUser.isLoading === false && followersFromUser.hasMore === true) {
-      this.props.getFollowers({
-        addMore: true,
-      });
-    }
-  }
-
   render() {
-    const { followersAccounts, followersFromUser } = this.props;
+    const { getFollowers, followersAccounts, followersFromUser } = this.props;
     return (
-      <div>
-        {!isEmpty(followersAccounts) && (
-          <UsersList
-            usersList={followersAccounts}
-            loadMore={this.loadMore}
+      <div className="usercard_container">
+        {!isEmpty(followersFromUser) && (
+          <InfiniteList
+            list={followersAccounts}
             hasMore={followersFromUser.hasMore}
+            isLoading={followersFromUser.isLoading}
+            initLoad={getFollowers}
+            loadMoreCb={() => getFollowers({ addMore: true })}
+            itemMappingCb={user => (
+              <UserCard
+                key={user.id}
+                user={user}
+              />
+            )}
           />
         )}
       </div>

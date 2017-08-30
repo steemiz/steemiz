@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
 import { manageContentVote } from '../Vote/utils';
-import { VOTE_OPTIMISTIC } from '../Vote/actions/vote';
+import { VOTE_OPTIMISTIC, VOTE_FAILURE } from '../Vote/actions/vote';
 import { GET_COMMENTS_FROM_POST_SUCCESS } from './actions/getCommentsFromPost';
 import { GET_COMMENTS_FROM_USER_SUCCESS } from './actions/getCommentsFromUser';
 import { GET_REPLIES_TO_USER_SUCCESS } from './actions/getRepliesToUser';
@@ -18,15 +18,37 @@ export default function commentsReducer(state, action) {
       };
     }
     case VOTE_OPTIMISTIC: {
-      const { contentId, accountName, weight, params: { type } } = action;
+      const { content, accountName, weight, params: { type } } = action;
       if (type === 'comment') {
-        const newComment = manageContentVote({ ...state.commentsData[contentId] }, weight, accountName);
+        const newComment = manageContentVote({ ...state.commentsData[content.id] }, weight, accountName);
         return update(state, {
           commentsData: {
-            [contentId]: {$set:
+            [content.id]: {$set:
               newComment,
             }
           }
+        });
+      } else {
+        return state;
+      }
+    }
+    case VOTE_FAILURE: {
+      const { content, accountName, params: { type } } = action;
+      if (type === 'comment') {
+        return update(state, {
+          commentsData: {
+            [content.id]: {
+              active_votes: {$apply: votes => {
+                return votes.filter(vote => {
+                  if (vote.voter !== accountName) {
+                    return true;
+                  }
+                  return vote.percent <= 0;
+                });
+              }},
+              net_votes: {$apply: count => count - 1}
+            }
+          },
         });
       } else {
         return state;

@@ -36,9 +36,9 @@ export const selectCurrentPostId = () => createSelector(
   posts => posts.currentPostId,
 );
 
-export const selectPostById = id => createSelector(
+export const selectPostByPermlink = (author, permlink) => createSelector(
   selectPosts(),
-  posts => posts[id] || {},
+  posts => posts[`${author}/${permlink}`] || {},
 );
 
 export const selectCurrentPost = () => createSelector(

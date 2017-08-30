@@ -11,7 +11,7 @@ export default class Home extends PureComponent {
 
   render() {
     return (
-      <PostList category="created" query={{ limit: 10 }} />
+      <PostList category="trending" query={{ limit: 10 }} />
     );
   }
 }

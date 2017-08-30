@@ -52,7 +52,7 @@ export function getPostsByReducer(state, action) {
       const { category, tag, posts } = action;
       const postsObject = {};
       posts.forEach(post => {
-        postsObject[post.id] = post;
+        postsObject[`${post.author}/${post.permlink}`] = post;
       });
 
       return update(state, {
@@ -61,7 +61,7 @@ export function getPostsByReducer(state, action) {
           [category]: {
             [tag]: {
               list: {$push:
-                posts.map(post => post.id),
+                posts.map(post => `${post.author}/${post.permlink}`),
               },
               isLoading: {$set: false},
             },
@@ -82,8 +82,9 @@ export function getPostsByReducer(state, action) {
       });
     }
     case VOTE_OPTIMISTIC: {
-      const { contentId, accountName, weight, params: { type } } = action;
+      const { content, accountName, weight, params: { type } } = action;
       if (type === 'post') {
+        const contentId = `${content.author}/${content.permlink}`;
         const newPost = manageContentVote({ ...state.posts[contentId] }, weight, accountName);
         return update(state, {
           posts: {
@@ -97,22 +98,27 @@ export function getPostsByReducer(state, action) {
       }
     }
     case VOTE_FAILURE: {
-      const { contentId, accountName } = action;
-      return update(state, {
-        posts: {
-          [contentId]: {
-            active_votes: {$apply: votes => {
-              return votes.filter(vote => {
-                if (vote.voter !== accountName) {
-                  return true;
-                }
-                return vote.percent <= 0;
-              });
-            }},
-            net_votes: {$apply: count => count - 1}
-          }
-        },
-      });
+      const { content, accountName, params: { type } } = action;
+      if (type === 'post') {
+        const contentId = `${content.author}/${content.permlink}`;
+        return update(state, {
+          posts: {
+            [contentId]: {
+              active_votes: {$apply: votes => {
+                return votes.filter(vote => {
+                  if (vote.voter !== accountName) {
+                    return true;
+                  }
+                  return vote.percent <= 0;
+                });
+              }},
+              net_votes: {$apply: count => count - 1}
+            }
+          },
+        });
+      } else {
+        return state;
+      }
     }
     default:
       return state;
@@ -126,7 +132,7 @@ function* getPostsBy({ category, query }) {
     const posts = yield getDiscussionsFromAPI(category, query);
     const tag = query.tag || 'all';
 
-    const filteredPosts = posts.filter(post => !statePosts[post.id]);
+    const filteredPosts = posts.filter(post => !statePosts[`${post.author}/${post.permlink}`]);
     if (filteredPosts.length === 0) {
       yield put(setNoMore(category, tag, true));
     }

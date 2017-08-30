@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import isEmpty from 'lodash/isEmpty';
 import { withRouter } from 'react-router-dom';
 
-import UsersList from './components/UsersList';
+import UserCard from './components/UserCard';
+import InfiniteList from 'components/InfiniteList';
 import { selectFollowingsAccounts, selectFollowingsFromUser } from './selectors';
 import { getFollowingsBegin } from './actions/getFollowings';
 
@@ -16,37 +16,23 @@ class ProfileFollowings extends Component {
     followingsFromUser: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.loadMore = this.loadMore.bind(this);
-  }
-
-  componentDidMount() {
-    if (isEmpty(this.props.followingsAccounts)) {
-      this.props.getFollowings();
-    }
-  }
-
-  loadMore() {
-    const { followingsFromUser } = this.props;
-    if (followingsFromUser.isLoading === false && followingsFromUser.hasMore === true) {
-      this.props.getFollowings({
-        addMore: true,
-      });
-    }
-  }
-
   render() {
-    const { followingsFromUser, followingsAccounts } = this.props;
+    const { getFollowings, followingsFromUser, followingsAccounts } = this.props;
     return (
-      <div>
-        {!isEmpty(followingsAccounts) && (
-          <UsersList
-            usersList={followingsAccounts}
-            loadMore={this.loadMore}
-            hasMore={followingsFromUser.hasMore}
-          />
-        )}
+      <div className="usercard_container">
+        <InfiniteList
+          list={followingsAccounts}
+          hasMore={followingsFromUser.hasMore}
+          isLoading={followingsFromUser.isLoading}
+          initLoad={getFollowings}
+          loadMoreCb={() => getFollowings({ addMore: true })}
+          itemMappingCb={user => (
+            <UserCard
+              key={user.id}
+              user={user}
+            />
+          )}
+        />
       </div>
     );
   }

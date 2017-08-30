@@ -8,7 +8,7 @@ import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
 import { blue400, blue500, grey400, grey500 } from 'material-ui/styles/colors';
 
 import { selectIsConnected, selectMyAccount } from '../User/selectors';
-import { selectPostById } from '../Post/selectors';
+import { selectPostByPermlink } from '../Post/selectors';
 import { selectCommentById } from '../Comment/selectors';
 import { voteBegin } from './actions/vote';
 import {
@@ -17,7 +17,6 @@ import {
 
 class VoteButton extends Component {
   static propTypes = {
-    contentId: PropTypes.number.isRequired,
     content: PropTypes.object.isRequired,
     myAccount: PropTypes.object.isRequired,
     isConnected: PropTypes.bool.isRequired,
@@ -65,7 +64,6 @@ class VoteButton extends Component {
 }
 
 const mapStateToProps = (state, props) => createStructuredSelector({
-  content: props.type === 'post' ? selectPostById(props.contentId) : selectCommentById(props.contentId),
   myAccount: selectMyAccount(),
   isConnected: selectIsConnected(),
 });

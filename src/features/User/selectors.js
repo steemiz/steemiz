@@ -132,14 +132,19 @@ export const selectFollowingsAccounts = accountName => createSelector(
   },
 );
 
-// REWARDS
-export const selectTransferHistory = accountName => createSelector(
+// HISTORY TRANSFER (REWARDS, VOTES)
+export const selectHistoryTransfer = accountName => createSelector(
   selectAccount(accountName),
-  account => account.transfer_history,
+  account => account.history_transfer || {},
+);
+
+export const selectHistoryTransferList = accountName => createSelector(
+  selectHistoryTransfer(accountName),
+  historyTransfer => historyTransfer.list || [],
 );
 
 export const selectRewardsCuration = accountName => createSelector(
-  [selectTransferHistory(accountName), selectAppProps()],
+  [selectHistoryTransferList(accountName), selectAppProps()],
   (transferHistory, appProps) => {
     if (!appProps) {
       return [];
@@ -163,7 +168,7 @@ export const selectLastWeekRewardsCuration = accountName => createSelector(
 );
 
 export const selectRewardsAuthor = accountName => createSelector(
-  [selectTransferHistory(accountName), selectAppProps()],
+  [selectHistoryTransferList(accountName), selectAppProps()],
   (transferHistory, appProps) => {
     if (!appProps) {
       return [];
@@ -183,5 +188,29 @@ export const selectLastWeekRewardsAuthor = accountName => createSelector(
     return curation
       .filter(transfer => Date.parse(transfer.timestamp) > timestampOneWeekAgo)
       .reduce((total, transfer) => total += transfer.steemPower, 0);
+  },
+);
+
+export const selectVotes = accountName => createSelector(
+  selectHistoryTransferList(accountName),
+  transferHistory => {
+    return transferHistory
+      .filter(transfer => transfer.type === 'vote');
+  },
+);
+
+export const selectGivenVotes = accountName => createSelector(
+  selectVotes(accountName),
+  votes => {
+    return votes
+      .filter(vote => vote.voter === accountName);
+  },
+);
+
+export const selectReceivedVotes = accountName => createSelector(
+  selectVotes(accountName),
+  votes => {
+    return votes
+      .filter(vote => vote.author === accountName);
   },
 );

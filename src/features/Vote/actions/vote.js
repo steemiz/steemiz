@@ -13,29 +13,28 @@ export function voteBegin(content, weight, params = {}) {
   return { type: VOTE_BEGIN, content, weight, params };
 }
 
-function voteOptimistic(contentId, accountName, weight, params) {
-  return { type: VOTE_OPTIMISTIC, contentId, accountName, weight, params };
+function voteOptimistic(content, accountName, weight, params) {
+  return { type: VOTE_OPTIMISTIC, content, accountName, weight, params };
 }
 
 export function voteSuccess() {
   return { type: VOTE_SUCCESS };
 }
 
-export function voteFailure(contentId, accountName, message) {
-  return { type: VOTE_FAILURE, contentId, accountName, message };
+export function voteFailure(content, accountName, params, message) {
+  return { type: VOTE_FAILURE, content, accountName, params, message };
 }
 
 /*--------- SAGAS ---------*/
 function* vote({ content, weight, params }) {
   const accountName = yield select(selectMe());
-  yield put(voteOptimistic(content.id, accountName, weight, params));
+  yield put(voteOptimistic(content, accountName, weight, params));
 
   try {
     const result = yield steemconnect.vote(accountName, content.author, content.permlink, weight);
-    console.log('result', result);
     yield put(voteSuccess());
   } catch(e) {
-    yield put(voteFailure(content.id, accountName, e.message));
+    yield put(voteFailure(content, accountName, params, e.message));
   }
 }
 

@@ -1,11 +1,13 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { select, call, put, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
 import update from 'immutability-helper';
+import isEmpty from 'lodash/isEmpty';
 import format from '../utils/format';
+import { selectAccounts } from '../selectors';
 
 /*--------- CONSTANTS ---------*/
 const GET_ACCOUNTS_BEGIN = 'GET_ACCOUNTS_BEGIN';
-const GET_ACCOUNTS_SUCCESS = 'GET_ACCOUNTS_SUCCESS';
+export const GET_ACCOUNTS_SUCCESS = 'GET_ACCOUNTS_SUCCESS';
 const GET_ACCOUNTS_FAILURE = 'GET_ACCOUNTS_FAILURE';
 
 /*--------- ACTIONS ---------*/
@@ -43,7 +45,12 @@ export function getAccountsReducer(state, action) {
 function* getAccounts({ accounts }) {
   try {
     const res = yield call(() => new Promise(resolve => resolve(steem.api.getAccountsAsync(accounts))));
-    const profiles = res.reduce((profiles, account) => {
+
+    // FILTER USERS ALREADY IN STATE
+    const accountsState = yield select(selectAccounts());
+    const filteredRes = res.filter(account => isEmpty(accountsState[account.name]));
+
+    const profiles = filteredRes.reduce((profiles, account) => {
       profiles[account.name] = format(account);
       return profiles;
     }, {});

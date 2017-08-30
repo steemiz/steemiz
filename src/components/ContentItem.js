@@ -26,25 +26,28 @@ export default class ContentItem extends PureComponent {
   render() {
     const { content, type } = this.props;
     const payout = calculateContentPayout(content);
+    const splitUrl = content.url.split('#');
+    const linkUrl = splitUrl[0];
+    const hashUrl = splitUrl[1] ? `#${splitUrl[1]}` : '';
     return (
       <div className="post_card">
         {type === 'post' && content.main_img && (
           <Link
-            to={{ pathname: content.url, state: { postId: content.id } }}
+            to={{ pathname: linkUrl, hash: hashUrl }}
             className="post_card__block post_card__block--img"
             style={{background: `url(${content.main_img}) no-repeat #eee center center / cover`}}
           />
         )}
         <div className="post_card__block post_card__block--content">
-          <Link to={{ pathname: content.url, state: { postId: content.id } }} className="post_card__block">
-            <h3>{content.title || content.root_title} ({content.id})</h3>
+          <Link to={{ pathname: linkUrl, hash: hashUrl }} className="post_card__block">
+            <h3>{content.title || content.root_title}</h3>
             <p>
               {extractDesc(content)}
             </p>
           </Link>
           <div className="post_card__block post_card__block--info">
             <div className="details">
-              <VoteButton contentId={content.id} type={type} />
+              <VoteButton content={content} type={type} />
               <div className="price">
                 {formatAmount(payout)}
               </div>
@@ -52,7 +55,7 @@ export default class ContentItem extends PureComponent {
                 <IconFavorite color={COLOR} hoverColor={COLOR_HOVER} style={{ width: SIZE_SMALL, margin: '0 0.3rem' }} />
                 <span>{content.net_votes}</span>
               </Link>
-              <Link title="Responses" to={{ pathname: content.url, state: { postId: content.id } }} className="social_area social_area--comment">
+              <Link title="Responses" to={{ pathname: linkUrl, hash: hashUrl }} className="social_area social_area--comment">
                 <IconSms color={COLOR} hoverColor={COLOR_HOVER} style={{ width: SIZE_SMALL, margin: '0 0.3rem' }} />
                 <span>{displayContentNbComments(content)}</span>
               </Link>

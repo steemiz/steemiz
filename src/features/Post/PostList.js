@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import InfiniteScroll from 'react-infinite-scroller';
 
 import {
   selectAllPostsFromCategory,
@@ -14,7 +13,7 @@ import {
 } from './selectors';
 import { getPostsByBegin } from './actions/getPostsBy';
 import { setCategoryTag } from './actions/setCategoryTag';
-import CircularProgress from 'components/CircularProgress';
+import InfiniteList from 'components/InfiniteList';
 import ContentItem from 'components/ContentItem';
 
 class PostList extends Component {
@@ -60,39 +59,32 @@ class PostList extends Component {
   }
 
   loadPosts() {
-    const { query, posts, postsIsLoading, categoryHasMore } = this.props;
-    if (postsIsLoading === false && categoryHasMore === true) {
-      this.props.getPostsBy({
-        ...query,
-        limit: query.limit + 1,
-        start_author: posts[posts.length - 1].author,
-        start_permlink: posts[posts.length - 1].permlink,
-      });
-    }
+    const { query, posts } = this.props;
+    this.props.getPostsBy({
+      ...query,
+      limit: query.limit + 1,
+      start_author: posts[posts.length - 1].author,
+      start_permlink: posts[posts.length - 1].permlink,
+    });
   }
 
   render() {
     const { posts, categoryHasMore, postsIsLoading } = this.props;
-    const items = posts.map(post => (
-      <ContentItem
-        key={post.id}
-        content={post}
-        type="post"
-      />
-    ));
     return (
       <div>
-        {postsIsLoading && <CircularProgress />}
-        {posts.length > 0 && (
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={this.loadPosts}
-            hasMore={categoryHasMore}
-            loader={<CircularProgress />}
-          >
-            {items}
-          </InfiniteScroll>
-        )}
+        <InfiniteList
+          list={posts}
+          hasMore={categoryHasMore}
+          isLoading={postsIsLoading}
+          loadMoreCb={this.loadPosts}
+          itemMappingCb={post => (
+            <ContentItem
+              key={post.id}
+              content={post}
+              type="post"
+            />
+          )}
+        />
         {posts.length === 0 && postsIsLoading === false && (
           <div>
             There is no posts here yet.
