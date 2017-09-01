@@ -1,11 +1,12 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
-import createHistory from 'history/createBrowserHistory';
-import rootReducer from './reducers';
+import createBrowserHistory from 'history/createBrowserHistory';
+import createMemoryHistory from 'history/createMemoryHistory';
+import rootReducer from 'reducers';
 import sagas from './sagas';
 
-export const history = createHistory();
+export const history = typeof window !== 'undefined' ? createBrowserHistory() : createMemoryHistory();
 const sagaMiddleware = createSagaMiddleware();
 
 const initialState = {};
@@ -15,7 +16,7 @@ const middleware = [
   routerMiddleware(history)
 ];
 
-if (process.env.NODE_ENV === 'development') {
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   const devToolsExtension = window.devToolsExtension;
 
   if (typeof devToolsExtension === 'function') {

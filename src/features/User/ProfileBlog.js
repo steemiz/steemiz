@@ -4,7 +4,7 @@ import PostList from '../Post/PostList';
 
 const ProfileBlog = ({ match: { params: { accountName }} }) => {
   return (
-    <PostList category="blog" query={{ limit: 5, tag: accountName }} />
+    <PostList category="blog" query={{ limit: 10, tag: accountName }} />
   )
 };
 

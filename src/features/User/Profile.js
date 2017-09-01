@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
 
-import asyncComponent from 'utils/asyncComponent';
+import asyncComponent from 'asyncComponent';
 import UserHeader from './components/UserHeader';
 import UserMenu from './components/UserMenu';
 import { setCurrentUserBegin } from './actions/setCurrentUser';

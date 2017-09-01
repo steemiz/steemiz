@@ -90,7 +90,7 @@ export const selectPostsIsLoading = () => createSelector(
 
 export const selectCategoryTagHasMore = () => createSelector(
   selectCategoryTag(),
-  categoryTag => categoryTag.hasMore || false,
+  categoryTag => categoryTag.hasMore,
 );
 
 export const selectOnePostFromCategory = (category, index) => createSelector(

@@ -18,7 +18,7 @@ class ProfileReplies extends Component {
     commentsData: PropTypes.object.isRequired,
     listRepliesToUser: PropTypes.array.isRequired,
     getRepliesToUser: PropTypes.func.isRequired,
-    hasMoreRepliesToUser: PropTypes.bool.isRequired,
+    hasMoreRepliesToUser: PropTypes.bool,
     repliesIsLoading: PropTypes.bool.isRequired,
   };
 

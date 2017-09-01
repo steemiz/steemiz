@@ -18,7 +18,7 @@ class ProfileComments extends Component {
     commentsData: PropTypes.object.isRequired,
     listCommentsFromUser: PropTypes.array.isRequired,
     getCommentsFromUser: PropTypes.func.isRequired,
-    hasMoreCommentsFromUser: PropTypes.bool.isRequired,
+    hasMoreCommentsFromUser: PropTypes.bool,
     commentsIsLoading: PropTypes.bool.isRequired,
   };
 

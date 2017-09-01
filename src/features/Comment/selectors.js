@@ -53,7 +53,7 @@ export const selectLastPermlinkCommentsFromUser = name => createSelector(
 
 export const selectHasMoreCommentsFromUser = name => createSelector(
   selectCommentsFromUser(name),
-  state => state.hasMore || false,
+  state => state.hasMore,
 );
 
 export const selectIsLoadingCommentsFromUser = name => createSelector(
@@ -84,7 +84,7 @@ export const selectLastObjectRepliesToUser = name => createSelector(
 
 export const selectHasMoreRepliesToUser = name => createSelector(
   selectRepliesToUser(name),
-  state => state.hasMore || false,
+  state => state.hasMore,
 );
 
 export const selectIsLoadingRepliesToUser = name => createSelector(

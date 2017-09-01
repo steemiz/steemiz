@@ -44,7 +44,7 @@ const mapStateToProps = (state, props) => createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  getFollowings: query => dispatch(getFollowingsBegin(props.match.params.accountName, query)),
+  getFollowings: query => dispatch(getFollowingsBegin(props.match.params.accountName, query, true)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileFollowings));

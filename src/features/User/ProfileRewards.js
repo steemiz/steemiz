@@ -6,10 +6,10 @@ import { Route, NavLink } from 'react-router-dom';
 import numeral from 'numeral';
 
 import { selectLastWeekRewardsAuthor, selectLastWeekRewardsCuration } from './selectors';
-import asyncComponent from 'utils/asyncComponent';
+import asyncComponent from 'asyncComponent';
 
-const ProfileRewardsCuration = asyncComponent(() => import('./ProfileRewardsCuration'));
-const ProfileRewardsAuthor = asyncComponent(() => import('./ProfileRewardsAuthor'));
+const ProfileRewardsCuration = asyncComponent(() => import('./ProfileRewardsCuration'), 'features/User/ProfileRewardsCuration');
+const ProfileRewardsAuthor = asyncComponent(() => import('./ProfileRewardsAuthor'), 'features/User/ProfileRewardsAuthor');
 
 const RewardStat = (props) => {
   return (

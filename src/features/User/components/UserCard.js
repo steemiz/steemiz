@@ -29,7 +29,7 @@ const UserCard = ({ user }) => {
 };
 
 UserCard.propTypes = {
-  //prop: PropTypes.array.isRequired
+  user: PropTypes.object.isRequired
 };
 
 export default withRouter(UserCard);

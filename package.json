@@ -30,6 +30,7 @@
     "react-select": "^1.0.0-rc.5",
     "react-tagsinput": "^3.17.0",
     "react-tap-event-plugin": "^2.0.1",
+    "react-universal-component": "^2.5.2",
     "redux": "^3.7.2",
     "redux-saga": "^0.15.4",
     "remarkable": "^1.7.1",
@@ -40,12 +41,26 @@
   },
   "scripts": {
     "start": "NODE_PATH=src react-scripts start",
+    "start:server": "NODE_PATH=src NODE_ENV=production node server/index.js",
     "build-css": "node-sass-chokidar src/ -o src/",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "node-sass-chokidar": "^0.0.3"
+    "babel-cli": "^6.26.0",
+    "babel-plugin-import-inspector": "^2.0.0",
+    "babel-plugin-universal-import": "^1.2.7",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "body-parser": "^1.17.2",
+    "compression": "^1.7.0",
+    "express": "^4.15.4",
+    "fs": "^0.0.1-security",
+    "ignore-styles": "^5.0.1",
+    "morgan": "^1.8.2",
+    "node-sass-chokidar": "^0.0.3",
+    "path": "^0.12.7"
   }
 }

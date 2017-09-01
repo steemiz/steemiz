@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
+import { COLOR, COLOR_HOVER } from 'styles/icons';
 
-const COLOR = '#e6e6e6';
-const COLOR_HOVER = '#4aa7f4';
 const ICON_STYLE = {
   float: 'left',
   margin: '.6rem 0',
@@ -14,34 +13,22 @@ class LeftSideBarItem extends PureComponent {
     to: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     icon: PropTypes.func.isRequired,
+    exact: PropTypes.bool,
     onClick: PropTypes.func,
   };
 
-  constructor(props) {
-    super(props);
-
-    const { to, location: { pathname }} = this.props;
-    this.state = {
-      isActive: to === pathname,
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { to } = this.props;
-    const { location: { pathname }} = nextProps;
-    this.setState({
-      isActive: to === pathname,
-    });
-  }
+  static defaultProps = {
+    exact: true,
+  };
 
   render() {
-    const { label, to } = this.props;
-    const { isActive } = this.state;
+    const { label, to, exact, location: { pathname } } = this.props;
+    const isActive = exact ? pathname === to : pathname.indexOf(to) === 0;
     const Icon = this.props.icon;
 
     return (
       <div className="link">
-        <NavLink className="link__inner" activeClassName="active" to={to} exact>
+        <NavLink className="link__inner" activeClassName="active" to={to} exact={exact}>
           <Icon color={isActive ? COLOR_HOVER : COLOR} style={ICON_STYLE} />
           <span>{label}</span>
         </NavLink>

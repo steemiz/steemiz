@@ -16,9 +16,7 @@ export default class InfiniteList extends PureComponent {
   };
 
   static defaultProps = {
-    hasMore: false,
     isLoading: false,
-    initLoad: undefined,
   };
 
   constructor(props) {
@@ -29,8 +27,8 @@ export default class InfiniteList extends PureComponent {
   componentDidMount() {
     // INITIAL DATA LOADING IF PROVIDED
     if (this.props.initLoad) {
-      const { isLoading, list } = this.props;
-      if (isLoading === false && isEmpty(list)) {
+      const { list, hasMore } = this.props;
+      if ((hasMore === true || hasMore === undefined) && isEmpty(list)) {
         this.props.initLoad();
       }
     }

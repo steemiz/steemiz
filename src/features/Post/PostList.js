@@ -24,7 +24,7 @@ class PostList extends Component {
       tag: PropTypes.string,
     }).isRequired,
     postsIsLoading: PropTypes.bool.isRequired,
-    categoryHasMore: PropTypes.bool.isRequired,
+    categoryHasMore: PropTypes.bool,
     getPostsBy: PropTypes.func.isRequired,
     setCategoryTag: PropTypes.func.isRequired,
   };

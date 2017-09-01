@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
-import { selectFollowingsAccounts } from './selectors';
+import { selectFollowingsList } from './selectors';
 import { getFollowingsBegin } from './actions/getFollowings';
 import UserContact from './components/UserContact';
 
@@ -12,35 +12,35 @@ class FollowingList extends Component {
   static propTypes = {
     accountName: PropTypes.string.isRequired,
     getFollowings: PropTypes.func.isRequired,
-    followingsAccounts: PropTypes.array,
+    followings: PropTypes.array,
   };
 
   static defaultProps = {
-    followingsAccounts: undefined,
+    followings: undefined,
   };
 
   componentDidMount() {
-    if (this.props.followers === undefined) {
-      this.props.getFollowings(this.props.accountName);
+    if (this.props.followings === undefined) {
+      this.props.getFollowings();
     }
   }
 
   render() {
-    const { followingsAccounts } = this.props;
+    const { followings } = this.props;
     return (
       <div>
-        {!isEmpty(followingsAccounts) && followingsAccounts.map(account => <UserContact key={account.name} account={account} />)}
+        {!isEmpty(followings) && followings.map(element => <UserContact key={element.following} name={element.following} />)}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state, props) => createStructuredSelector({
-  followingsAccounts: selectFollowingsAccounts(props.accountName),
+  followings: selectFollowingsList(props.accountName),
 });
 
-const mapDispatchToProps = dispatch => ({
-  getFollowings: accountName => dispatch(getFollowingsBegin(accountName)),
+const mapDispatchToProps = (dispatch, props) => ({
+  getFollowings: () => dispatch(getFollowingsBegin(props.accountName, {}, true)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FollowingList);

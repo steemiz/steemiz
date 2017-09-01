@@ -12,8 +12,8 @@ const GET_FOLLOWINGS_FAILURE = 'GET_FOLLOWINGS_FAILURE';
 const GET_FOLLOWINGS_END = 'GET_FOLLOWINGS_END';
 
 /*--------- ACTIONS ---------*/
-export function getFollowingsBegin(accountName, query = {}) {
-  return { type: GET_FOLLOWINGS_BEGIN, accountName, query };
+export function getFollowingsBegin(accountName, query = {}, fetchProfiles = false) {
+  return { type: GET_FOLLOWINGS_BEGIN, accountName, query, fetchProfiles };
 }
 
 export function getFollowingsSuccess(accountName, followings) {
@@ -48,7 +48,14 @@ export function getFollowingsReducer(state, action) {
       return update(state, {
         followings: {
           [accountName]: {
-            list: {$push: followings},
+            list: {$apply: list => {
+              // FILTER RESULTS FOR ACCOUNTS ALREADY IN FOLLOWINGS
+              const filteredFollowings = followings.filter(following => !list.find(followingState => followingState.following === following.following));
+              return [
+                ...list,
+                ...filteredFollowings,
+              ]
+            }},
             isLoading: {$set: false},
           },
         },
@@ -70,7 +77,7 @@ export function getFollowingsReducer(state, action) {
 }
 
 /*--------- SAGAS ---------*/
-function* getFollowings({ accountName, query }) {
+function* getFollowings({ accountName, query, fetchProfiles }) {
   try {
     let startFollowing = '';
     let limit = 20;
@@ -89,23 +96,21 @@ function* getFollowings({ accountName, query }) {
       followings = followings.slice(1);
     }
 
-    // FILTER RESULTS FOR ACCOUNTS ALREADY IN FOLLOWERS
-    const followingsList = yield select(selectFollowingsList(accountName));
-    const filteredFollowings = followings.filter(following => !followingsList.find(followingState => followingState.following === following.following));
-
     // Get followings accounts
-    const accounts = yield select(selectAccounts());
-    const arrayAccounts = Object.keys(accounts);
+    if (fetchProfiles) {
+      const accounts = yield select(selectAccounts());
+      const arrayAccounts = Object.keys(accounts);
 
-    const accountNames = followings
-      .map(account => account.following)
-      // Removes accounts already in state.accounts
-      .filter(accountName => !arrayAccounts.includes(accountName));
-    if (accountNames.length > 0) {
-      yield put(getAccountsBegin(accountNames));
+      const accountNames = followings
+        .map(account => account.following)
+        // Removes accounts already in state.accounts
+        .filter(accountName => !arrayAccounts.includes(accountName));
+      if (accountNames.length > 0) {
+        yield put(getAccountsBegin(accountNames));
+      }
+      yield take(GET_ACCOUNTS_SUCCESS);
     }
-    yield take(GET_ACCOUNTS_SUCCESS);
-    yield put(getFollowingsSuccess(accountName, filteredFollowings));
+    yield put(getFollowingsSuccess(accountName, followings));
   } catch(e) {
     yield put(getFollowingsFailure(e.message));
   }

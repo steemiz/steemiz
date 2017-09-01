@@ -66,18 +66,18 @@ export const selectFollowersCount = accountName => createSelector(
 
 export const selectFollowersList = accountName => createSelector(
   selectFollowersFromUser(accountName),
-  state =>  state.list || [],
+  state =>  state.list,
 );
 
 export const selectLastFollower = accountName => createSelector(
   selectFollowersList(accountName),
-  state => state[state.length - 1],
+  state => state && state[state.length - 1],
 );
 
 export const selectFollowersAccounts = accountName => createSelector(
   [selectAccounts(), selectFollowersList(accountName)],
   (accounts, followers) => {
-    if (!followers.length) {
+    if (!followers) {
       return [];
     }
     const followersAccounts = [];
@@ -108,18 +108,18 @@ export const selectFollowingsCount = accountName => createSelector(
 
 export const selectFollowingsList = accountName => createSelector(
   selectFollowingsFromUser(accountName),
-  state =>  state.list || [],
+  state =>  state.list,
 );
 
 export const selectLastFollowing = accountName => createSelector(
   selectFollowingsList(accountName),
-  state => state[state.length - 1],
+  state => state && state[state.length - 1],
 );
 
 export const selectFollowingsAccounts = accountName => createSelector(
   [selectAccounts(), selectFollowingsList(accountName)],
   (accounts, followings) => {
-    if (!followings.length) {
+    if (!followings) {
       return [];
     }
     const followingsAccounts = [];

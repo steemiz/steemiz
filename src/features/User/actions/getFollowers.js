@@ -12,8 +12,8 @@ const GET_FOLLOWERS_FAILURE = 'GET_FOLLOWERS_FAILURE';
 const GET_FOLLOWERS_END = 'GET_FOLLOWERS_END';
 
 /*--------- ACTIONS ---------*/
-export function getFollowersBegin(accountName, query = {}) {
-  return { type: GET_FOLLOWERS_BEGIN, accountName, query };
+export function getFollowersBegin(accountName, query = {}, fetchProfiles = false) {
+  return { type: GET_FOLLOWERS_BEGIN, accountName, query, fetchProfiles };
 }
 
 export function getFollowersSuccess(accountName, followers) {
@@ -48,7 +48,14 @@ export function getFollowersReducer(state, action) {
       return update(state, {
         followers: {
           [accountName]: {
-            list: {$push: followers},
+            list: {$apply: list => {
+              // FILTER RESULTS FOR ACCOUNTS ALREADY IN FOLLOWERS
+              const filteredFollowers = followers.filter(follower => !list.find(followerState => followerState.follower === follower.follower));
+              return [
+                ...list,
+                ...filteredFollowers,
+              ]
+            }},
             isLoading: {$set: false},
           },
         },
@@ -70,7 +77,7 @@ export function getFollowersReducer(state, action) {
 }
 
 /*--------- SAGAS ---------*/
-function* getFollowers({ accountName, query }) {
+function* getFollowers({ accountName, query, fetchProfiles }) {
   try {
     let startFollower = '';
     let limit = 20;
@@ -89,23 +96,22 @@ function* getFollowers({ accountName, query }) {
       followers = followers.slice(1);
     }
 
-    // FILTER RESULTS FOR ACCOUNTS ALREADY IN FOLLOWERS
-    const followersList = yield select(selectFollowersList(accountName));
-    const filteredFollowers = followers.filter(follower => !followersList.find(followerState => followerState.follower === follower.follower));
-
     // Get followers accounts
-    const accounts = yield select(selectAccounts());
-    const arrayAccounts = Object.keys(accounts);
+    if (fetchProfiles) {
+      const accounts = yield select(selectAccounts());
+      const arrayAccounts = Object.keys(accounts);
 
-    const accountNames = followers
-      .map(account => account.follower)
-      // Removes accounts already in state.accounts
-      .filter(accountName => !arrayAccounts.includes(accountName));
-    if (accountNames.length > 0) {
-      yield put(getAccountsBegin(accountNames));
+      const accountNames = followers
+        .map(account => account.follower)
+        // Removes accounts already in state.accounts
+        .filter(accountName => !arrayAccounts.includes(accountName));
+      if (accountNames.length > 0) {
+        yield put(getAccountsBegin(accountNames));
+      }
+      yield take(GET_ACCOUNTS_SUCCESS);
     }
-    yield take(GET_ACCOUNTS_SUCCESS);
-    yield put(getFollowersSuccess(accountName, filteredFollowers));
+
+    yield put(getFollowersSuccess(accountName, followers));
   } catch(e) {
     yield put(getFollowersFailure(e.message));
   }

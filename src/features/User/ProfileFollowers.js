@@ -47,7 +47,7 @@ const mapStateToProps = (state, props) => createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  getFollowers: query => dispatch(getFollowersBegin(props.match.params.accountName, query)),
+  getFollowers: query => dispatch(getFollowersBegin(props.match.params.accountName, query, true)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileFollowers));

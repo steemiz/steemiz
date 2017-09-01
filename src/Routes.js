@@ -5,17 +5,20 @@ import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { replace } from 'react-router-redux';
 import queryString from 'query-string';
-import asyncComponent from './utils/asyncComponent';
+import asyncComponent from './asyncComponent';
 import { getToken } from './utils/token';
 import { getMeBegin } from './features/User/actions/getMe';
 import { selectMe } from './features/User/selectors';
 
-const Home = asyncComponent(() => import('./pages/Home'));
-const MyFeed = asyncComponent(() => import('./pages/MyFeed'));
-const MyBlog = asyncComponent(() => import('./pages/MyBlog'));
-const TagPostList = asyncComponent(() => import('./pages/TagPostList'));
-const PostRead = asyncComponent(() => import('./features/Post/PostRead'));
-const Profile = asyncComponent(() => import('./features/User/Profile'));
+import universal from 'react-universal-component';
+
+
+const Home = universal(() => import('./pages/Home'));
+const MyFeed = universal(() => import('./pages/MyFeed'));
+const MyBlog = universal(() => import('./pages/MyBlog'));
+const TagPostList = universal(() => import('./pages/TagPostList'));
+const PostRead = universal(() => import('./features/Post/PostRead'));
+const Profile = universal(() => import('./features/User/Profile'));
 
 class Routes extends Component {
   static propTypes = {
