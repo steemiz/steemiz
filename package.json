@@ -25,7 +25,6 @@
     "react-progressive-image": "^0.1.2",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.1.2",
-    "react-router-redux": "next",
     "react-scripts": "1.0.10",
     "react-select": "^1.0.0-rc.5",
     "react-tagsinput": "^3.17.0",
@@ -41,7 +40,6 @@
   },
   "scripts": {
     "start": "NODE_PATH=src react-scripts start",
-    "start:server": "NODE_PATH=src NODE_ENV=production node server/index.js",
     "build-css": "node-sass-chokidar src/ -o src/",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
