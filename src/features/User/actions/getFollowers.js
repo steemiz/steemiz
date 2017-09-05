@@ -2,7 +2,7 @@ import { select, take, call, put, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
 import update from 'immutability-helper';
 
-import { selectLastFollower, selectFollowersList, selectAccounts } from '../selectors';
+import { selectAccounts } from '../selectors';
 import { getAccountsBegin, GET_ACCOUNTS_SUCCESS } from './getAccounts';
 
 /*--------- CONSTANTS ---------*/
@@ -12,8 +12,8 @@ const GET_FOLLOWERS_FAILURE = 'GET_FOLLOWERS_FAILURE';
 const GET_FOLLOWERS_END = 'GET_FOLLOWERS_END';
 
 /*--------- ACTIONS ---------*/
-export function getFollowersBegin(accountName, query = {}, fetchProfiles = false) {
-  return { type: GET_FOLLOWERS_BEGIN, accountName, query, fetchProfiles };
+export function getFollowersBegin(accountName, query = {}, fetchProfiles = false, limit = 0) {
+  return { type: GET_FOLLOWERS_BEGIN, accountName, query, fetchProfiles, limit };
 }
 
 export function getFollowersSuccess(accountName, followers) {
@@ -77,19 +77,26 @@ export function getFollowersReducer(state, action) {
 }
 
 /*--------- SAGAS ---------*/
-function* getFollowers({ accountName, query, fetchProfiles }) {
+function* getFollowers(props) {
+  const { accountName, query, fetchProfiles } = props;
+  let { limit } = props;
+  let endList = false;
   try {
     let startFollower = '';
-    let limit = 20;
+
+    // limit = 0, get all followers
+    if (limit === 0) {
+      limit = 1000;
+    }
     if (query.addMore) {
-      const lastFollower = yield select(selectLastFollower(accountName));
-      startFollower = lastFollower.follower;
+      startFollower = query.lastFollower;
       limit = limit + 1;
     }
 
     let followers = yield call(() => new Promise(resolve => resolve(steem.api.getFollowers(accountName, startFollower, 'blog', limit))));
     if (followers.length < limit) {
       yield put(getFollowersEnd(accountName));
+      endList = true;
     }
 
     if (query.addMore) {
@@ -110,8 +117,11 @@ function* getFollowers({ accountName, query, fetchProfiles }) {
       }
       yield take(GET_ACCOUNTS_SUCCESS);
     }
-
     yield put(getFollowersSuccess(accountName, followers));
+
+    if ((limit === 1000 || limit === 1001) && endList === false) {
+      yield put(getFollowersBegin(accountName, { addMore: true }, false, 0));
+    }
   } catch(e) {
     yield put(getFollowersFailure(e.message));
   }

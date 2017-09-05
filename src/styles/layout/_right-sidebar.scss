@@ -183,6 +183,20 @@
 		min-width: 48px;
 	}
 
+	.search_box {
+		display: flex;
+		align-items: center;
+
+		> svg {
+			margin-right: 10px;
+		}
+	}
+
+	.nav {
+		display: flex;
+		justify-content: flex-end;
+	}
+
 	.user_contact {
 		display: flex;
 		align-items: center;

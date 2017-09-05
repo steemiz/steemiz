@@ -2,7 +2,7 @@ import { select, take, call, put, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
 import update from 'immutability-helper';
 
-import { selectLastFollowing, selectAccounts, selectFollowingsList } from '../selectors';
+import { selectAccounts } from '../selectors';
 import { getAccountsBegin, GET_ACCOUNTS_SUCCESS } from './getAccounts';
 
 /*--------- CONSTANTS ---------*/
@@ -12,8 +12,8 @@ const GET_FOLLOWINGS_FAILURE = 'GET_FOLLOWINGS_FAILURE';
 const GET_FOLLOWINGS_END = 'GET_FOLLOWINGS_END';
 
 /*--------- ACTIONS ---------*/
-export function getFollowingsBegin(accountName, query = {}, fetchProfiles = false) {
-  return { type: GET_FOLLOWINGS_BEGIN, accountName, query, fetchProfiles };
+export function getFollowingsBegin(accountName, query = {}, fetchProfiles = false, limit = 0) {
+  return { type: GET_FOLLOWINGS_BEGIN, accountName, query, fetchProfiles, limit };
 }
 
 export function getFollowingsSuccess(accountName, followings) {
@@ -77,19 +77,26 @@ export function getFollowingsReducer(state, action) {
 }
 
 /*--------- SAGAS ---------*/
-function* getFollowings({ accountName, query, fetchProfiles }) {
+function* getFollowings(props) {
+  const { accountName, query, fetchProfiles } = props;
+  let { limit } = props;
+  let endList = false;
   try {
     let startFollowing = '';
-    let limit = 20;
+
+    // limit = 0, get all followings
+    if (limit === 0) {
+      limit = 90;
+    }
     if (query.addMore) {
-      const lastFollowing = yield select(selectLastFollowing(accountName));
-      startFollowing = lastFollowing.following;
+      startFollowing = query.lastFollowing;
       limit = limit + 1;
     }
 
     let followings = yield call(() => new Promise(resolve => resolve(steem.api.getFollowing(accountName, startFollowing, 'blog', limit))));
     if (followings.length < limit) {
       yield put(getFollowingsEnd(accountName));
+      endList = true;
     }
 
     if (query.addMore) {
@@ -111,6 +118,10 @@ function* getFollowings({ accountName, query, fetchProfiles }) {
       yield take(GET_ACCOUNTS_SUCCESS);
     }
     yield put(getFollowingsSuccess(accountName, followings));
+
+    if ((limit === 90 || limit === 91) && endList === false) {
+      yield put(getFollowingsBegin(accountName, { addMore: true }, false, 0));
+    }
   } catch(e) {
     yield put(getFollowingsFailure(e.message));
   }

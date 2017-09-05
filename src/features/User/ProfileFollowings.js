@@ -12,8 +12,12 @@ import { getFollowingsBegin } from './actions/getFollowings';
 class ProfileFollowings extends Component {
   static propTypes = {
     getFollowings: PropTypes.func.isRequired,
-    followingsAccounts: PropTypes.array.isRequired,
+    followingsAccounts: PropTypes.array,
     followingsFromUser: PropTypes.object.isRequired,
+  };
+
+  static defaultProps = {
+    followingsAccounts: [],
   };
 
   render() {
@@ -22,10 +26,10 @@ class ProfileFollowings extends Component {
       <div className="usercard_container">
         <InfiniteList
           list={followingsAccounts}
-          hasMore={followingsFromUser.hasMore}
+          hasMore={followingsFromUser.hasMore || (followingsFromUser.list && followingsAccounts.length < followingsFromUser.list.length)}
           isLoading={followingsFromUser.isLoading}
           initLoad={getFollowings}
-          loadMoreCb={() => getFollowings({ addMore: true })}
+          loadMoreCb={() => getFollowings({ addMore: true, lastFollowing: followingsAccounts[followingsAccounts.length - 1].name })}
           itemMappingCb={user => (
             <UserCard
               key={user.id}

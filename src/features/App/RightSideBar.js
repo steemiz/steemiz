@@ -9,22 +9,27 @@ import IconDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import IconLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import IconRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import CustomTabs from 'components/CustomTabs';
+import { COLOR_INACTIVE, COLOR_HOVER } from 'styles/icons';
+
 import FollowersList from '../User/FollowersList';
 import FollowingsList from '../User/FollowingsList';
 import { selectIsSidebarOpen, selectTrendingTags } from './selectors';
 import { selectMe } from '../User/selectors';
 import { toggleSidebar } from './actions/sidebar';
 
-const colorActive = '#4aa7f4';
-const colorInactive = '#a2a2a3';
-
 class RightSideBar extends Component {
   static propTypes = {
-    //myProp: PropTypes.string.isRequired
+    isSidebarOpen: PropTypes.bool.isRequired,
+    trendingTags: PropTypes.array,
+    me: PropTypes.string.isRequired,
   };
 
-  constructor(props) {
-    super(props);
+  static defaultProps = {
+    trendingTags: [],
+  };
+
+  constructor() {
+    super();
     this.state = {
       tabs1: 'tags',
       tabs2: 'followers',
@@ -63,7 +68,7 @@ class RightSideBar extends Component {
         <CustomTabs>
           <Tab
             label="Tags"
-            buttonStyle={{ color: tabs1 === 'tags' ? colorActive : colorInactive }}
+            buttonStyle={{ color: tabs1 === 'tags' ? COLOR_HOVER : COLOR_INACTIVE }}
             onActive={this.switchTags}
           >
             <div>
@@ -73,13 +78,13 @@ class RightSideBar extends Component {
                 )}
               </div>
               <button className="btn__show_more" onClick={this.toggleAllTags}>
-                <IconDown color={colorInactive} hoverColor={colorActive} />
+                <IconDown color={COLOR_INACTIVE} hoverColor={COLOR_HOVER} />
               </button>
             </div>
           </Tab>
           <Tab
             label="Users"
-            buttonStyle={{ color: tabs1 === 'users' ? colorActive : colorInactive }}
+            buttonStyle={{ color: tabs1 === 'users' ? COLOR_HOVER : COLOR_INACTIVE }}
             onActive={this.switchUsers}
           >
             <div>
@@ -93,7 +98,7 @@ class RightSideBar extends Component {
         <CustomTabs>
           <Tab
             label="Followers"
-            buttonStyle={{ color: tabs2 === 'followers' ? colorActive : colorInactive }}
+            buttonStyle={{ color: tabs2 === 'followers' ? COLOR_HOVER : COLOR_INACTIVE }}
             onActive={this.switchFollowers}
           >
             <div className="chat_list">
@@ -102,7 +107,7 @@ class RightSideBar extends Component {
           </Tab>
           <Tab
             label="Following"
-            buttonStyle={{ color: tabs2 === 'following' ? colorActive : colorInactive }}
+            buttonStyle={{ color: tabs2 === 'following' ? COLOR_HOVER : COLOR_INACTIVE }}
             onActive={this.switchFollowing}
           >
             <div className="chat_list">
@@ -111,7 +116,7 @@ class RightSideBar extends Component {
           </Tab>
         </CustomTabs>
         <button className="btn_toggle_sidebar" onClick={this.props.toggleSidebar}>
-          {isSidebarOpen ? <IconRight color={colorInactive} hoverColor={colorActive} /> : <IconLeft color={colorInactive} hoverColor={colorActive} />}
+          {isSidebarOpen ? <IconRight color={COLOR_INACTIVE} hoverColor={COLOR_HOVER} /> : <IconLeft color={COLOR_INACTIVE} hoverColor={COLOR_HOVER} />}
         </button>
       </aside>
     );

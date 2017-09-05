@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import isEmpty from 'lodash/isEmpty';
 
+import UsersList from './components/UsersList';
 import { selectFollowingsList } from './selectors';
 import { getFollowingsBegin } from './actions/getFollowings';
-import UserContact from './components/UserContact';
 
 class FollowingList extends Component {
   static propTypes = {
@@ -27,10 +26,9 @@ class FollowingList extends Component {
 
   render() {
     const { followings } = this.props;
+    const followingsDataSource = followings ? followings.map(following => following.following) : [];
     return (
-      <div>
-        {!isEmpty(followings) && followings.map(element => <UserContact key={element.following} name={element.following} />)}
-      </div>
+      <UsersList dataSource={followingsDataSource} />
     );
   }
 }
@@ -40,7 +38,7 @@ const mapStateToProps = (state, props) => createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  getFollowings: () => dispatch(getFollowingsBegin(props.accountName, {}, true)),
+  getFollowings: () => dispatch(getFollowingsBegin(props.accountName, {}, false, 0)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FollowingList);

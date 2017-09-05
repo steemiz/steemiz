@@ -13,8 +13,12 @@ import { getFollowersBegin } from './actions/getFollowers';
 class ProfileFollowers extends Component {
   static propTypes = {
     getFollowers: PropTypes.func.isRequired,
-    followersAccounts: PropTypes.array.isRequired,
+    followersAccounts: PropTypes.array,
     followersFromUser: PropTypes.object.isRequired,
+  };
+
+  static defaultProps = {
+    followersAccounts: [],
   };
 
   render() {
@@ -24,10 +28,10 @@ class ProfileFollowers extends Component {
         {!isEmpty(followersFromUser) && (
           <InfiniteList
             list={followersAccounts}
-            hasMore={followersFromUser.hasMore}
+            hasMore={followersFromUser.hasMore || (followersFromUser.list && followersAccounts.length < followersFromUser.list.length)}
             isLoading={followersFromUser.isLoading}
             initLoad={getFollowers}
-            loadMoreCb={() => getFollowers({ addMore: true })}
+            loadMoreCb={() => getFollowers({ addMore: true, lastFollower: followersAccounts[followersAccounts.length - 1].name })}
             itemMappingCb={user => (
               <UserCard
                 key={user.id}
@@ -47,7 +51,7 @@ const mapStateToProps = (state, props) => createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  getFollowers: query => dispatch(getFollowersBegin(props.match.params.accountName, query, true)),
+  getFollowers: query => dispatch(getFollowersBegin(props.match.params.accountName, query, true, 20)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileFollowers));

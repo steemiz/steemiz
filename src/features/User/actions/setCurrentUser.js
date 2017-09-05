@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { put, select, takeLatest } from 'redux-saga/effects';
 import update from 'immutability-helper';
 import isEmpty from 'lodash/isEmpty';
 import { selectCurrentAccount } from '../selectors';
@@ -14,8 +14,8 @@ export function setCurrentUserBegin(user) {
   return { type: SET_CURRENT_USER_BEGIN, user };
 }
 
-export function setCurrentUserSuccess(user) {
-  return { type: SET_CURRENT_USER_SUCCESS, user };
+export function setCurrentUserSuccess() {
+  return { type: SET_CURRENT_USER_SUCCESS };
 }
 
 export function setCurrentUserFailure(message) {
@@ -25,7 +25,7 @@ export function setCurrentUserFailure(message) {
 /*--------- REDUCER ---------*/
 export function setCurrentUserReducer(state, action) {
   switch (action.type) {
-    case SET_CURRENT_USER_SUCCESS:
+    case SET_CURRENT_USER_BEGIN:
       return update(state, {
         currentUser: {$set: action.user},
       });
@@ -41,9 +41,9 @@ function* setCurrentUser({ user }) {
     if (isEmpty(currentAccount)) {
       yield put(getAccountsBegin([user]));
     }
-    yield put(setCurrentUserSuccess(user));
+    yield put(setCurrentUserSuccess());
   } catch (e) {
-
+    yield put(setCurrentUserFailure(e.message));
   }
 }
 
