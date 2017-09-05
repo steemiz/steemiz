@@ -1481,6 +1481,14 @@ input:-webkit-autofill {
   margin-bottom: 0; }
   .chat_list .avatar_progress {
     min-width: 48px; }
+  .chat_list .search_box {
+    display: flex;
+    align-items: center; }
+    .chat_list .search_box > svg {
+      margin-right: 10px; }
+  .chat_list .nav {
+    display: flex;
+    justify-content: flex-end; }
   .chat_list .user_contact {
     display: flex;
     align-items: center;

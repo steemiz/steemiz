@@ -1,5 +1,4 @@
 import { applyMiddleware, compose, createStore } from 'redux';
-import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createBrowserHistory from 'history/createBrowserHistory';
 import createMemoryHistory from 'history/createMemoryHistory';
@@ -13,7 +12,6 @@ const initialState = {};
 const enhancers = [];
 const middleware = [
   sagaMiddleware,
-  routerMiddleware(history)
 ];
 
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
