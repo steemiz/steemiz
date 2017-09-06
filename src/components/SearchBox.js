@@ -3,7 +3,7 @@ import IconSearch from 'material-ui/svg-icons/action/search';
 import AutoComplete from 'material-ui/AutoComplete';
 import { COLOR_INACTIVE, COLOR_HOVER, COLOR_LIGHT_TEXT } from 'styles/icons';
 
-const SearchBox = ({ dataSource, onNewRequest }) => {
+const SearchBox = ({ dataSource, onNewRequest, onUpdateInput }) => {
   return (
     <div className="search_box">
       <IconSearch color={COLOR_INACTIVE} />
@@ -11,6 +11,7 @@ const SearchBox = ({ dataSource, onNewRequest }) => {
         dataSource={dataSource}
         filter={AutoComplete.caseInsensitiveFilter}
         onNewRequest={onNewRequest}
+        onUpdateInput={onUpdateInput}
         maxSearchResults={10}
         hintText="Search"
         fullWidth

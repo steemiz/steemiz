@@ -429,12 +429,11 @@
             border: 1px solid #b7b7b7;
             border-radius: 5px;
             padding: 3px;
-            position: absolute;
-            top: 10.8rem;
-            right: 1.8rem;
             font-size: 10px;
             color : #b7b7b7;
             min-width: 18px;
+            margin-left: 6px;
+            position: absolute;
         }
 
         &__name {
@@ -442,6 +441,7 @@
             margin: 0.8rem 0rem;
             @include ellipsis(100%);
             display: block;
+            position:relative;
         }
 
         &__steem_power {

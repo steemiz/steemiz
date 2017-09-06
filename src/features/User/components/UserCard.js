@@ -12,11 +12,10 @@ const UserCard = ({ user }) => {
       <div className="user_profile__avatar">
         <AvatarSteemit name={user.name} size={140} votingPower={user.voting_power} />
       </div>
-      {/*<Author name={user.name} reputation={user.reputation}/>*/}
-      <span className="user_profile__rate">{user.reputation}</span>
-      <h3 className="user_profile__name">{user.name}</h3>
-      {/*<span className="user_profile__rate">{formatter.reputation(user.reputation)}</span>
-      <h3 className="user_profile__name">{user.name}</h3>*/}
+      <h3 className="user_profile__name">
+        {user.name}
+        <span className="user_profile__rate">{user.reputation}</span>
+      </h3>
       <h4 className="user_profile__steem_power">
         {user.vesting_shares && <UserSteemPower vestingShares={user.vesting_shares} />}
       </h4>
