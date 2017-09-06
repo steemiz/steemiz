@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import IconButton from 'material-ui/IconButton';
-import IconNavBefore from 'material-ui/svg-icons/image/navigate-before';
-import IconNavNext from 'material-ui/svg-icons/image/navigate-next';
 
+import SideBarNav from 'components/SideBarNav';
 import SearchBox from 'components/SearchBox';
 import UserContact from './UserContact';
 
@@ -67,14 +65,7 @@ export default class UsersList extends PureComponent {
       <div>
         <SearchBox dataSource={dataSource} onNewRequest={this.filter} onUpdateInput={this.reset} />
         {!isEmpty(displayedResults) && displayedResults.map(user => <UserContact key={user} name={user} />)}
-        <div className="nav">
-          <IconButton onClick={() => this.goToPage(page - 1)} disabled={page === 1}>
-            <IconNavBefore />
-          </IconButton>
-          <IconButton onClick={() => this.goToPage(page + 1)} disabled={displayedResults.length !== DISPLAYED_SIZE}>
-            <IconNavNext />
-          </IconButton>
-        </div>
+        <SideBarNav changePage={this.goToPage} page={page} isEndPage={displayedResults.length !== DISPLAYED_SIZE} />
       </div>
     );
   }
