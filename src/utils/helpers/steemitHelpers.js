@@ -72,3 +72,20 @@ export const calculateContentPayout = content => {
 export const displayContentNbComments = content => numeral(content.children).format('0,0');
 export const hasVoted = (content, name) => !!content.active_votes.find(vote => vote.voter === name && vote.percent > 0);
 export const formatAmount = amount => numeral(amount).format('$0,0.00');
+
+export const createCommentPermlink = (parentAuthor, parentPermlink) => {
+  let permlink;
+
+  // comments: re-parentauthor-parentpermlink-time
+  const timeStr = new Date().toISOString().replace(/[^a-zA-Z0-9]+/g, '');
+  const newParentPermlink = parentPermlink.replace(/(-\d{8}t\d{9}z)/g, '');
+  permlink = `re-${parentAuthor}-${newParentPermlink}-${timeStr}`;
+
+  if (permlink.length > 255) {
+    // STEEMIT_MAX_PERMLINK_LENGTH
+    permlink = permlink.substring(permlink.length - 255, permlink.length);
+  }
+  // only letters numbers and dashes shall survive
+  permlink = permlink.toLowerCase().replace(/[^a-z0-9-]+/g, '');
+  return permlink;
+};

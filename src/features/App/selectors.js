@@ -24,3 +24,13 @@ export const selectIsSidebarOpen = () => createSelector(
   selectAppConfig(),
   state => state.sidebar.open,
 );
+
+export const selectCurrentCategory = () => createSelector(
+  selectAppConfig(),
+  posts => posts.currentCategory,
+);
+
+export const selectCurrentTag = () => createSelector(
+  selectAppConfig(),
+  posts => posts.currentTag || 'all',
+);

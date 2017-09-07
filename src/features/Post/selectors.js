@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { selectCommentsDomain } from '../Comment/selectors';
+import { selectCommentsDomain } from 'features/Comment/selectors';
+import { selectCurrentCategory, selectCurrentTag } from 'features/App/selectors';
 
 const selectPostDomain = () => state => state.post;
 
@@ -19,16 +20,6 @@ export const selectIsPublishing = () => createSelector(
 export const selectPosts = () => createSelector(
   selectPostDomain(),
   state => state.posts,
-);
-
-export const selectCurrentCategory = () => createSelector(
-  selectPostDomain(),
-  posts => posts.currentCategory,
-);
-
-export const selectCurrentTag = () => createSelector(
-  selectPostDomain(),
-  posts => posts.currentTag || 'all',
 );
 
 export const selectCurrentPostId = () => createSelector(
@@ -91,9 +82,4 @@ export const selectPostsIsLoading = () => createSelector(
 export const selectCategoryTagHasMore = () => createSelector(
   selectCategoryTag(),
   categoryTag => categoryTag.hasMore,
-);
-
-export const selectOnePostFromCategory = (category, index) => createSelector(
-  selectAllPostsFromCategory(category),
-  posts => posts[index] ? posts[index] : {},
 );

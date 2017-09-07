@@ -13,7 +13,7 @@ export function setCategoryTagReducer(state, action) {
     case SET_CATEGORY_TAG: {
       return {
         ...state,
-        currentCategory: action.category,
+        currentCategory: action.category || state.currentCategory,
         currentTag: action.tag,
       }
     }

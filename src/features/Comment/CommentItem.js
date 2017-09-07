@@ -7,39 +7,30 @@ import { sortCommentsFromSteem } from 'utils/helpers/stateHelpers';
 import ContentPayoutAndVotes from 'components/ContentPayoutAndVotes';
 import AvatarSteemit from 'components/AvatarSteemit';
 import Author from 'components/Author';
+import CommentReplyForm from './CommentReplyForm';
 
 class CommentItem extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+    this.switchReplyForm = this.switchReplyForm.bind(this);
+    this.closeReplyForm = this.closeReplyForm.bind(this);
     this.state = {
-      showEmbeddedComment: false,
+      showReplyForm: false,
       isEditing: false,
     };
   }
 
-  componentDidMount() {
-    this.checkHashLink();
+  switchReplyForm() {
+    this.setState({ showReplyForm: !this.state.showReplyForm });
   }
 
-  checkHashLink() {
-    const { location } = this.props;
-    // eslint-disable-next-line
-    if (window && location.hash) {
-      this.scrollToAnchoredLink();
-    }
-  }
-
-  scrollToAnchoredLink() {
-    const { location } = this.props;
-    // eslint-disable-next-line
-    const targetElm = window.document.getElementById(location.hash);
-    if (!targetElm) return;
-    targetElm.scrollIntoView();
+  closeReplyForm() {
+    this.setState({ showReplyForm: false });
   }
 
   render() {
     const { comment, commentsChild, commentsData, sortOrder } = this.props;
-
+    const { showReplyForm } = this.state;
     return (
       <div className="CommentComponent">
         <div className="CommentItem">
@@ -62,43 +53,11 @@ class CommentItem extends Component {
             </div>
             <div className="CommentComponent__footer">
               <ContentPayoutAndVotes type="comment" content={comment} />
-              <span className="CommentComponent__reply" onClick={this.props.onReply}>Reply</span>
+              <span className="CommentComponent__reply" onClick={this.switchReplyForm}>Reply</span>
             </div>
-            {/*<div className="CommentActionButtons">
-              <div className="CommentActionButtons__button">
-                <a
-                  onClick={!isLiked
-                    ? () => vote(comment, account.voting_power)
-                    : () => vote(comment, 0)}
-                  className={isLiked ? 'active' : ''}
-                >
-                  <ThumbUp />
-                </a>
-              </div>
-
-              <div className="CommentActionButtons__button">
-                {numeral(payout).format('$0,0.000')}
-              </div>
-
-              {isEditable && <div className="CommentActionButtons__button">
-                <a onClick={e => this.handleEditClick(e)}>
-                  <Edit />
-                </a>
-              </div>}
-
-              <a onClick={e => this.handleReplyClick(e)}>
-                <Reply />
-              </a>
-
-              {' '}
-
-              {(comment.children > 0) &&
-                <a tabIndex="0" onClick={this.toggleShowReplies}>
-                  View {comment.children}{' '}
-                  {comment.children > 1 ? 'replies' : 'reply'}
-                </a>
-              }
-            </div>*/}
+            {showReplyForm && (
+              <CommentReplyForm content={comment} closeForm={this.closeReplyForm} />
+            )}
 
             {/*{this.state.showEmbeddedComment &&
               <CommentFormEmbedded

@@ -5,15 +5,18 @@ import combine from 'utils/combine';
  */
 import getAppConfig, { getAppConfigReducer } from './actions/getAppConfig';
 import { sidebarReducer } from './actions/sidebar';
+import { setCategoryTagReducer } from './actions/setCategoryTag';
 
 export const initialState = {
   sidebar: {
     open: true,
   },
+  currentCategory: '',
+  currentTag: '',
 };
 
 export const reducer = (state = initialState, action) => combine(
-  [ getAppConfigReducer, sidebarReducer ],
+  [ getAppConfigReducer, sidebarReducer, setCategoryTagReducer ],
   state,
   action,
 );

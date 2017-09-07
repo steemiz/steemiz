@@ -6,6 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { BrowserRouter as Router } from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import './utils/helpers/immutabilityHelpers';
+import 'utils/date';
 
 import store from './store';
 import App from './features/App/App';

@@ -10,10 +10,10 @@ import CustomTabs from 'components/CustomTabs';
 import { COLOR_INACTIVE, COLOR_HOVER } from 'styles/icons';
 
 import TagsList from './components/TagsList';
-import FollowersList from '../User/FollowersList';
-import FollowingsList from '../User/FollowingsList';
-import { selectIsSidebarOpen, selectTrendingTags } from './selectors';
-import { selectMe } from '../User/selectors';
+import FollowersList from 'features/User/FollowersList';
+import FollowingsList from 'features/User/FollowingsList';
+import { selectIsSidebarOpen, selectTrendingTags, selectCurrentCategory, selectCurrentTag } from './selectors';
+import { selectMe } from 'features/User/selectors';
 import { toggleSidebar } from './actions/sidebar';
 
 class RightSideBar extends Component {
@@ -21,6 +21,8 @@ class RightSideBar extends Component {
     isSidebarOpen: PropTypes.bool.isRequired,
     trendingTags: PropTypes.array,
     me: PropTypes.string.isRequired,
+    currentCategory: PropTypes.string.isRequired,
+    currentTag: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
@@ -52,7 +54,7 @@ class RightSideBar extends Component {
   }
 
   render() {
-    const { isSidebarOpen, trendingTags, me } = this.props;
+    const { isSidebarOpen, trendingTags, me, currentCategory, currentTag } = this.props;
     const { tabs1, tabs2 } = this.state;
     return (
       <aside id="right_sidebar" className={isSidebarOpen ? "-is-open" : ""}>
@@ -62,7 +64,7 @@ class RightSideBar extends Component {
             buttonStyle={{ color: tabs1 === 'tags' ? COLOR_HOVER : COLOR_INACTIVE }}
             onActive={this.switchTags}
           >
-            <TagsList tags={trendingTags} />
+            <TagsList tags={trendingTags} currentCategory={currentCategory} currentTag={currentTag} />
           </Tab>
           <Tab
             label="Users"
@@ -107,6 +109,8 @@ const mapStateToProps = (state, props) => createStructuredSelector({
   me: selectMe(),
   isSidebarOpen: selectIsSidebarOpen(),
   trendingTags: selectTrendingTags(),
+  currentCategory: selectCurrentCategory(),
+  currentTag: selectCurrentTag(),
 });
 
 const mapDispatchToProps = dispatch => ({

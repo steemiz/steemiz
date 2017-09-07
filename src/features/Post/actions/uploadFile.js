@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 
 /*--------- CONSTANTS ---------*/
@@ -19,17 +19,6 @@ export function uploadFileFailure(message) {
   return { type: UPLOAD_FILE_FAILURE, message };
 }
 
-/*--------- REDUCER ---------*/
-export function uploadFileReducer(state, action) {
-  switch (action.type) {
-    case UPLOAD_FILE_SUCCESS:
-      return state
-        .set('success', true);
-    default:
-      return state;
-  }
-}
-
 /*--------- SAGAS ---------*/
 function* uploadFile({ promise, file }) {
   try {
@@ -44,8 +33,10 @@ function* uploadFile({ promise, file }) {
     });
 
     promise.resolve(res);
+    yield put(uploadFileSuccess());
   } catch(e) {
     promise.reject(e);
+    yield put(uploadFileFailure(e.message));
   }
 }
 

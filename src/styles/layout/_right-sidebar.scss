@@ -149,11 +149,15 @@
 			color: $gray;
 			margin: 0 8px 8px 0;
 			cursor: pointer;
-    		box-shadow: 0px 0px 4px 1px #e8e8e8;
+    		box-shadow: 0 0 4px 1px #e8e8e8;
     		&:hover {
     			color: $blue;
     			background: $white;
     		}
+
+			&.active {
+				color: $blue;
+			}
 		}
 	}
 

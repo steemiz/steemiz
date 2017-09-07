@@ -12,6 +12,7 @@ import { selectMe } from './features/User/selectors';
 const Home = universal(() => import('./pages/Home'));
 const MyFeed = universal(() => import('./pages/MyFeed'));
 const MyBlog = universal(() => import('./pages/MyBlog'));
+const Category = universal(() => import('./pages/Category'));
 const TagPostList = universal(() => import('./pages/TagPostList'));
 const PostRead = universal(() => import('./features/Post/PostRead'));
 const Profile = universal(() => import('./features/User/Profile'));
@@ -44,6 +45,7 @@ class Routes extends Component {
           <Route path="/feed" exact component={MyFeed} />
           <Route path="/blog" exact component={MyBlog} />
           <Route path="/@:accountName" component={Profile} />
+          <Route path="/:category" exact component={Category} />
           <Route path="/:topic/@:author/:permlink" exact component={PostRead} />
           <Route path="/:category/:tag" exact component={TagPostList} />
         </Switch>

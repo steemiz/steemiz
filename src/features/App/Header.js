@@ -11,8 +11,9 @@ import Popover from 'material-ui/Popover';
 import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconClose from 'material-ui/svg-icons/navigation/close';
 
-import { selectMe, selectMyAccount } from '../User/selectors';
-import { logoutBegin } from '../User/actions/logout';
+import { selectMe, selectMyAccount } from 'features/User/selectors';
+import { selectCurrentCategory } from './selectors';
+import { logoutBegin } from 'features/User/actions/logout';
 
 import logo from 'styles/assets/imgs/logos/logo.png'
 import PostCreate from 'features/Post/PostCreate';
@@ -36,17 +37,18 @@ const countriesItems = Object.keys(COUNTRIES).map(index => (
 class Header extends Component {
   static propTypes = {
     me: PropTypes.string.isRequired,
+    currentCategory: PropTypes.string.isRequired,
     myAccount: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       filter: {
         post: 1,
-        category: 1,
+        category: "videos",
         country: "1",
       },
       dropdownMenu: {
@@ -55,18 +57,6 @@ class Header extends Component {
       collapseOpen: false,
     }
   }
-
-  handleSelectPost = (event, index, value) => {
-    this.setState(state => {
-      state.filter.post = value
-    })
-  };
-
-  handleSelectCategory = (event, index, value) => {
-    this.setState(state => {
-      state.filter.category = value
-    })
-  };
 
   handleSelectCountry = (event, index, value) => {
     this.setState(state => {
@@ -99,7 +89,7 @@ class Header extends Component {
   };
 
   render() {
-    const { me, myAccount } = this.props;
+    const { me, myAccount, currentCategory } = this.props;
     const { filter, dropdownMenu, collapseOpen } = this.state;
     return (
       <header className="header clearfix">
@@ -118,26 +108,26 @@ class Header extends Component {
         {me && (
           <div className={`header__collapse collapse ${collapseOpen ? 'in' : ''}`}>
             <SelectField
-              value={filter.post}
-              onChange={this.handleSelectPost}
+              value={currentCategory}
               className="select_filter"
               maxHeight={400}
               fullWidth={true}
               autoWidth={true}
             >
-              <MenuItem value={1} key={1} primaryText="all posts" />
-              <MenuItem value={2} key={2} primaryText="my posts" />
+              <MenuItem value="trending" key="trending" primaryText={<Link className="menu_link" to="/trending">trending</Link>} />
+              <MenuItem value="created" key="created" primaryText={<Link className="menu_link" to="/created">new</Link>} />
+              <MenuItem value="hot" key="hot" primaryText={<Link className="menu_link" to="/hot">hot</Link>} />
+              {/*<MenuItem value="promoted" key="promoted" primaryText={<Link className="menu_link" to="/promoted">promoted</Link>} />*/}
             </SelectField>
             <SelectField
               value={filter.category}
-              onChange={this.handleSelectCategory}
               className="select_filter"
               maxHeight={400}
               fullWidth={true}
               autoWidth={true}
             >
-              <MenuItem value={1} key={1} primaryText="videos only" />
-              <MenuItem value={2} key={2} primaryText="articles only" />
+              <MenuItem value="videos" key={1} primaryText="videos only" />
+              <MenuItem value="articles" key={2} primaryText="articles only" />
             </SelectField>
             <SelectField
               value={filter.country}
@@ -185,6 +175,7 @@ class Header extends Component {
 const mapStateToProps = createStructuredSelector({
   me: selectMe(),
   myAccount: selectMyAccount(),
+  currentCategory: selectCurrentCategory(),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

@@ -8,11 +8,13 @@ import {
   selectAllPostsFromCategory,
   selectCategoryTagHasMore,
   selectPostsIsLoading,
+} from './selectors';
+import {
   selectCurrentTag,
   selectCurrentCategory,
-} from './selectors';
+} from 'features/App/selectors';
 import { getPostsByBegin } from './actions/getPostsBy';
-import { setCategoryTag } from './actions/setCategoryTag';
+import { setCategoryTag } from 'features/App/actions/setCategoryTag';
 import InfiniteList from 'components/InfiniteList';
 import ContentItem from 'components/ContentItem';
 
@@ -27,10 +29,12 @@ class PostList extends Component {
     categoryHasMore: PropTypes.bool,
     getPostsBy: PropTypes.func.isRequired,
     setCategoryTag: PropTypes.func.isRequired,
+    currentCategory: PropTypes.string,
+    currentTag: PropTypes.string,
   };
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.loadPosts = this.loadPosts.bind(this);
   }
 
@@ -46,7 +50,7 @@ class PostList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.currentTag !== nextProps.query.tag) {
+    if (this.props.category !== nextProps.category || this.props.query.tag !== nextProps.query.tag) {
       this.props.setCategoryTag(nextProps.category, nextProps.query.tag);
     }
     if (

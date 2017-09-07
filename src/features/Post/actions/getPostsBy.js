@@ -132,10 +132,10 @@ function* getPostsBy({ category, query }) {
     const posts = yield getDiscussionsFromAPI(category, query);
     const tag = query.tag || 'all';
 
-    const filteredPosts = posts.filter(post => !statePosts[`${post.author}/${post.permlink}`]);
-    if (filteredPosts.length === 0) {
+    if (posts.length === 1) {
       yield put(setNoMore(category, tag, true));
     }
+    const filteredPosts = posts.filter(post => !statePosts[`${post.author}/${post.permlink}`]);
     const formattedPosts = filteredPosts.map(post => format(post));
 
     yield put(getPostsBySuccess(category, tag, formattedPosts));

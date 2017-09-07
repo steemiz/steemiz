@@ -1096,6 +1096,8 @@ input:-webkit-autofill {
     color: #999999 !important; }
     .header .select_filter svg path {
       display: none !important; }
+    .header .select_filter a {
+      color: rgba(0, 0, 0, 0.87); }
     .header .select_filter:hover {
       border-radius: 2rem;
       box-shadow: 0px 6px 15px 1px #dadada; }
@@ -1280,6 +1282,9 @@ input:-webkit-autofill {
         .header .search__result__body .comment_card {
           margin: 0;
           border-top: 1px solid #eeeeee; }
+
+.menu_link {
+  color: rgba(0, 0, 0, 0.87); }
 
 #left_sidebar {
   display: flex;
@@ -1466,10 +1471,15 @@ input:-webkit-autofill {
       color: #999999;
       margin: 0 8px 8px 0;
       cursor: pointer;
-      box-shadow: 0px 0px 4px 1px #e8e8e8; }
+      box-shadow: 0 0 4px 1px #e8e8e8; }
       #right_sidebar .tab__result--link:hover {
         color: #4aa7f4;
         background: #ffffff; }
+      #right_sidebar .tab__result--link.active {
+        color: #4aa7f4; }
+  #right_sidebar .nav {
+    display: flex;
+    justify-content: flex-end; }
   #right_sidebar .tab--bottom {
     height: calc(100% - 295px); }
     #right_sidebar .tab--bottom .tab__result {
@@ -1486,9 +1496,6 @@ input:-webkit-autofill {
     align-items: center; }
     .chat_list .search_box > svg {
       margin-right: 10px; }
-  .chat_list .nav {
-    display: flex;
-    justify-content: flex-end; }
   .chat_list .user_contact {
     display: flex;
     align-items: center;
@@ -3598,12 +3605,11 @@ input:-webkit-autofill {
       border: 1px solid #b7b7b7;
       border-radius: 5px;
       padding: 3px;
-      position: absolute;
-      top: 10.8rem;
-      right: 1.8rem;
       font-size: 10px;
       color: #b7b7b7;
-      min-width: 18px; }
+      min-width: 18px;
+      margin-left: 6px;
+      position: absolute; }
     .usercard_container .user_profile__name {
       color: #666;
       margin: 0.8rem 0rem;
@@ -3613,7 +3619,8 @@ input:-webkit-autofill {
       text-overflow: ellipsis;
       white-space: nowrap;
       word-wrap: normal;
-      display: block; }
+      display: block;
+      position: relative; }
     .usercard_container .user_profile__steem_power {
       color: #ff992b;
       margin: 0px; }
