@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Popover from 'material-ui/Popover';
 
 import { getUpvotes, sortVotes } from 'utils/helpers/voteHelpers';
+import CircularProgress from 'components/CircularProgress';
 import Payout from 'features/Comment/Payout';
 import VoteButton from 'features/Vote/VoteButton';
 import { calculateContentPayout, formatAmount } from 'utils/helpers/steemitHelpers';
 
-export default class ContentPayoutAndVotes extends Component {
+export default class ContentPayoutAndVotes extends PureComponent {
   static propTypes = {
     content: PropTypes.object.isRequired, // Post or comment
     type: PropTypes.oneOf(['post', 'comment']).isRequired, // post or comment
@@ -81,8 +82,11 @@ export default class ContentPayoutAndVotes extends Component {
       sortVotes(getUpvotes(content.active_votes), 'rshares')
         .reverse()
         .slice(0, 5);
-    const lastVotesTooltipMsg = fiveLastVotes.map(vote => <li key={vote.voter}><Link
-      to={`/@${vote.voter}`}>{vote.voter}</Link></li>);
+    const lastVotesTooltipMsg = fiveLastVotes.map(vote => (
+      <li key={vote.voter}>
+        <Link to={`/@${vote.voter}`}>{vote.voter}</Link>
+      </li>
+    ));
     if (lastVotesTooltipMsg.length === 5) lastVotesTooltipMsg.push(<li key="...">...</li>);
 
     return (
@@ -91,6 +95,7 @@ export default class ContentPayoutAndVotes extends Component {
           <VoteButton content={content} type={type} />
         </div>
         <div className="Voting__money">
+          {content.isUpdating && <CircularProgress size={20} thickness={3} style={{ marginRight: 10 }} />}
           <span onClick={this.handleViewMoneyCard}>{formatAmount(payout)}</span>
           <Popover
             open={payoutCard.open}

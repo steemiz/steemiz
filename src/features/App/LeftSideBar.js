@@ -8,7 +8,7 @@ import IconRss from 'material-ui/svg-icons/communication/rss-feed';
 import IconAccountCircle from 'material-ui/svg-icons/action/account-circle';
 import IconSettings from 'material-ui/svg-icons/action/settings';
 
-import LeftSideBarItem from './LeftSideBarItem';
+import LeftSideBarItem from './components/LeftSideBarItem';
 import { selectMe } from '../User/selectors';
 
 class LeftSideBar extends Component {

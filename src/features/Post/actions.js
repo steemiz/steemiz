@@ -6,6 +6,7 @@ import getPostsBy, { getPostsByReducer } from './actions/getPostsBy';
 import getOnePost, { getOnePostReducer } from './actions/getOnePost';
 import uploadFile from './actions/uploadFile';
 import publishContent, { publishContentReducer } from './actions/publishContent';
+import postsReducer from './reducer';
 
 const initialState = {
   posts: {},
@@ -21,7 +22,12 @@ const initialState = {
 };
 
 export const reducer = (state = initialState, action) => combine(
-  [ getPostsByReducer, getOnePostReducer, publishContentReducer ],
+  [
+    getPostsByReducer,
+    getOnePostReducer,
+    publishContentReducer,
+    postsReducer,
+  ],
   state,
   action,
 );

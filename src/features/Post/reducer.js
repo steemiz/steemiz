@@ -1,32 +1,25 @@
 import update from 'immutability-helper';
-import { manageContentVote } from '../Vote/utils';
-import { VOTE_OPTIMISTIC, VOTE_FAILURE, VOTE_SUCCESS, UPDATE_PAYOUT } from '../Vote/actions/vote';
-import { GET_COMMENTS_FROM_POST_SUCCESS } from './actions/getCommentsFromPost';
-import { GET_COMMENTS_FROM_USER_SUCCESS } from './actions/getCommentsFromUser';
-import { GET_REPLIES_TO_USER_SUCCESS } from './actions/getRepliesToUser';
-import { getCommentsChildrenLists, mapCommentsBasedOnId } from './utils/comments';
+import { VOTE_FAILURE, VOTE_OPTIMISTIC, VOTE_SUCCESS, UPDATE_PAYOUT } from 'features/Vote/actions/vote';
+import { manageContentVote } from 'features/Vote/utils';
 
-export default function commentsReducer(state, action) {
+function getContentId(content) {
+  return `${content.author}/${content.permlink}`;
+}
+
+/*--------- REDUCER ---------*/
+export default function postsReducer(state, action) {
   switch (action.type) {
-    case GET_COMMENTS_FROM_POST_SUCCESS:
-    case GET_COMMENTS_FROM_USER_SUCCESS:
-    case GET_REPLIES_TO_USER_SUCCESS: {
-      return {
-        ...state,
-        commentsChild: Object.assign(getCommentsChildrenLists(action.state), state.commentsChild),
-        commentsData: Object.assign(mapCommentsBasedOnId(action.state.content), state.commentsData),
-      };
-    }
     case VOTE_OPTIMISTIC: {
       const { content, accountName, weight, params: { type } } = action;
-      if (type === 'comment') {
-        const newComment = manageContentVote({ ...state.commentsData[content.id] }, weight, accountName);
+      if (type === 'post') {
+        const contentId = getContentId(content);
+        const newPost = manageContentVote({ ...state.posts[contentId] }, weight, accountName);
         return update(state, {
-          commentsData: {
-            [content.id]: {$set:
-              newComment,
-            }
-          }
+          posts: {
+            [contentId]: {$set:
+            newPost,
+            },
+          },
         });
       } else {
         return state;
@@ -34,10 +27,11 @@ export default function commentsReducer(state, action) {
     }
     case VOTE_FAILURE: {
       const { content, accountName, params: { type } } = action;
-      if (type === 'comment') {
+      if (type === 'post') {
+        const contentId = getContentId(content);
         return update(state, {
-          commentsData: {
-            [content.id]: {
+          posts: {
+            [contentId]: {
               active_votes: {$apply: votes => {
                 return votes.filter(vote => {
                   if (vote.voter !== accountName) {
@@ -56,10 +50,11 @@ export default function commentsReducer(state, action) {
     }
     case VOTE_SUCCESS: {
       const { content, contentType } = action;
-      if (contentType === 'comment') {
+      if (contentType === 'post') {
+        const contentId = getContentId(content);
         return update(state, {
-          commentsData: {
-            [content.id]: {
+          posts: {
+            [contentId]: {
               isUpdating: {$set: true},
             }
           },
@@ -70,10 +65,11 @@ export default function commentsReducer(state, action) {
     }
     case UPDATE_PAYOUT: {
       const { content, contentType } = action;
-      if (contentType === 'comment') {
+      if (contentType === 'post') {
+        const contentId = getContentId(content);
         return update(state, {
-          commentsData: {
-            [content.id]: {
+          posts: {
+            [contentId]: {
               pending_payout_value: {$set: content.pending_payout_value},
               total_payout_value: {$set: content.total_payout_value},
               isUpdating: {$set: false},

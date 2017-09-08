@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { FormattedRelative } from 'react-intl';
 import { formatter } from 'steem';
@@ -9,7 +9,7 @@ import AvatarSteemit from 'components/AvatarSteemit';
 import Author from 'components/Author';
 import CommentReplyForm from './CommentReplyForm';
 
-class CommentItem extends Component {
+class CommentItem extends PureComponent {
   constructor() {
     super();
     this.switchReplyForm = this.switchReplyForm.bind(this);

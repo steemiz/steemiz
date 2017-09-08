@@ -11,7 +11,7 @@ export const initialState = {
   sidebar: {
     open: true,
   },
-  currentCategory: '',
+  currentCategory: 'trending',
   currentTag: '',
 };
 

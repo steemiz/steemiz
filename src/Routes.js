@@ -4,18 +4,18 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import queryString from 'query-string';
-import universal from 'react-universal-component';
+import asyncComponent from 'asyncComponent';
 import { getToken } from './utils/token';
 import { getMeBegin } from './features/User/actions/getMe';
 import { selectMe } from './features/User/selectors';
 
-const Home = universal(() => import('./pages/Home'));
-const MyFeed = universal(() => import('./pages/MyFeed'));
-const MyBlog = universal(() => import('./pages/MyBlog'));
-const Category = universal(() => import('./pages/Category'));
-const TagPostList = universal(() => import('./pages/TagPostList'));
-const PostRead = universal(() => import('./features/Post/PostRead'));
-const Profile = universal(() => import('./features/User/Profile'));
+const Home = asyncComponent(() => import('./pages/Home'));
+const MyFeed = asyncComponent(() => import('./pages/MyFeed'));
+const MyBlog = asyncComponent(() => import('./pages/MyBlog'));
+const Category = asyncComponent(() => import('./pages/Category'));
+const TagPostList = asyncComponent(() => import('./pages/TagPostList'));
+const PostRead = asyncComponent(() => import('./features/Post/PostRead'));
+const Profile = asyncComponent(() => import('./features/User/Profile'));
 
 class Routes extends Component {
   static propTypes = {

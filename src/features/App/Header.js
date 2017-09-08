@@ -21,7 +21,7 @@ import AvatarSteemit from 'components/AvatarSteemit';
 import GreenButton from 'components/GreenButton';
 
 import { COUNTRIES } from 'constants/constants'
-import HeaderMenu from './HeaderMenu';
+import HeaderMenu from './components/HeaderMenu';
 
 const countriesItems = Object.keys(COUNTRIES).map(index => (
   <MenuItem

@@ -24,8 +24,8 @@ class VoteButton extends Component {
     vote: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.vote = this.vote.bind(this);
   }
 
@@ -45,7 +45,7 @@ class VoteButton extends Component {
     return (
       <IconButton
         tooltip={contentUpvoted ? 'Unvote' : 'Vote'}
-        onClick={!contentUpvoted ? () => this.vote(myAccount.voting_power) : () => this.vote(0)}
+        onClick={!contentUpvoted ? () => this.vote(10000) : () => this.vote(0)}
         disabled={!isConnected}
         iconStyle={{
           width: 18,
@@ -68,8 +68,8 @@ const mapStateToProps = (state, props) => createStructuredSelector({
   isConnected: selectIsConnected(),
 });
 
-const mapDispatchToProps = dispatch => ({
-  vote: (content, weight, params) => dispatch(voteBegin(content, weight, params)),
+const mapDispatchToProps = (dispatch, props) => ({
+  vote: (content, weight, params) => dispatch(voteBegin(content, weight, props.type, params)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VoteButton);

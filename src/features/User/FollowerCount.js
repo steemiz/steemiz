@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import isEmpty from 'lodash/isEmpty';
 import { selectFollowersCount, selectFollowingsCount } from './selectors';
 
 import { getFollowerCountBegin } from './actions/getFollowerCount';

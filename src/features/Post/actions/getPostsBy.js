@@ -1,7 +1,5 @@
 import { select, put, takeEvery } from 'redux-saga/effects';
 import update from 'immutability-helper';
-import { VOTE_FAILURE, VOTE_OPTIMISTIC } from 'features/Vote/actions/vote';
-import { manageContentVote } from 'features/Vote/utils';
 import format from '../utils/format';
 import { getDiscussionsFromAPI } from 'utils/helpers/apiHelpers';
 import { selectPosts } from '../selectors';
@@ -80,45 +78,6 @@ export function getPostsByReducer(state, action) {
           }
         }
       });
-    }
-    case VOTE_OPTIMISTIC: {
-      const { content, accountName, weight, params: { type } } = action;
-      if (type === 'post') {
-        const contentId = `${content.author}/${content.permlink}`;
-        const newPost = manageContentVote({ ...state.posts[contentId] }, weight, accountName);
-        return update(state, {
-          posts: {
-            [contentId]: {$set:
-              newPost,
-            },
-          },
-        });
-      } else {
-        return state;
-      }
-    }
-    case VOTE_FAILURE: {
-      const { content, accountName, params: { type } } = action;
-      if (type === 'post') {
-        const contentId = `${content.author}/${content.permlink}`;
-        return update(state, {
-          posts: {
-            [contentId]: {
-              active_votes: {$apply: votes => {
-                return votes.filter(vote => {
-                  if (vote.voter !== accountName) {
-                    return true;
-                  }
-                  return vote.percent <= 0;
-                });
-              }},
-              net_votes: {$apply: count => count - 1}
-            }
-          },
-        });
-      } else {
-        return state;
-      }
     }
     default:
       return state;

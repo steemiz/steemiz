@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import extractDesc from 'utils/helpers/extractDesc';
 import { FormattedRelative } from 'react-intl';
+import CircularProgress from 'components/CircularProgress';
+import extractDesc from 'utils/helpers/extractDesc';
 import IconFavorite from 'material-ui/svg-icons/action/favorite';
 import IconSms from 'material-ui/svg-icons/notification/sms';
 
@@ -49,6 +50,7 @@ export default class ContentItem extends PureComponent {
             <div className="details">
               <VoteButton content={content} type={type} />
               <div className="price">
+                {content.isUpdating && <CircularProgress size={20} thickness={3} style={{ marginRight: 10 }} />}
                 {formatAmount(payout)}
               </div>
               <Link to="/" title="Favorites" className="social_area social_area--like">

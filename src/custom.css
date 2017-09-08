@@ -2795,7 +2795,8 @@ input:-webkit-autofill {
         color: #7bb54d;
         font-size: 1.3rem;
         font-family: 'nunito_sanssemibold';
-        margin: 0 0.5rem; }
+        margin: 0 0.5rem;
+        display: flex; }
         .post_card__block--info .details .price span {
           font-size: 0.9rem;
           position: relative;
@@ -3035,7 +3036,9 @@ input:-webkit-autofill {
   .Voting__money {
     font-weight: 600;
     margin-right: 8px;
-    cursor: pointer; }
+    cursor: pointer;
+    display: flex;
+    align-items: center; }
     .Voting__money:hover {
       text-decoration: underline; }
   .Voting__voters_list {

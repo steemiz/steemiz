@@ -9,13 +9,13 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Body from 'components/Body';
 import AvatarSteemit from 'components/AvatarSteemit';
 import Author from 'components/Author';
-import { getCommentsFromPostBegin } from '../Comment/actions/getCommentsFromPost';
-import { selectCommentsChild, selectCommentsData, selectCommentsIsLoading } from '../Comment/selectors';
+import { getCommentsFromPostBegin } from 'features/Comment/actions/getCommentsFromPost';
+import { selectCommentsChild, selectCommentsData, selectCommentsIsLoading } from 'features/Comment/selectors';
 import { selectCurrentPost, selectCurrentComments } from './selectors';
 import { getOnePostBegin, setCurrentPostPermlink } from './actions/getOnePost';
-import PostTags from './PostTags';
-import PostFooter from './PostFooter';
-import CommentPost from '../Comment/CommentPost';
+import PostTags from './components/PostTags';
+import PostFooter from './components/PostFooter';
+import CommentPost from 'features/Comment/CommentPost';
 import './PostRead.css';
 
 class PostRead extends Component {

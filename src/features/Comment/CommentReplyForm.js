@@ -34,6 +34,7 @@ class CommentReplyForm extends Component {
   }
 
   render() {
+    const { closeForm } = this.props;
     const { body } = this.state;
     return (
       <div>
@@ -54,7 +55,7 @@ class CommentReplyForm extends Component {
           <FlatButton
             label="Close"
             primary={true}
-            onTouchTap={this.toggleForm}
+            onTouchTap={closeForm}
           />
         </div>
       </div>
