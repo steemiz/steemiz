@@ -9,11 +9,14 @@
 	&__money {
 		font-weight: 600;
 		margin-right: 8px;
-		cursor: pointer;
 		display: flex;
 		align-items: center;
-		&:hover {
-			text-decoration: underline;
+		position: relative;
+		span {
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
 		}
 	}
 
@@ -21,17 +24,26 @@
 		font-weight: 600;
 		padding-left: 7px;
 		border-left: 1px solid #8a8a8a;
-		cursor: pointer;
-		&:hover {
-			text-decoration: underline;
+		position: relative;
+		span {
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
 		}
 	}
 }
 
+.CardBox {
+	position: absolute;
+	top: 100%;
+	background: white;
+	box-shadow: 0 0 8px lightgrey;
+}
+
 .MoneyCard {
-	color: #8a8a8a;
 	padding: 0.7rem 1rem 0.8rem;
-	max-width: 15rem;
+	width: 17rem;
 
 	p {
 		margin: 0 0 0.5rem;

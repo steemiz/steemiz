@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Popover from 'material-ui/Popover';
 
 import { getUpvotes, sortVotes } from 'utils/helpers/voteHelpers';
 import CircularProgress from 'components/CircularProgress';
@@ -19,12 +18,8 @@ export default class ContentPayoutAndVotes extends PureComponent {
     super(props);
 
     this.state = {
-      payoutCard: {
-        open: false
-      },
-      voteCard: {
-        open: false
-      },
+      payoutCard: false,
+      voteCard: false,
     };
   }
 
@@ -33,21 +28,9 @@ export default class ContentPayoutAndVotes extends PureComponent {
     event.preventDefault();
 
     this.setState({
-      payoutCard: {
-        open: true,
-        anchorEl: event.currentTarget,
-      }
+      payoutCard: !this.state.payoutCard,
     })
   };
-
-  handleCloseMoneyCard = () => {
-    this.setState({
-      payoutCard: {
-        open: false,
-      }
-    })
-  };
-
 
   handleViewVoteCard = (event) => {
     // This prevents ghost click.
@@ -57,18 +40,7 @@ export default class ContentPayoutAndVotes extends PureComponent {
     }
 
     this.setState({
-      voteCard: {
-        open: true,
-        anchorEl: event.currentTarget,
-      }
-    })
-  };
-
-  handleCloseVoteCard = () => {
-    this.setState({
-      voteCard: {
-        open: false,
-      }
+      voteCard: !this.state.voteCard,
     })
   };
 
@@ -97,33 +69,21 @@ export default class ContentPayoutAndVotes extends PureComponent {
         <div className="Voting__money">
           {content.isUpdating && <CircularProgress size={20} thickness={3} style={{ marginRight: 10 }} />}
           <span onClick={this.handleViewMoneyCard}>{formatAmount(payout)}</span>
-          <Popover
-            open={payoutCard.open}
-            anchorEl={payoutCard.anchorEl}
-            anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-            targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-            onRequestClose={this.handleCloseMoneyCard}
-          >
-            <div className="MoneyCard">
+          {payoutCard && (
+            <div className="CardBox MoneyCard">
               <Payout content={content} />
             </div>
-          </Popover>
+          )}
         </div>
         <div className="Voting__voters_list">
           <span onClick={this.handleViewVoteCard}>{content.net_votes} votes</span>
-          <Popover
-            open={voteCard.open}
-            anchorEl={voteCard.anchorEl}
-            anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-            targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-            onRequestClose={this.handleCloseVoteCard}
-          >
-            <div className="VoteCard">
+          {voteCard && (
+            <div className="CardBox VoteCard">
               <ul>
                 {lastVotesTooltipMsg}
               </ul>
             </div>
-          </Popover>
+          )}
         </div>
       </div>
     )

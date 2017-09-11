@@ -9,6 +9,7 @@
 	padding: 1rem;
 	text-align: center;
 	z-index: $index_leftsidebar;
+	will-change: transform;
 
 	.link {
 		display: inline-block;

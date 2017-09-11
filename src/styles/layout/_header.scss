@@ -5,6 +5,7 @@
   @include position(fixed, $body_gap $body_gap null $body_gap);
   border-radius: $app_radius $app_radius 0 0;
   z-index: $index_header;
+  will-change: transform;
 
   @media screen and (max-width: 1200px) {
     box-shadow: 0 0 10px 1px #c3c2c2;

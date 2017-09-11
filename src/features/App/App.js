@@ -27,15 +27,15 @@ class App extends Component {
     return (
       <ScrollToTop>
         <div id="app_container">
-            <Header />
-            <LeftSideBar />
-            <RightSideBar />
-            <div id="app_content" className={isSidebarOpen ? 'sidebar_open' : ''}>
-              <div className="content__inner">
-                <Routes />
-              </div>
+          <Header />
+          <LeftSideBar />
+          <RightSideBar />
+          <div id="app_content" className={isSidebarOpen ? 'sidebar_open' : ''}>
+            <div className="content__inner">
+              <Routes />
             </div>
-            <Notification />
+          </div>
+          <Notification />
         </div>
       </ScrollToTop>
     );
