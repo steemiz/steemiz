@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 import isEmpty from 'lodash/isEmpty';
 import format from '../utils/format';
 import { selectAccounts } from '../selectors';
+import { selectAppProps } from 'features/App/selectors';
 
 /*--------- CONSTANTS ---------*/
 const GET_ACCOUNTS_BEGIN = 'GET_ACCOUNTS_BEGIN';
@@ -50,8 +51,9 @@ function* getAccounts({ accounts }) {
     const accountsState = yield select(selectAccounts());
     const filteredRes = res.filter(account => isEmpty(accountsState[account.name]));
 
+    const appProps = yield select(selectAppProps());
     const profiles = filteredRes.reduce((profiles, account) => {
-      profiles[account.name] = format(account);
+      profiles[account.name] = format(account, appProps);
       return profiles;
     }, {});
     yield put(getAccountsSuccess(profiles));

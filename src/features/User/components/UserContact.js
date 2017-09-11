@@ -23,7 +23,7 @@ const UserContact = ({ name }) => {
 };
 
 UserContact.propTypes = {
-  //prop: PropTypes.array.isRequired
+  name: PropTypes.string.isRequired,
 };
 
 export default UserContact;

@@ -1,9 +1,35 @@
+.Vote {
+	border-radius: 100%;
+	overflow: hidden;
+	transition: 0.2s ease;
+	margin-right: .5rem;
+
+	&.active, &:hover {
+		@include gradientDiagonal();
+	}
+
+	.CardBox {
+		width: 300px;
+		padding: 20px;
+	}
+
+	.Slider {
+		display: flex;
+		align-items: center;
+	}
+
+	.Weight {
+		margin-left: 20px;
+	}
+}
+
 .Voting {
 	display: flex;
 	align-items: center;
 
 	&__button {
 		cursor: pointer;
+		position: relative;
 	}
 
 	&__money {
@@ -39,6 +65,7 @@
 	top: 100%;
 	background: white;
 	box-shadow: 0 0 8px lightgrey;
+	z-index: 2;
 }
 
 .MoneyCard {
@@ -79,3 +106,5 @@
 		}
 	}
 }
+
+

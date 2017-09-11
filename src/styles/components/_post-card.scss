@@ -158,34 +158,11 @@
 				display: none;
 			}
 
-			.btn_go_ahead {
-				border: 1px solid #f1f1f1;
-				border-radius: 100%;
-				color: $blue;
-				background: transparent;
-				padding: 0;
-				@include size(2.2rem);
-				text-align: center;
-
-				&:hover, &:active, &:focus {
-					color: $white;
-					@include gradientDiagonal();
-					transition: 0.2s ease;
-					border-color: $blue;
-				}
-				
-				i {
-					transform: rotate(270deg);
-					font-size: 16px;
-					margin-top: 2px;
-				}
-			}
-
 			.price {
 				color: $green;
 				font-size: 1.3rem;
 				font-family: 'nunito_sanssemibold';
-				margin: 0 0.5rem;
+				margin: 0 0.5rem 0 0;
 				display: flex;
 				span {
 					font-size: 0.9rem;

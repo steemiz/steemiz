@@ -28,7 +28,7 @@ export default function extractDesc(content) {
       desc = desc.substring(0, dotSpace + 1)
     } else {
       // Truncate, remove the last (likely partial) word (along with random punctuation), and add ellipses
-      desc = desc.substring(0, 120).trim().replace(/[,!\?]?\s+[^\s]+$/, "…");
+      desc = desc.substring(0, 120).trim().replace(/[,!?]?\s+[^\s]+$/, "…");
     }
   }
   return desc;

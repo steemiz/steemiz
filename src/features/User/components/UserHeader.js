@@ -39,7 +39,7 @@ class UserHeader extends PureComponent {
             <p className="user__info__position">{about}</p>
             <div className="user__info__statistics">
               <div className="statistic statistic--steem_power">
-                <h3>{account.vesting_shares && <UserSteemPower vestingShares={account.vesting_shares} />}</h3>
+                <h3><UserSteemPower account={account} /></h3>
                 <p>Steem Power</p>
               </div>
               <div className="statistic statistic--posts">

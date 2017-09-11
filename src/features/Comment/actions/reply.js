@@ -93,7 +93,7 @@ function* reply({ parent, body }) {
     if (!parent.parent_author) {
       yield put(addCommentsFromPosts(parent, tempId));
     }
-    const res = yield call(() => steemconnect.comment(
+    yield call(() => steemconnect.comment(
       parent.author,
       parent.permlink,
       myAccount.name,

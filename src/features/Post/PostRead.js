@@ -9,13 +9,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Body from 'components/Body';
 import AvatarSteemit from 'components/AvatarSteemit';
 import Author from 'components/Author';
+import CommentItem from 'features/Comment/CommentItem';
+import InfiniteList from 'components/InfiniteList';
 import { getCommentsFromPostBegin } from 'features/Comment/actions/getCommentsFromPost';
 import { selectCommentsChild, selectCommentsData, selectCommentsIsLoading } from 'features/Comment/selectors';
 import { selectCurrentPost, selectCurrentComments } from './selectors';
 import { getOnePostBegin, setCurrentPostPermlink } from './actions/getOnePost';
 import PostTags from './components/PostTags';
 import PostFooter from './components/PostFooter';
-import CommentPost from 'features/Comment/CommentPost';
 import './PostRead.css';
 
 class PostRead extends Component {
@@ -36,6 +37,13 @@ class PostRead extends Component {
     }
   };
 
+  constructor() {
+    super();
+    this.state = {
+      nbCommentsDisplayed: 10,
+    };
+  }
+
   componentDidMount() {
     const { match: { params : { author, permlink }} } = this.props;
     this.props.getOnePost(author, permlink);
@@ -52,8 +60,20 @@ class PostRead extends Component {
     this.props.setCurrentPostId(undefined);
   }
 
+  addMoreComments = () => {
+    this.setState({
+      nbCommentsDisplayed: this.state.nbCommentsDisplayed + 10,
+    });
+  };
+
   render() {
-    const { post, currentComments, commentsData, commentsChild } = this.props;
+    const { post, currentComments, commentsData, commentsChild, commentsIsLoading } = this.props;
+    const { nbCommentsDisplayed } = this.state;
+    let listComments, listCommentsDisplayed = [];
+    if (!isEmpty(currentComments)) {
+      listComments = currentComments.list;
+      listCommentsDisplayed = listComments.slice(0, nbCommentsDisplayed);
+    }
     return (
       <div className="single_post_container clearfix">
         {!isEmpty(post) && (
@@ -92,13 +112,19 @@ class PostRead extends Component {
               </Link>
             </div>
             <div className="PostDetail__large">
-              {!isEmpty(currentComments) && (
-                <CommentPost
-                  currentComments={currentComments}
-                  commentsData={commentsData}
-                  commentsChild={commentsChild}
-                />
-              )}
+              <InfiniteList
+                list={listCommentsDisplayed}
+                hasMore={listComments && listComments.length > nbCommentsDisplayed}
+                isLoading={commentsIsLoading}
+                loadMoreCb={this.addMoreComments}
+                itemMappingCb={commentId =>
+                  <CommentItem
+                    key={commentId}
+                    comment={commentsData[commentId]}
+                    commentsData={commentsData}
+                    commentsChild={commentsChild}
+                  />}
+              />
             </div>
           </div>
         )}

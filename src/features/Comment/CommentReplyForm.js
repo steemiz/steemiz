@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 import TextField from 'material-ui/TextField';

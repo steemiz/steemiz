@@ -3,7 +3,7 @@ import update from 'immutability-helper';
 import draftToHtml from 'draftjs-to-html';
 import kebabCase from 'lodash/kebabCase';
 
-import { getToken, removeToken } from 'utils/token';
+import { getToken } from 'utils/token';
 import steemconnect from 'utils/steemconnect';
 import { selectMyAccount } from 'features/User/selectors';
 import { open } from 'features/Notification/actions/notification';
@@ -92,7 +92,7 @@ function* publishContent({ content }) {
     if (links.length) { metadata.links = links; }
     if (images.length) { metadata.image = images; }
 
-    const res = yield call(() => steemconnect.comment(
+    yield call(() => steemconnect.comment(
       '', // parent_author
       tags.length ? tags[0] : 'general', // parent_permlink
       myAccount.name, // author

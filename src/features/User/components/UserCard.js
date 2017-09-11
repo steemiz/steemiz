@@ -17,7 +17,7 @@ const UserCard = ({ user }) => {
         <span className="user_profile__rate">{user.reputation}</span>
       </h3>
       <h4 className="user_profile__steem_power">
-        {user.vesting_shares && <UserSteemPower vestingShares={user.vesting_shares} />}
+        {user && <UserSteemPower account={user} />}
       </h4>
       <p>Steem Power</p>
       <div className="user_profile__view">

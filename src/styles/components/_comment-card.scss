@@ -67,29 +67,6 @@
 			display: flex;
 			align-items: center;
 
-			.btn_go_ahead {
-				border: 1px solid #f1f1f1;
-				border-radius: 100%;
-				color: $blue;
-				background: transparent;
-				padding: 0;
-				@include size(2.2rem);
-				text-align: center;
-
-				&:hover, &:active, &:focus {
-					color: $white;
-					@include gradientDiagonal();
-					border-color: $blue;
-					transition: 0.2s ease;
-				}
-				
-				i {
-					transform: rotate(270deg);
-					font-size: 16px;
-					margin-top: 2px;
-				}
-			}
-
 			.price {
 				color: $green;
 				font-size: 1.3rem;

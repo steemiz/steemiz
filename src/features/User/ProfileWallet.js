@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { Route, NavLink } from 'react-router-dom';
-import isEmpty from 'lodash/isEmpty';
 import numeral from 'numeral';
 
 import UserSteemPower from './UserSteemPower';
@@ -60,7 +58,7 @@ class ProfileRewards extends Component {
                 </p>
               </div>
               <div className="number">
-                <h3>{currentAccount.vesting_shares && <UserSteemPower vestingShares={currentAccount.vesting_shares} />}</h3>
+                <h3><UserSteemPower account={currentAccount} /></h3>
                 <span className="label">Steem</span>
               </div>
             </div>
@@ -104,11 +102,5 @@ class ProfileRewards extends Component {
 const mapStateToProps = (state, props) => createStructuredSelector({
   currentAccount: selectCurrentAccount(),
 });
-
-/*
-const mapDispatchToProps = (dispatch, props) => ({
-  getTransferHistory: () => dispatch(getTransferHistoryBegin(props.match.params.accountName)),
-});
-*/
 
 export default connect(mapStateToProps)(ProfileRewards);

@@ -42,8 +42,8 @@ export default class PostFooter extends PureComponent {
     const { post } = this.props;
     const { showReplyForm } = this.state;
     return (
-      <div>
-        <div className="article__footer">
+      <div className="article__footer">
+        <div className="article__footer__details">
           <div className="article__footer__left">
             <div className="time_author">
               <IconWatch color={COLOR} style={{ width: SIZE_SMALL }} />
@@ -56,7 +56,7 @@ export default class PostFooter extends PureComponent {
             <ContentPayoutAndVotes type="post" content={post} />
           </div>
 
-          <div className="article__footer__right">
+          <div className="article__footer__details__right">
             <div className="btn_resteem" title="Resteem">
               <IconExchange size={SIZE_SMALL} />
             </div>
