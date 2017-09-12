@@ -1,4 +1,4 @@
-import sc2 from '../sc2';
+import sc2 from 'sc2-sdk';
 
 sc2.init({
   app: 'steemiz.app',

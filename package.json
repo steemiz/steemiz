@@ -35,6 +35,7 @@
     "remarkable": "^1.7.1",
     "reselect": "^3.0.1",
     "sanitize-html": "^1.14.1",
+    "sc2-sdk": "^0.0.4",
     "steem": "^0.5.20",
     "xmldom": "^0.1.27"
   },
