@@ -227,32 +227,6 @@
 
 /*
 |--------------------------------------------------
-| Comments page
-|--------------------------------------------------
-*/
-.comments_container {
-    .comment_card {
-        border-bottom: 1px solid #e6e6e6;
-
-        &__block--content {
-            padding: 1rem;
-        }
-        
-        &__block--info {
-            @media screen and (max-width: 400px) {
-                .details {
-                    display: block;
-                    &>* {
-                        float: left;
-                    }
-                }
-            } 
-        }
-    }
-}
-
-/*
-|--------------------------------------------------
 | Replies page
 |--------------------------------------------------
 */

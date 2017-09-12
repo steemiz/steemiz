@@ -295,10 +295,6 @@
       &__body {
         overflow-y: auto;
         height: calc(100% - #{$height_head} - 1rem);
-        .comment_card {
-          margin: 0;
-          border-top: 1px solid #eeeeee;
-        }
       }
     }
   }

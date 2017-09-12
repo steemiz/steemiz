@@ -15,19 +15,21 @@ class LeftSideBar extends Component {
   render() {
     const { me } = this.props;
     return (
-      <aside id="left_sidebar">
-        <div>
-          <LeftSideBarItem to="/" label="All post" icon={IconView} />
-          <LeftSideBarItem to="/feed" label="Following Feed" icon={IconStar} />
-          <LeftSideBarItem to="/blog" label="My Blog" icon={IconRss} />
-        </div>
+      <div>
         {me && (
-          <div>
-            <LeftSideBarItem to={`/@${me}`} label="Profile" icon={IconAccountCircle} exact={false} />
-            <LeftSideBarItem to="/settings" label="Settings" icon={IconSettings} />
-          </div>
+          <aside id="left_sidebar">
+            <div>
+              <LeftSideBarItem to="/" label="All post" icon={IconView} />
+              <LeftSideBarItem to={`/@${me}/feed`} label="Following Feed" icon={IconStar} />
+              <LeftSideBarItem to={`/@${me}/blog`} label="My Blog" icon={IconRss} />
+            </div>
+            <div>
+              <LeftSideBarItem to={`/@${me}`} label="Profile" icon={IconAccountCircle} exact={false} />
+              <LeftSideBarItem to="/settings" label="Settings" icon={IconSettings} />
+            </div>
+          </aside>
         )}
-      </aside>
+      </div>
     );
   }
 }

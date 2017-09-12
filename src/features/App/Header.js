@@ -42,7 +42,7 @@ class Header extends Component {
     logout: PropTypes.func.isRequired,
   };
 
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
@@ -55,6 +55,16 @@ class Header extends Component {
         open: false,
       },
       collapseOpen: false,
+      category: props.currentCategory,
+    }
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    // CANNOT SET CATEGORY DIRECTLY FROM currentCategory
+    // BECAUSE currentCategory CAN EQUAL 'blog' OR 'feed'
+    // (something different from select options)
+    if (['created', 'hot', 'trending'].indexOf(nextProps.currentCategory) >= 0) {
+      this.setState({ category: nextProps.currentCategory });
     }
   }
 
@@ -89,8 +99,8 @@ class Header extends Component {
   };
 
   render() {
-    const { me, myAccount, currentCategory } = this.props;
-    const { filter, dropdownMenu, collapseOpen } = this.state;
+    const { me, myAccount } = this.props;
+    const { filter, dropdownMenu, collapseOpen, category } = this.state;
     return (
       <header className="header clearfix">
         <div className="header__group header__group--search float_left">
@@ -108,7 +118,7 @@ class Header extends Component {
         {me && (
           <div className={`header__collapse collapse ${collapseOpen ? 'in' : ''}`}>
             <SelectField
-              value={currentCategory}
+              value={category}
               className="select_filter"
               maxHeight={400}
               fullWidth={true}

@@ -1280,9 +1280,6 @@ input:-webkit-autofill {
       .header .search__result__body {
         overflow-y: auto;
         height: calc(100% - 7rem - 1rem); }
-        .header .search__result__body .comment_card {
-          margin: 0;
-          border-top: 1px solid #eeeeee; }
 
 .menu_link {
   color: rgba(0, 0, 0, 0.87); }
@@ -2794,6 +2791,11 @@ input:-webkit-autofill {
         .post_card__block--info .details .social_area i {
           font-size: 1rem;
           margin: 0 0.3rem; }
+  .post_card .resteemed {
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+    font-style: italic; }
   @media screen and (max-width: 800px) {
     .post_card .post_card__block {
       flex-direction: column-reverse; } }
@@ -2817,92 +2819,6 @@ input:-webkit-autofill {
         margin-top: 10px; }
         .post_card .details:before {
           display: block; } }
-
-.comment_card {
-  position: relative;
-  margin: 1rem 0 1rem 0;
-  width: 100%;
-  overflow: hidden; }
-  .comment_card::after {
-    clear: both;
-    content: "";
-    display: table; }
-  .comment_card__block--content {
-    float: left;
-    padding: 1.5rem;
-    width: 100%; }
-    .comment_card__block--content h3 {
-      color: #6f6f6f;
-      margin: 0 0 0.4rem;
-      display: inline-block;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      word-wrap: normal; }
-    .comment_card__block--content p {
-      color: #999999;
-      margin: 0 0 0.3rem;
-      line-height: 1.5rem;
-      display: inline-block;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      word-wrap: normal; }
-    .comment_card__block--content a p:hover, .comment_card__block--content a h3:hover {
-      text-decoration: underline; }
-  .comment_card__block--info {
-    float: left; }
-    .comment_card__block--info::after {
-      clear: both;
-      content: "";
-      display: table; }
-    .comment_card__block--info p {
-      margin: 0; }
-    .comment_card__block--info .author {
-      margin: 0.3rem 1rem; }
-      .comment_card__block--info .author p span {
-        opacity: 0.8;
-        margin-right: 4px; }
-      .comment_card__block--info .author p i {
-        color: #cccccc;
-        border-radius: 0.3rem;
-        padding: 0 4px;
-        font-size: 0.8rem;
-        height: 1.5rem;
-        display: inline-block;
-        line-height: 1.5rem;
-        margin-left: 4px;
-        font-style: normal; }
-    .comment_card__block--info .datetime {
-      margin: 0.3rem 1rem; }
-    .comment_card__block--info .details {
-      display: flex;
-      align-items: center; }
-      .comment_card__block--info .details .price {
-        color: #7bb54d;
-        font-size: 1.3rem;
-        font-family: 'nunito_sanssemibold';
-        margin: 0 0.5rem; }
-        .comment_card__block--info .details .price span {
-          font-size: 0.9rem;
-          position: relative;
-          top: -4px; }
-      .comment_card__block--info .details .social_area {
-        color: #cccccc;
-        border-radius: 0.3rem;
-        margin: 0 0.25rem;
-        padding: 0.2rem 0.5rem;
-        font-size: 0.8rem;
-        display: flex;
-        align-items: center; }
-        .comment_card__block--info .details .social_area i {
-          font-size: 1rem;
-          margin: 0 0.3rem; }
-      .comment_card__block--info .details .social_area--comment i {
-        position: relative;
-        top: 1px; }
 
 .create_post__editor {
   min-height: 15rem;
@@ -2989,7 +2905,6 @@ input:-webkit-autofill {
 .Vote {
   border-radius: 100%;
   overflow: hidden;
-  transition: 0.2s ease;
   margin-right: .5rem; }
   .Vote.active, .Vote:hover {
     background: #53aed1;
@@ -3448,21 +3363,6 @@ input:-webkit-autofill {
   @media screen and (max-width: 480px) {
     .blog_container .post_card[data-style="column"] {
       width: calc(100% - 1rem); } }
-
-/*
-|--------------------------------------------------
-| Comments page
-|--------------------------------------------------
-*/
-.comments_container .comment_card {
-  border-bottom: 1px solid #e6e6e6; }
-  .comments_container .comment_card__block--content {
-    padding: 1rem; }
-  @media screen and (max-width: 400px) {
-    .comments_container .comment_card__block--info .details {
-      display: block; }
-      .comments_container .comment_card__block--info .details > * {
-        float: left; } }
 
 /*
 |--------------------------------------------------

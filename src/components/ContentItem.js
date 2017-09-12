@@ -6,6 +6,7 @@ import CircularProgress from 'components/CircularProgress';
 import extractDesc from 'utils/helpers/extractDesc';
 import IconFavorite from 'material-ui/svg-icons/action/favorite';
 import IconSms from 'material-ui/svg-icons/notification/sms';
+import IconReply from 'material-ui/svg-icons/content/reply';
 
 import Author from './Author';
 import VoteButton from 'features/Vote/VoteButton';
@@ -30,6 +31,8 @@ export default class ContentItem extends PureComponent {
     const splitUrl = content.url.split('#');
     const linkUrl = splitUrl[0];
     const hashUrl = splitUrl[1] ? `#${splitUrl[1]}` : '';
+    const isResteemed = content.reblogged_by.length > 0;
+    const resteemedBy = content.reblogged_by[0];
     return (
       <div className="post_card">
         {type === 'post' && content.main_img && (
@@ -42,9 +45,17 @@ export default class ContentItem extends PureComponent {
         <div className="post_card__block post_card__block--content">
           <Link to={{ pathname: linkUrl, hash: hashUrl }} className="post_card__block">
             <h3>{content.title || content.root_title}</h3>
-            <p>
-              {extractDesc(content)}
-            </p>
+          </Link>
+          {isResteemed && (
+            <div className="resteemed">
+              <IconReply color={COLOR} style={{ width: SIZE_SMALL, margin: '0 0.3rem' }} />
+              <span>
+                Resteemed by {' '}<Link to={`/@${resteemedBy}`}>{resteemedBy}</Link>
+              </span>
+            </div>
+          )}
+          <Link to={{ pathname: linkUrl, hash: hashUrl }} className="post_card__block">
+            <p>{extractDesc(content)}</p>
           </Link>
           <div className="post_card__block post_card__block--info">
             <div className="details">

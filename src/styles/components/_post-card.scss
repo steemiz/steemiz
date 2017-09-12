@@ -195,6 +195,13 @@
 		}
 	}
 
+	.resteemed {
+		display: flex;
+		align-items: center;
+		margin-bottom: .5rem;
+		font-style: italic;
+	}
+
 	@media screen and (max-width: 800px) {
 		.post_card__block {
 			flex-direction: column-reverse;

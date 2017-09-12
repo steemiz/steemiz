@@ -10,8 +10,7 @@ import { getMeBegin } from './features/User/actions/getMe';
 import { selectMe } from './features/User/selectors';
 
 const Home = asyncComponent(() => import('./pages/Home'));
-const MyFeed = asyncComponent(() => import('./pages/MyFeed'));
-const MyBlog = asyncComponent(() => import('./pages/MyBlog'));
+const Feed = asyncComponent(() => import('./pages/Feed'));
 const Category = asyncComponent(() => import('./pages/Category'));
 const TagPostList = asyncComponent(() => import('./pages/TagPostList'));
 const PostRead = asyncComponent(() => import('./features/Post/PostRead'));
@@ -42,8 +41,7 @@ class Routes extends Component {
         {this.props.location.search && <Redirect to="/" />}
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/feed" exact component={MyFeed} />
-          <Route path="/blog" exact component={MyBlog} />
+          <Route path="/@:accountName/feed" exact component={Feed} />
           <Route path="/@:accountName" component={Profile} />
           <Route path="/:category" exact component={Category} />
           <Route path="/:topic/@:author/:permlink" exact component={PostRead} />

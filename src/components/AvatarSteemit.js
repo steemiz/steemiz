@@ -22,7 +22,11 @@ const AvatarSteemit = ({ name, size, votingPower }) => {
             backgroundColor="#999"
             size={size}
           />
-          {votingPower && <div className="avatar__hover"><span>{percentVotingPower}</span></div>}
+          {votingPower && (
+            <div className="avatar__hover">
+              <span style={{ fontSize: size / 2.5 }}>{percentVotingPower}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
