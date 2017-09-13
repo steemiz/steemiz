@@ -1,10 +1,8 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { put, select, takeLatest } from 'redux-saga/effects';
 import update from 'immutability-helper';
 import draftToHtml from 'draftjs-to-html';
-import kebabCase from 'lodash/kebabCase';
-
-import { getToken } from 'utils/token';
-import steemconnect from 'utils/steemconnect';
+import steemconnect from 'sc2-sdk';
+import { createPermlink } from 'utils/helpers/steemitHelpers';
 import { selectMyAccount } from 'features/User/selectors';
 import { open } from 'features/Notification/actions/notification';
 
@@ -69,9 +67,11 @@ export function publishContentReducer(state, action) {
  */
 function* publishContent({ content }) {
   try {
-    steemconnect.setAccessToken(getToken());
     const myAccount = yield select(selectMyAccount());
-    const { title, tags, editorRaw } = content;
+    const { title, tags, editorRaw, reward } = content;
+    const author = myAccount.name;
+    const parentPermlink = tags.length ? tags[0] : 'general';
+    const permlink = yield createPermlink(title, author, parentPermlink, tags[0]);
     const metadata = {
       app: 'steemiz',
     };
@@ -92,15 +92,41 @@ function* publishContent({ content }) {
     if (links.length) { metadata.links = links; }
     if (images.length) { metadata.image = images; }
 
-    yield call(() => steemconnect.comment(
-      '', // parent_author
-      tags.length ? tags[0] : 'general', // parent_permlink
-      myAccount.name, // author
-      kebabCase(title), // permlink
-      title,
-      draftToHtml(editorRaw),
-      metadata,
-    ));
+    const operations = [];
+    const commentOp = [
+      'comment',
+      {
+        parent_author: '',
+        parent_permlink: parentPermlink,
+        author,
+        permlink,
+        title,
+        body: draftToHtml(editorRaw),
+        json_metadata: JSON.stringify(metadata),
+      },
+    ];
+    operations.push(commentOp);
+
+    const commentOptionsConfig = {
+      author,
+      permlink,
+      allow_votes: true,
+      allow_curation_rewards: true,
+    };
+
+    if (reward === '0') {
+      commentOptionsConfig.max_accepted_payout = '0.000 SBD';
+      commentOptionsConfig.percent_steem_dollars = 10000;
+    } else if (reward === '100') {
+      commentOptionsConfig.max_accepted_payout = '1000000.000 SBD';
+      commentOptionsConfig.percent_steem_dollars = 0;
+    }
+
+    if (reward !== '50') {
+      operations.push(['comment_options', commentOptionsConfig]);
+    }
+
+    yield steemconnect.broadcast(operations);
     yield put(publishContentSuccess());
     yield put(open('Congratulations! Your content has been successfully published!'));
   } catch (e) {

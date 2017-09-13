@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bs58": "^4.0.1",
     "draft-js": "^0.10.1",
     "draftjs-to-html": "^0.7.4",
     "embedjs": "^0.0.4",
@@ -36,6 +37,8 @@
     "reselect": "^3.0.1",
     "sanitize-html": "^1.14.1",
     "sc2-sdk": "^0.0.4",
+    "secure-random": "^1.1.1",
+    "speakingurl": "^14.0.1",
     "steem": "^0.5.20",
     "xmldom": "^0.1.27"
   },

@@ -32,13 +32,14 @@ class PostCreate extends Component {
     isPublishing: PropTypes.bool.isRequired,
   };
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       title: '',
       editorState: EditorState.createEmpty(),
       tags: [],
+      reward: '50',
     }
   }
 
@@ -51,17 +52,22 @@ class PostCreate extends Component {
   };
 
   handleCreatePost = () => {
-    //console.log(this.state);
-    const { title, editorState, tags } = this.state;
+    console.log(this.state);
+    const { title, editorState, tags, reward } = this.state;
     this.props.publishContent({
-      title: title,
+      title,
       editorRaw: convertToRaw(editorState.getCurrentContent()),
-      tags: tags,
+      tags,
+      reward,
     });
   };
 
   handleEditorStateChange = editorState => {
     this.setState({ editorState });
+  };
+
+  handleRewards = (evt, index, value) => {
+    this.setState({ reward: value });
   };
 
   uploadImageCallBack = file => {
@@ -71,13 +77,13 @@ class PostCreate extends Component {
   };
 
   handleChangeSelectTag = tags => {
-    this.setState({tags});
+    this.setState({ tags });
   };
 
   render() {
     const { publishFormOpen, isPublishing } = this.props;
-    const { editorState, title } = this.state;
-    const progress = isPublishing ? <CircularProgress size={20} thickness={3} /> : <div/>;
+    const { editorState, title, reward } = this.state;
+    const progress = isPublishing ? <CircularProgress size={20} thickness={3} /> : <div />;
     const actions = [
       progress,
       <FlatButton
@@ -105,19 +111,16 @@ class PostCreate extends Component {
           onRequestClose={this.toggleForm}
           contentStyle={{ width: '90%', height: '90%', maxWidth: 'none' }}
           titleStyle={{ padding: '15px 24px 15px' }}
+          actionsContainerStyle={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
           autoScrollBodyContent={true}
         >
           <div className="create_post__body">
             <TextField
               className="input__group"
               onChange={this.handleTitle}
-              /*errorText={formError.title || null}*/
               floatingLabelText="Title"
               name="title"
               value={title}
-              /*ref={ref => {
-                formData.InputTitle = ref
-              }}*/
             />
             <Editor
               hashtag={{}}
@@ -133,9 +136,12 @@ class PostCreate extends Component {
               floatingLabelText="Rewards"
               maxHeight={400}
               fullWidth={true}
+              onChange={this.handleRewards}
+              value={reward}
             >
-              <MenuItem value={1} key={1} primaryText="50/50" />
-              <MenuItem value={2} key={2} primaryText="49/50" />
+              <MenuItem value="50" key={0} primaryText="Default (50% / 50%)" />
+              <MenuItem value="100" key={1} primaryText="Power Up 100%" />
+              <MenuItem value="0" key={2} primaryText="Decline Payout" />
             </SelectField>
             <TagsInput value={this.state.tags} onChange={this.handleChangeSelectTag} />
 

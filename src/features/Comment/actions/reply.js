@@ -1,6 +1,6 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { put, select, takeLatest } from 'redux-saga/effects';
 import update from 'immutability-helper';
-import steemconnect from 'utils/steemconnect';
+import steemconnect from 'sc2-sdk';
 import { createCommentPermlink } from 'utils/helpers/steemitHelpers';
 import { selectMyAccount } from 'features/User/selectors';
 
@@ -93,7 +93,7 @@ function* reply({ parent, body }) {
     if (!parent.parent_author) {
       yield put(addCommentsFromPosts(parent, tempId));
     }
-    yield call(() => steemconnect.comment(
+    yield steemconnect.comment(
       parent.author,
       parent.permlink,
       myAccount.name,
@@ -101,7 +101,7 @@ function* reply({ parent, body }) {
       '',
       body,
       { tags: [parent.category] },
-    ));
+    );
     yield put(replySuccess());
   } catch (e) {
     yield put(replyFailure(e.message));

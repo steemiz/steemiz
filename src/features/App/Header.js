@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import steemconnect from 'utils/steemconnect';
+import steemconnect from 'sc2-sdk';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
@@ -154,7 +154,7 @@ class Header extends Component {
               {me}
             </button>
             <div>
-              <AvatarSteemit name={me} size={48} votingPower={myAccount.voting_power} />
+              <AvatarSteemit name={me} votingPower={myAccount.voting_power} />
             </div>
             <Popover
               className="header__group__dropdownmenu"

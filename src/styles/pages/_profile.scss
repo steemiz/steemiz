@@ -39,18 +39,17 @@
         }
 
         &__wrapper {
-            @include position(relative, 0 0 0 0);
+            display: flex;
+            position: relative;
             padding: 3rem 2rem 3rem 3rem;
             overflow: hidden;
         }
 
         &__containner {
-            float: left;
             padding-right: 2.2rem;
         }
 
         &__info {
-            float: left;
             color: white;
 
             &__name {
@@ -390,13 +389,6 @@
         &__avatar {
             display: inline-block;
             padding-top: 2rem;
-
-            .avatar {
-                height: 124px !important;
-                width: 124px !important;
-                margin-left: 6px !important;
-                margin-top: 6px !important;
-            }
         }
 
         &__rate {
