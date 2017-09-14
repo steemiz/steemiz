@@ -58,16 +58,6 @@ class CommentItem extends PureComponent {
             {showReplyForm && (
               <CommentReplyForm content={comment} closeForm={this.closeReplyForm} />
             )}
-
-            {/*{this.state.showEmbeddedComment &&
-              <CommentFormEmbedded
-                parentId={comment.id}
-                isReplyToComment
-                isEditing={this.state.isEditing}
-                onSubmit={() => this.setState({ showEmbeddedComment: false, isEditing: false })}
-              />
-            }*/}
-
           </div>
         </div>
         <div className="Comment__child">

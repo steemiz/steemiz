@@ -163,8 +163,9 @@ class Header extends Component {
               anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
               targetOrigin={{ horizontal: 'left', vertical: 'top' }}
               onRequestClose={this.handleCloseDropdownMenu}
+              onClick={this.handleCloseDropdownMenu}
             >
-              <HeaderMenu me={me} logout={this.props.logout} />
+              <HeaderMenu me={me} logout={this.props.logout} closeMenu={this.handleCloseDropdownMenu} />
             </Popover>
           </div>
         )}

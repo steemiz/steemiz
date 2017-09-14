@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Popover from 'material-ui/Popover';
 
 import { getUpvotes, sortVotes } from 'utils/helpers/voteHelpers';
 import CircularProgress from 'components/CircularProgress';
@@ -18,35 +19,43 @@ export default class ContentPayoutAndVotes extends PureComponent {
     super(props);
 
     this.state = {
-      payoutCard: false,
-      voteCard: false,
+      isOpenMoneyCard: false,
+      isOpenVoteCard: false,
+      moneyAnchor: {},
+      voteAnchor: {},
     };
   }
 
-  handleViewMoneyCard = (event) => {
+  openMoneyCard = (event) => {
     // This prevents ghost click.
     event.preventDefault();
 
     this.setState({
-      payoutCard: !this.state.payoutCard,
+      isOpenMoneyCard: !this.state.isOpenMoneyCard,
+      moneyAnchor: event.currentTarget,
     })
   };
 
-  handleViewVoteCard = (event) => {
+  openVoteCard = (event) => {
     // This prevents ghost click.
     event.preventDefault();
-    if (this.props.content.net_votes <= 0) {
-      return;
-    }
 
     this.setState({
-      voteCard: !this.state.voteCard,
+      isOpenVoteCard: !this.state.isOpenVoteCard,
+      voteAnchor: event.currentTarget,
+    })
+  };
+
+  closeCards = () => {
+    this.setState({
+      isOpenMoneyCard: false,
+      isOpenVoteCard: false,
     })
   };
 
   render() {
     const { content, type } = this.props;
-    const { payoutCard, voteCard } = this.state;
+    const { isOpenMoneyCard, isOpenVoteCard } = this.state;
 
     const payout = calculateContentPayout(content);
 
@@ -55,11 +64,13 @@ export default class ContentPayoutAndVotes extends PureComponent {
         .reverse()
         .slice(0, 5);
     const lastVotesTooltipMsg = fiveLastVotes.map(vote => (
-      <li key={vote.voter}>
-        <Link to={`/@${vote.voter}`}>{vote.voter}</Link>
-      </li>
+      <Link to={`/@${vote.voter}`} key={vote.voter}>{vote.voter}</Link>
     ));
-    if (lastVotesTooltipMsg.length === 5) lastVotesTooltipMsg.push(<li key="...">...</li>);
+    if (lastVotesTooltipMsg.length === 5) lastVotesTooltipMsg.push(
+      <div key="...">
+        ... and {content.active_votes.length - 5} more votes.
+      </div>
+    );
 
     return (
       <div className="Voting">
@@ -68,21 +79,33 @@ export default class ContentPayoutAndVotes extends PureComponent {
         </div>
         <div className="Voting__money">
           {content.isUpdating && <CircularProgress size={20} thickness={3} style={{ marginRight: 10 }} />}
-          <span onClick={this.handleViewMoneyCard}>{formatAmount(payout)}</span>
-          {payoutCard && (
-            <div className="CardBox MoneyCard">
+          {payout === 0 ? <span>{formatAmount(payout)}</span> : <span onClick={this.openMoneyCard}>{formatAmount(payout)}</span>}
+          {payout !== 0 && (
+            <Popover
+              className="card"
+              open={isOpenMoneyCard}
+              anchorEl={this.state.moneyAnchor}
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              onRequestClose={this.closeCards}
+            >
               <Payout content={content} />
-            </div>
+            </Popover>
           )}
         </div>
         <div className="Voting__voters_list">
-          <span onClick={this.handleViewVoteCard}>{content.net_votes} votes</span>
-          {voteCard && (
-            <div className="CardBox VoteCard">
-              <ul>
-                {lastVotesTooltipMsg}
-              </ul>
-            </div>
+          {content.net_votes === 0 ? <span>{content.net_votes} votes</span> : <span onClick={this.openVoteCard}>{content.net_votes} votes</span>}
+          {content.net_votes !== 0 && (
+            <Popover
+              className="card"
+              open={isOpenVoteCard}
+              anchorEl={this.state.voteAnchor}
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              onRequestClose={this.closeCards}
+            >
+              {lastVotesTooltipMsg}
+            </Popover>
           )}
         </div>
       </div>

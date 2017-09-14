@@ -9,10 +9,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Body from 'components/Body';
 import AvatarSteemit from 'components/AvatarSteemit';
 import Author from 'components/Author';
-import CommentItem from 'features/Comment/CommentItem';
 import InfiniteList from 'components/InfiniteList';
+import CommentItem from 'features/Comment/CommentItem';
 import { getCommentsFromPostBegin } from 'features/Comment/actions/getCommentsFromPost';
 import { selectCommentsChild, selectCommentsData, selectCommentsIsLoading } from 'features/Comment/selectors';
+import { selectIsConnected } from 'features/User/selectors';
 import { selectCurrentPost, selectCurrentComments } from './selectors';
 import { getOnePostBegin, setCurrentPostPermlink } from './actions/getOnePost';
 import PostTags from './components/PostTags';
@@ -29,6 +30,12 @@ class PostRead extends Component {
     getOnePost: PropTypes.func.isRequired,
     setCurrentPostId: PropTypes.func.isRequired,
     getCommentsFromPost: PropTypes.func.isRequired,
+    isConnected: PropTypes.bool.isRequired,
+    post: PropTypes.object,
+    commentsData: PropTypes.object.isRequired,
+    commentsChild: PropTypes.object.isRequired,
+    currentComments: PropTypes.object,
+    commentsIsLoading: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -67,7 +74,7 @@ class PostRead extends Component {
   };
 
   render() {
-    const { post, currentComments, commentsData, commentsChild, commentsIsLoading } = this.props;
+    const { post, currentComments, commentsData, commentsChild, commentsIsLoading, isConnected } = this.props;
     const { nbCommentsDisplayed } = this.state;
     let listComments, listCommentsDisplayed = [];
     if (!isEmpty(currentComments)) {
@@ -98,20 +105,22 @@ class PostRead extends Component {
               {post.json_metadata.tags ? <PostTags post={post} /> : <div />}
               <PostFooter post={post} />
             </div>
-            <div className="PostDetail__signup">
-              <p>Authors get paid when people like you upvote their post.</p>
-              <p>Join our amazing community to comment and reward others.</p>
-              <Link to="/signup">
-                <RaisedButton
-                  label="Sign up now to receive FREE STEEM"
-                  primary={true}
-                  labelStyle={{ textTransform: 'initial' }}
-                  buttonStyle={{ background: "#368dd2" }}
-                >
-                </RaisedButton>
-              </Link>
-            </div>
-            <div className="PostDetail__large">
+            {!isConnected && (
+              <div className="PostDetail__signup">
+                <p>Authors get paid when people like you upvote their post.</p>
+                <p>Join our amazing community to comment and reward others.</p>
+                <Link to="/signup">
+                  <RaisedButton
+                    label="Sign up now to receive FREE STEEM"
+                    primary={true}
+                    labelStyle={{ textTransform: 'initial' }}
+                    buttonStyle={{ background: "#368dd2" }}
+                  >
+                  </RaisedButton>
+                </Link>
+              </div>
+            )}
+            <div className={`PostDetail__large ${isConnected ? 'border_top' : ''}`}>
               <InfiniteList
                 list={listCommentsDisplayed}
                 hasMore={listComments && listComments.length > nbCommentsDisplayed}
@@ -140,6 +149,7 @@ const mapStateToProps = () => {
     commentsChild: selectCommentsChild(),
     currentComments: selectCurrentComments(),
     commentsIsLoading: selectCommentsIsLoading(),
+    isConnected: selectIsConnected(),
   });
 };
 

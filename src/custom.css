@@ -1887,6 +1887,11 @@ input:-webkit-autofill {
   .Vote .Weight {
     margin-left: 20px; }
 
+.card {
+  padding: 1rem; }
+  .card a {
+    display: block; }
+
 .Voting {
   display: flex;
   align-items: center; }
@@ -1929,8 +1934,7 @@ input:-webkit-autofill {
       margin: 0; }
 
 .VoteCard {
-  max-width: 15rem;
-  min-width: 10rem; }
+  min-width: 12rem; }
   .VoteCard ul {
     list-style-type: none;
     margin: 0;
@@ -2057,7 +2061,10 @@ input:-webkit-autofill {
     margin: 0 auto; }
   .PostDetail__large {
     max-width: 60rem;
-    margin: 2rem auto 0 auto; }
+    margin: 2rem auto;
+    padding-top: 3rem; }
+    .PostDetail__large.border_top {
+      border-top: 1px solid #d5d5d5; }
   .PostDetail__comments__control {
     margin: 0 0 1rem; }
     .PostDetail__comments__control::after {

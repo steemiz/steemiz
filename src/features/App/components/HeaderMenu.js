@@ -11,18 +11,18 @@ import IconQuestion from 'material-ui/svg-icons/action/question-answer';
 import IconPower from 'material-ui/svg-icons/action/power-settings-new';
 import HeaderMenuItems from './HeaderMenuItem';
 
-const HeaderMenu = ({ me, logout }) => {
+const HeaderMenu = ({ me, logout, closeMenu }) => {
   return (
     <Menu>
-      <HeaderMenuItems to="#" label="Notifications" icon={IconNotification} />
-      <HeaderMenuItems to="#" label="Blog" icon={IconSms} />
-      <HeaderMenuItems to={`/@${me}`} label="My Profile" icon={IconAccountCircle} />
-      <HeaderMenuItems to="#" label="Transactions" icon={IconMail} />
+      <HeaderMenuItems to="#" label="Notifications" icon={IconNotification} onClick={closeMenu} />
+      <HeaderMenuItems to="#" label="Blog" icon={IconSms} onClick={closeMenu} />
+      <HeaderMenuItems to={`/@${me}`} label="My Profile" icon={IconAccountCircle} onClick={closeMenu} />
+      <HeaderMenuItems to="#" label="Transactions" icon={IconMail} onClick={closeMenu} />
       <Divider />
-      <HeaderMenuItems to="#" label="Settings" icon={IconSettings} />
-      <HeaderMenuItems to="#" label="Support" icon={IconQuestion} />
+      <HeaderMenuItems to="#" label="Settings" icon={IconSettings} onClick={closeMenu} />
+      <HeaderMenuItems to="#" label="Support" icon={IconQuestion} onClick={closeMenu} />
       <Divider />
-      <HeaderMenuItems to="#" onClick={logout} label="Sign Out" icon={IconPower} />
+      <HeaderMenuItems to="#" onClick={() => { logout(); closeMenu(); }} label="Sign Out" icon={IconPower} />
     </Menu>
   )
 };
@@ -30,6 +30,7 @@ const HeaderMenu = ({ me, logout }) => {
 HeaderMenu.propTypes = {
   me: PropTypes.string.isRequired,
   logout: PropTypes.func.isRequired,
+  closeMenu: PropTypes.func.isRequired,
 };
 
 export default HeaderMenu;
