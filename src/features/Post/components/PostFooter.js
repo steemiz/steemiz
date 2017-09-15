@@ -14,6 +14,9 @@ import CommentReplyForm from 'features/Comment/CommentReplyForm';
 import Author from 'components/Author';
 import { displayContentNbComments } from 'utils/helpers/steemitHelpers';
 import { COLOR, SIZE_SMALL } from 'styles/icons';
+import SmallFlatButton from 'components/SmallFlatButton';
+import SmallIconButton from 'components/SmallIconButton';
+import ReplyButton from 'components/ReplyButton';
 
 export default class PostFooter extends PureComponent {
   static propTypes = {
@@ -57,30 +60,22 @@ export default class PostFooter extends PureComponent {
           </div>
 
           <div className="article__footer__details__right">
-            <div className="btn_resteem" title="Resteem">
-              <IconExchange size={SIZE_SMALL} />
+            <div>
+              <SmallIconButton icon={IconExchange} tooltip="Resteem" />
             </div>
             <div>
-              <span className="btn_reply" title="Reply" onClick={this.switchReplyForm}>Reply</span>
+              <ReplyButton onClick={this.switchReplyForm} />
             </div>
             <div className="responses">
-              <Link to="#">
-                <IconComments size={SIZE_SMALL} />
-                {displayContentNbComments(post)}
-              </Link>
-              {/* No page view method in api */}
-              {/*<Link to="" title="Views"><i className="fa fa-eye" />186</Link>*/}
+              <SmallFlatButton
+                label={displayContentNbComments(post)}
+                icon={IconComments}
+              />
             </div>
             <div>
-              <Link to="#" target="_blank" title="Share on Facebook">
-                <IconFb size={SIZE_SMALL} />
-              </Link>
-              <Link to="#" target="_blank" title="Share on Twitter">
-                <IconTwitter size={SIZE_SMALL} />
-              </Link>
-              <Link to="#" target="_blank" title="Share on Linkedin">
-                <IconLinked size={SIZE_SMALL} />
-              </Link>
+              <SmallIconButton icon={IconFb} tooltip="Share on Facebook" />
+              <SmallIconButton icon={IconTwitter} tooltip="Share on Twitter" />
+              <SmallIconButton icon={IconLinked} tooltip="Share on Linkedin" />
             </div>
           </div>
         </div>

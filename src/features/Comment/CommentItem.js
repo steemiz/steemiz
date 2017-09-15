@@ -7,6 +7,7 @@ import { sortCommentsFromSteem } from 'utils/helpers/stateHelpers';
 import ContentPayoutAndVotes from 'components/ContentPayoutAndVotes';
 import AvatarSteemit from 'components/AvatarSteemit';
 import Author from 'components/Author';
+import ReplyButton from 'components/ReplyButton';
 import CommentReplyForm from './CommentReplyForm';
 
 class CommentItem extends PureComponent {
@@ -54,7 +55,7 @@ class CommentItem extends PureComponent {
             </div>
             <div className="CommentComponent__footer">
               <ContentPayoutAndVotes type="comment" content={comment} />
-              <span className="CommentComponent__reply" onClick={this.switchReplyForm}>Reply</span>
+              <ReplyButton onClick={this.switchReplyForm} />
             </div>
           </div>
         </div>

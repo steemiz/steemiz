@@ -1911,19 +1911,11 @@ input:-webkit-autofill {
     display: flex;
     align-items: center;
     position: relative; }
-    .Voting__money span {
-      cursor: pointer; }
-      .Voting__money span:hover {
-        text-decoration: underline; }
   .Voting__voters_list {
     font-weight: 600;
     padding-left: 7px;
     border-left: 1px solid #8a8a8a;
     position: relative; }
-    .Voting__voters_list span {
-      cursor: pointer; }
-      .Voting__voters_list span:hover {
-        text-decoration: underline; }
 
 .CardBox {
   position: absolute;
@@ -2077,6 +2069,8 @@ input:-webkit-autofill {
       clear: both;
       content: "";
       display: table; }
+  .PostDetail .TagList {
+    margin-bottom: 1rem; }
   .PostDetail .article__post {
     font-size: 21px;
     line-height: 1.58;
@@ -2128,35 +2122,17 @@ input:-webkit-autofill {
       .PostDetail .article__footer__details .responses a > svg {
         margin-right: 5px; }
     .PostDetail .article__footer__details__right > div {
+      display: flex;
       padding: 0 10px;
       border-left: 1px solid #8a8a8a; }
-      .PostDetail .article__footer__details__right > div a {
-        color: #8a8a8a;
-        padding: 0 2px; }
-        .PostDetail .article__footer__details__right > div a:hover {
-          color: #4aa7f4; }
       .PostDetail .article__footer__details__right > div:first-child {
         border-left: 0; }
-    .PostDetail .article__footer__details__right .btn_resteem:hover i {
-      color: #4aa7f4; }
-    .PostDetail .article__footer__details__right .btn_resteem i {
-      font-size: 16px;
-      color: #8a8a8a; }
-    .PostDetail .article__footer__details__right .btn_reply {
-      line-height: 1.5rem;
-      cursor: pointer; }
-      .PostDetail .article__footer__details__right .btn_reply:hover {
-        color: #4aa7f4; }
-    .PostDetail .article__footer__details__right .statistics a i {
-      margin: 0 5px; }
   .PostDetail .time_author {
     display: flex;
     align-items: center;
-    margin-right: 10px; }
+    margin: 6px 15px 0 0; }
     .PostDetail .time_author > * {
       margin-right: 4px; }
-    .PostDetail .time_author__icon {
-      font-size: 18px; }
   .PostDetail__signup {
     text-align: center;
     padding: 1rem 0 2.2rem;

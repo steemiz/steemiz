@@ -5,6 +5,7 @@ import Popover from 'material-ui/Popover';
 
 import { getUpvotes, sortVotes } from 'utils/helpers/voteHelpers';
 import CircularProgress from 'components/CircularProgress';
+import SmallFlatButton from 'components/SmallFlatButton';
 import Payout from 'features/Comment/Payout';
 import VoteButton from 'features/Vote/VoteButton';
 import VotePayout from 'features/Vote/VotePayout';
@@ -83,7 +84,7 @@ export default class ContentPayoutAndVotes extends PureComponent {
           </strong>
         </div>
       ));
-      if (lastVotesTooltipMsg.length === 5) lastVotesTooltipMsg.push(
+      if (content.net_votes > 5) lastVotesTooltipMsg.push(
         <div key="...">
           ... and <strong>{content.active_votes.length - 5}</strong> more votes.
         </div>
@@ -97,7 +98,11 @@ export default class ContentPayoutAndVotes extends PureComponent {
         </div>
         <div className="Voting__money">
           {content.isUpdating && <CircularProgress size={20} thickness={3} style={{ marginRight: 10 }} />}
-          {payout === 0 ? <span>{formatAmount(payout)}</span> : <span onClick={this.openMoneyCard}>{formatAmount(payout)}</span>}
+          {payout === 0 ? (
+            <SmallFlatButton label={formatAmount(payout)} />
+          ) : (
+            <SmallFlatButton onClick={this.openMoneyCard} label={formatAmount(payout)} />
+          )}
           {payout !== 0 && isOpenMoneyCard && (
             <Popover
               className="card"
@@ -113,7 +118,11 @@ export default class ContentPayoutAndVotes extends PureComponent {
           )}
         </div>
         <div className="Voting__voters_list">
-          {content.net_votes === 0 ? <span>{content.net_votes} votes</span> : <span onClick={this.openVoteCard}>{content.net_votes} votes</span>}
+          {content.net_votes === 0 ? (
+            <SmallFlatButton label={`${content.net_votes} votes`} />
+          ) : (
+            <SmallFlatButton onClick={this.openVoteCard} label={`${content.net_votes} votes`} />
+          )}
           {content.net_votes !== 0 && isOpenVoteCard && (
             <Popover
               className="card"

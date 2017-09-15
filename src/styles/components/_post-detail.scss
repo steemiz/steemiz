@@ -32,6 +32,10 @@
 		@include clearfix();
 	}
 
+	.TagList {
+		margin-bottom: 1rem;
+	}
+
 	.article {
 		&__post {
 			font-size: 21px;
@@ -102,7 +106,7 @@
 				flex-direction: column;
 			}
 
-			&>div {
+			& > div {
 				display: flex;
 				align-items: center;
 			}
@@ -116,44 +120,13 @@
 			}
 
 			&__right {
-				&>div {
+				& > div {
+					display: flex;
 					padding: 0 10px;
 					border-left: 1px solid #8a8a8a;
 
-					a {
-						color: #8a8a8a;
-						padding: 0 2px;
-						&:hover {
-							color: $blue;
-						}
-					}
-
 					&:first-child {
 						border-left: 0;
-					}
-				}
-
-				.btn_resteem {
-					&:hover i {
-						color: $blue;
-					}
-					i {
-						font-size: 16px;
-						color: #8a8a8a;
-					}	
-				}
-
-				.btn_reply {
-					line-height: 1.5rem;
-					cursor: pointer;
-					&:hover {
-						color: $blue;
-					}
-				}
-
-				.statistics {
-					a i {
-						margin: 0 5px;
 					}
 				}
 			}
@@ -163,13 +136,9 @@
 	.time_author {
 		display: flex;
 		align-items: center;
-		margin-right: 10px;
+		margin: 6px 15px 0 0;
 		&>* {
 			margin-right: 4px;
-		}
-
-		&__icon {
-			font-size: 18px;
 		}
 	}
 

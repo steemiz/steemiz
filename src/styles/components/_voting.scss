@@ -55,12 +55,6 @@
 		display: flex;
 		align-items: center;
 		position: relative;
-		span {
-			cursor: pointer;
-			&:hover {
-				text-decoration: underline;
-			}
-		}
 	}
 
 	&__voters_list {
@@ -68,12 +62,6 @@
 		padding-left: 7px;
 		border-left: 1px solid #8a8a8a;
 		position: relative;
-		span {
-			cursor: pointer;
-			&:hover {
-				text-decoration: underline;
-			}
-		}
 	}
 }
 
