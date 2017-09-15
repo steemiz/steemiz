@@ -41,7 +41,8 @@ class CommentItem extends PureComponent {
           </div>
           <div className="CommentComponent__detail">
             <div className="CommentComponent__head">
-              <Author name={comment.author} reputation={formatter.reputation(comment.author_reputation)} />
+              <Author name={comment.author}
+                      reputation={formatter.reputation(comment.author_reputation)} />
               <span className="timestamp">
                 <FormattedRelative value={`${comment.created}Z`} />
               </span>
@@ -55,12 +56,14 @@ class CommentItem extends PureComponent {
               <ContentPayoutAndVotes type="comment" content={comment} />
               <span className="CommentComponent__reply" onClick={this.switchReplyForm}>Reply</span>
             </div>
-            {showReplyForm && (
-              <CommentReplyForm content={comment} closeForm={this.closeReplyForm} />
-            )}
           </div>
         </div>
         <div className="Comment__child">
+          {showReplyForm && (
+            <div className="CommentComponent">
+              <CommentReplyForm content={comment} closeForm={this.closeReplyForm} />
+            </div>
+          )}
           {commentsChild[comment.id] && sortCommentsFromSteem(
             commentsChild[comment.id],
             commentsData,

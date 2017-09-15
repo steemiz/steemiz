@@ -70,7 +70,8 @@ export const calculatePayout = (post) => {
 export const calculateContentPayout = content => {
   const pendingPayoutValue = parseFloat(content.pending_payout_value);
   const totalPayoutValue = parseFloat(content.total_payout_value);
-  return totalPayoutValue || pendingPayoutValue;
+  const curatorPayoutValue = parseFloat(content.curator_payout_value);
+  return totalPayoutValue + pendingPayoutValue + curatorPayoutValue;
 };
 
 export const displayContentNbComments = content => numeral(content.children).format('0,0');

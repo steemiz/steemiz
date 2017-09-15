@@ -7,7 +7,7 @@ import { calculatePayout, formatAmount } from "utils/helpers/steemitHelpers";
 
 const AmountWithLabel = ({ label, amount }) => (
   isNumber(amount)
-    ? <div>{label}: {formatAmount(amount)}</div>
+    ? <div>{label}: <strong>{formatAmount(amount)}</strong></div>
     : null
 );
 
@@ -35,7 +35,7 @@ export default class Payout extends PureComponent {
         <AmountWithLabel label="Potential Payout" amount={potentialPayout} />
         <AmountWithLabel label="Promoted" amount={promotionCost} />
         {!isPayoutDeclined && cashoutInTime &&
-        <div>Will release <FormattedRelative value={`${cashoutInTime}Z`} /></div>}
+        <div>Will release <strong><FormattedRelative value={`${cashoutInTime}Z`} /></strong></div>}
         {isPayoutDeclined && <div>Declined Payout</div>}
         <AmountWithLabel label="Max Accepted Payout" amount={maxAcceptedPayout} />
         <AmountWithLabel label="Total Past Payouts" amount={pastPayouts} />

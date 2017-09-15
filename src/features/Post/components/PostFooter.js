@@ -85,7 +85,9 @@ export default class PostFooter extends PureComponent {
           </div>
         </div>
         {showReplyForm && (
-          <CommentReplyForm content={post} closeForm={this.closeReplyForm} />
+          <div className="article__reply">
+            <CommentReplyForm content={post} closeForm={this.closeReplyForm} />
+          </div>
         )}
       </div>
     );

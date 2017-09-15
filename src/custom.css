@@ -67,6 +67,7 @@ html, body {
   background: #2b3b49;
   margin: 0;
   padding: 0;
+  color: #8a8a8a;
   height: 100%;
   width: 100%; }
 
@@ -1889,8 +1890,14 @@ input:-webkit-autofill {
 
 .card {
   padding: 1rem; }
-  .card a {
-    display: block; }
+  .card .Vote__details {
+    display: flex;
+    justify-content: space-between; }
+  .card .weight {
+    color: #d3d3d6;
+    margin-left: .2rem; }
+  .card .value {
+    margin-left: 1rem; }
 
 .Voting {
   display: flex;
@@ -2048,7 +2055,6 @@ input:-webkit-autofill {
   background: #ffffff;
   border-radius: 2px;
   padding: 2rem 1.5rem;
-  color: #8a8a8a;
   font-size: 16px; }
   @media screen and (min-width: 1400px) {
     .PostDetail {
@@ -2101,6 +2107,10 @@ input:-webkit-autofill {
     margin: 0 auto;
     display: block;
     max-width: 100%; }
+  .PostDetail .article__reply {
+    border: 1px solid #efefef;
+    padding: 10px;
+    margin: 40px 0; }
   .PostDetail .article__footer {
     padding: 1rem 0; }
   .PostDetail .article__footer__details {
@@ -2141,7 +2151,8 @@ input:-webkit-autofill {
       margin: 0 5px; }
   .PostDetail .time_author {
     display: flex;
-    align-items: center; }
+    align-items: center;
+    margin-right: 10px; }
     .PostDetail .time_author > * {
       margin-right: 4px; }
     .PostDetail .time_author__icon {
