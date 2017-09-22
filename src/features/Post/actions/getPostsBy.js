@@ -51,10 +51,12 @@ export function getPostsByReducer(state, action) {
       const { category, tag, posts, statePosts } = action;
 
       // Filtering posts already in state
-      const newPosts = posts.filter(post => !statePosts[getPostKey(post)]);
-      posts.forEach(post => {
-        newPosts[getPostKey(post)] = post;
-      });
+      const newPosts = {};
+      posts
+        .filter(post => !statePosts[getPostKey(post)])
+        .forEach(post => {
+          newPosts[getPostKey(post)] = post;
+        });
 
       // Appending new post ids to list
       const oldList = state.categories[category][tag].list;
