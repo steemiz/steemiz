@@ -12,7 +12,7 @@ import IconMenu from 'material-ui/svg-icons/navigation/menu';
 import IconClose from 'material-ui/svg-icons/navigation/close';
 
 import { selectMe, selectMyAccount } from 'features/User/selectors';
-import { selectCurrentCategory } from './selectors';
+import { selectCurrentCategory, selectCurrentTag } from './selectors';
 import { logoutBegin } from 'features/User/actions/logout';
 
 import logo from 'styles/assets/imgs/logos/logo.png'
@@ -99,7 +99,7 @@ class Header extends Component {
   };
 
   render() {
-    const { me, myAccount } = this.props;
+    const { me, myAccount, currentTag } = this.props;
     const { filter, dropdownMenu, collapseOpen, category } = this.state;
     return (
       <header className="header clearfix">
@@ -124,9 +124,9 @@ class Header extends Component {
               fullWidth={true}
               autoWidth={true}
             >
-              <MenuItem value="trending" key="trending" primaryText={<Link className="menu_link" to="/trending">trending</Link>} />
-              <MenuItem value="created" key="created" primaryText={<Link className="menu_link" to="/created">new</Link>} />
-              <MenuItem value="hot" key="hot" primaryText={<Link className="menu_link" to="/hot">hot</Link>} />
+              <MenuItem value="trending" key="trending" primaryText={<Link className="menu_link" to={`/trending${currentTag ? `/${currentTag}` : ''}`}>trending</Link>} />
+              <MenuItem value="created" key="created" primaryText={<Link className="menu_link" to={`/created${currentTag ? `/${currentTag}` : ''}`}>new</Link>} />
+              <MenuItem value="hot" key="hot" primaryText={<Link className="menu_link" to={`/hot${currentTag ? `/${currentTag}` : ''}`}>hot</Link>} />
               {/*<MenuItem value="promoted" key="promoted" primaryText={<Link className="menu_link" to="/promoted">promoted</Link>} />*/}
             </SelectField>
             <SelectField
@@ -187,6 +187,7 @@ const mapStateToProps = createStructuredSelector({
   me: selectMe(),
   myAccount: selectMyAccount(),
   currentCategory: selectCurrentCategory(),
+  currentTag: selectCurrentTag(),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

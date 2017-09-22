@@ -37,5 +37,5 @@ export const selectCurrentCategory = () => createSelector(
 
 export const selectCurrentTag = () => createSelector(
   selectAppConfig(),
-  posts => posts.currentTag || 'all',
+  posts => posts.currentTag,
 );

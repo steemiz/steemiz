@@ -61,11 +61,12 @@
                 align-items: center;
 
                 span {
-                    border: 1px solid white;
-                    border-radius: 0.5rem;
-                    font-size: 0.9rem;
-                    padding: 0.52rem 0.45rem 0.33rem;
+                    border-radius: .5rem;
+                    font-size: .9rem;
+                    padding: .25rem;
                     margin-left: .5rem;
+                    background-color: grey;
+                    font-weight: bold;
                 }
             }
 
@@ -392,13 +393,16 @@
         }
 
         &__rate {
-            border: 1px solid #b7b7b7;
-            border-radius: 5px;
-            padding: 3px;
-            font-size: 10px;
-            color : #b7b7b7;
-            min-width: 18px;
-            margin-left: 6px;
+            color: grey;
+            font-size: .60rem;
+            background-color: #efefef;
+            border-radius: 50px;
+            font-weight: bold;
+            width: 20px;
+            text-align: center;
+            padding: 4px;
+            display: inline-block;
+            margin-left: 5px;
             position: absolute;
         }
 

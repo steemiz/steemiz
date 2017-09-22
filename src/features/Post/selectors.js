@@ -52,7 +52,10 @@ export const selectCategory = () => createSelector(
 
 export const selectCategoryTag = () => createSelector(
   [selectCurrentTag(), selectCategory()],
-  (tag, category) => { return category && category[tag] || {} }
+  (currentTag, category) => {
+    const tag = currentTag ? currentTag : 'all';
+    return category && category[tag] || {};
+  }
 );
 
 export const selectCategoryTagList = () => createSelector(

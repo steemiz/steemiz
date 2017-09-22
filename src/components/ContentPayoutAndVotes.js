@@ -11,6 +11,8 @@ import VoteButton from 'features/Vote/VoteButton';
 import VotePayout from 'features/Vote/VotePayout';
 import { calculateContentPayout, formatAmount } from 'utils/helpers/steemitHelpers';
 
+const NB_SHOW_VOTES = 15;
+
 export default class ContentPayoutAndVotes extends PureComponent {
   static propTypes = {
     content: PropTypes.object.isRequired, // Post or comment
@@ -66,12 +68,12 @@ export default class ContentPayoutAndVotes extends PureComponent {
     if (content.net_votes !== 0 && isOpenVoteCard) {
       const totalRshares = content.active_votes.reduce((total, vote) => total + parseInt(vote.rshares, 10), 0);
       const totalPayout = content.cashout_time.indexOf('1969') === -1 ? parseFloat(content.pending_payout_value) : parseFloat(content.total_payout_value);
-      const fiveLastVotes =
+      const lastVotes =
         sortVotes(getUpvotes(content.active_votes), 'rshares')
           .reverse()
-          .slice(0, 5);
+          .slice(0, NB_SHOW_VOTES);
 
-      lastVotesTooltipMsg = fiveLastVotes.map(vote => (
+      lastVotesTooltipMsg = lastVotes.map(vote => (
         <div className="Vote__details" key={vote.voter}>
           <div>
             <Link to={`/@${vote.voter}`}>
@@ -84,7 +86,7 @@ export default class ContentPayoutAndVotes extends PureComponent {
           </strong>
         </div>
       ));
-      if (content.net_votes > 5) lastVotesTooltipMsg.push(
+      if (content.net_votes > NB_SHOW_VOTES) lastVotesTooltipMsg.push(
         <div key="...">
           ... and <strong>{content.active_votes.length - 5}</strong> more votes.
         </div>

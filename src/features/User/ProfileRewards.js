@@ -40,11 +40,11 @@ class ProfileRewards extends Component {
           <div className="tab__title">
             <NavLink className="tab__key" activeClassName="active" to={`/@${accountName}/rewards`} exact>Curation</NavLink>
             <NavLink className="tab__key" activeClassName="active" to={`/@${accountName}/rewards/author`} exact>Author</NavLink>
-            <Route path="/@:accountName/rewards" exact render={props => <RewardStat type="curation" estimation={lastWeekRewardsCuration} />} />
-            <Route path="/@:accountName/rewards/author" exact render={props => <RewardStat type="author" estimation={lastWeekRewardsAuthor} />} />
+            <Route path={`${match.path}`} exact render={props => <RewardStat type="curation" estimation={lastWeekRewardsCuration} />} />
+            <Route path={`${match.path}/author`} exact render={props => <RewardStat type="author" estimation={lastWeekRewardsAuthor} />} />
           </div>
-          <Route path="/@:accountName/rewards" exact component={ProfileRewardsCuration} />
-          <Route path="/@:accountName/rewards/author" exact component={ProfileRewardsAuthor} />
+          <Route path={`${match.path}`} exact component={ProfileRewardsCuration} />
+          <Route path={`${match.path}/author`} exact component={ProfileRewardsAuthor} />
         </div>
       </div>
     );

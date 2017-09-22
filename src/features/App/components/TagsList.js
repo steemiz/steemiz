@@ -10,7 +10,7 @@ export default class TagsList extends PureComponent {
   static propTypes = {
     tags: PropTypes.array.isRequired,
     currentCategory: PropTypes.string.isRequired,
-    currentTag: PropTypes.string.isRequired,
+    currentTag: PropTypes.string,
   };
 
   constructor() {

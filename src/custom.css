@@ -1829,9 +1829,16 @@ input:-webkit-autofill {
     .Author__name:hover {
       text-decoration: underline; }
   .Author__reputation {
-    padding: 3px;
-    color: #a7abae;
-    font-size: 0.85rem; }
+    color: grey;
+    font-size: .60rem;
+    background-color: #efefef;
+    border-radius: 50px;
+    margin: 0px 5px;
+    font-weight: bold;
+    width: 20px;
+    text-align: center;
+    padding: 4px;
+    margin-top: 1px; }
 
 .AuthorCard {
   max-width: 20rem;
@@ -2208,11 +2215,12 @@ input:-webkit-autofill {
         display: flex;
         align-items: center; }
         .profile_container .user__info__name span {
-          border: 1px solid white;
-          border-radius: 0.5rem;
-          font-size: 0.9rem;
-          padding: 0.52rem 0.45rem 0.33rem;
-          margin-left: .5rem; }
+          border-radius: .5rem;
+          font-size: .9rem;
+          padding: .25rem;
+          margin-left: .5rem;
+          background-color: grey;
+          font-weight: bold; }
       .profile_container .user__info__position {
         font-size: 15px;
         margin: 10px 0; }
@@ -2448,13 +2456,16 @@ input:-webkit-autofill {
       display: inline-block;
       padding-top: 2rem; }
     .usercard_container .user_profile__rate {
-      border: 1px solid #b7b7b7;
-      border-radius: 5px;
-      padding: 3px;
-      font-size: 10px;
-      color: #b7b7b7;
-      min-width: 18px;
-      margin-left: 6px;
+      color: grey;
+      font-size: .60rem;
+      background-color: #efefef;
+      border-radius: 50px;
+      font-weight: bold;
+      width: 20px;
+      text-align: center;
+      padding: 4px;
+      display: inline-block;
+      margin-left: 5px;
       position: absolute; }
     .usercard_container .user_profile__name {
       color: #666;

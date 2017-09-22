@@ -13,9 +13,16 @@
 	}
 
 	&__reputation {
-		padding: 3px;
-		color: #a7abae;
-		font-size: 0.85rem;
+		color: grey;
+		font-size: .60rem;
+		background-color: #efefef;
+		border-radius: 50px;
+		margin: 0px 5px;
+		font-weight: bold;
+		width: 20px;
+		text-align: center;
+		padding: 4px;
+		margin-top: 1px;
 	}
 }
 

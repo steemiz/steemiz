@@ -22,7 +22,7 @@ class RightSideBar extends Component {
     trendingTags: PropTypes.array,
     me: PropTypes.string.isRequired,
     currentCategory: PropTypes.string.isRequired,
-    currentTag: PropTypes.string.isRequired,
+    currentTag: PropTypes.string,
   };
 
   static defaultProps = {

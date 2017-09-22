@@ -16,8 +16,8 @@ export function getPostsByBegin(category, query) {
   return { type: GET_POSTS_BY_BEGIN, category, query };
 }
 
-export function getPostsBySuccess(category, tag, posts) {
-  return { type: GET_POSTS_BY_SUCCESS, category, tag, posts };
+export function getPostsBySuccess(category, tag, posts, statePosts) {
+  return { type: GET_POSTS_BY_SUCCESS, category, tag, posts, statePosts };
 }
 
 export function getPostsByFailure(message) {
@@ -48,20 +48,26 @@ export function getPostsByReducer(state, action) {
       });
     }
     case GET_POSTS_BY_SUCCESS: {
-      const { category, tag, posts } = action;
-      const postsObject = {};
+      const { category, tag, posts, statePosts } = action;
+
+      // Filtering posts already in state
+      const newPosts = posts.filter(post => !statePosts[getPostKey(post)]);
       posts.forEach(post => {
-        postsObject[getPostKey(post)] = post;
+        newPosts[getPostKey(post)] = post;
       });
 
+      // Appending new post ids to list
+      const oldList = state.categories[category][tag].list;
+      const listToPush = posts
+        .filter(post => !oldList.find(postId => postId === getPostKey(post)))
+        .map(post => getPostKey(post));
+
       return update(state, {
-        posts: { $merge: postsObject },
+        posts: { $merge: newPosts },
         categories: {
           [category]: {
             [tag]: {
-              list: {$push:
-                posts.map(post => getPostKey(post)),
-              },
+              list: {$push: listToPush},
               isLoading: {$set: false},
             },
           },
@@ -91,14 +97,12 @@ function* getPostsBy({ category, query }) {
     const statePosts = yield select(selectPosts());
     const posts = yield getDiscussionsFromAPI(category, query);
     const tag = query.tag || 'all';
-
     if (posts.length === 1) {
       yield put(setNoMore(category, tag, true));
     }
-    const filteredPosts = posts.filter(post => !statePosts[getPostKey(post)]);
-    const formattedPosts = filteredPosts.map(post => format(post));
+    const formattedPosts = posts.map(post => format(post));
 
-    yield put(getPostsBySuccess(category, tag, formattedPosts));
+    yield put(getPostsBySuccess(category, tag, formattedPosts, statePosts));
   } catch(e) {
     yield put(getPostsByFailure(e.message));
   }
