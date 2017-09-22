@@ -18,8 +18,7 @@ import steemconnect from 'sc2-sdk';
 steemconnect.init({
   app: 'steemiz.app',
   callbackURL: process.env.REACT_APP_STEEMCONNECT_REDIRECT_URL,
-  accessToken: 'access_token',
-  scope: ['vote', 'comment', 'comment_options']
+  accessToken: 'access_token'
 });
 steemconnect.setAccessToken(getToken());
 

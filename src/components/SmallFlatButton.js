@@ -7,7 +7,7 @@ const SmallFlatButton = ({ label, icon, color, ...rest }) => {
   const Icon = icon;
   return (
     <FlatButton
-      style={{ height: 32, lineHeight: '32px', minWidth: 60 }}
+      style={{ height: 32, lineHeight: '32px', minWidth: 60, whiteSpace: 'nowrap' }}
       labelStyle={{ color: color }}
       label={label}
       icon={Icon && <Icon style={{ height: 32 }} color={color} size={SIZE_SMALL} />}

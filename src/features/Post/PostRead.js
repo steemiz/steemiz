@@ -36,6 +36,7 @@ class PostRead extends Component {
     commentsChild: PropTypes.object.isRequired,
     currentComments: PropTypes.object,
     commentsIsLoading: PropTypes.bool.isRequired,
+    resteem: PropTypes.func.isRequired,
   };
 
   static defaultProps = {

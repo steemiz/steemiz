@@ -128,7 +128,7 @@ function* publishContent({ content }) {
 
     yield steemconnect.broadcast(operations);
     yield put(publishContentSuccess());
-    yield put(open('Congratulations! Your content has been successfully published!'));
+    yield put(open('success', 'Congratulations! Your content has been successfully published!'));
   } catch (e) {
     yield put(publishContentFailure(e.message));
   }

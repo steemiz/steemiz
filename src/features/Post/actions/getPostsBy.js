@@ -1,6 +1,7 @@
 import { select, put, takeEvery } from 'redux-saga/effects';
 import update from 'immutability-helper';
 import format from '../utils/format';
+import getPostKey from '../utils/postKey';
 import { getDiscussionsFromAPI } from 'utils/helpers/apiHelpers';
 import { selectPosts } from '../selectors';
 
@@ -50,7 +51,7 @@ export function getPostsByReducer(state, action) {
       const { category, tag, posts } = action;
       const postsObject = {};
       posts.forEach(post => {
-        postsObject[`${post.author}/${post.permlink}`] = post;
+        postsObject[getPostKey(post)] = post;
       });
 
       return update(state, {
@@ -59,7 +60,7 @@ export function getPostsByReducer(state, action) {
           [category]: {
             [tag]: {
               list: {$push:
-                posts.map(post => `${post.author}/${post.permlink}`),
+                posts.map(post => getPostKey(post)),
               },
               isLoading: {$set: false},
             },
@@ -94,7 +95,7 @@ function* getPostsBy({ category, query }) {
     if (posts.length === 1) {
       yield put(setNoMore(category, tag, true));
     }
-    const filteredPosts = posts.filter(post => !statePosts[`${post.author}/${post.permlink}`]);
+    const filteredPosts = posts.filter(post => !statePosts[getPostKey(post)]);
     const formattedPosts = filteredPosts.map(post => format(post));
 
     yield put(getPostsBySuccess(category, tag, formattedPosts));

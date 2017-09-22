@@ -42,7 +42,7 @@ export default class ContentItem extends PureComponent {
             style={{background: `url(${content.main_img}) no-repeat #eee center center / cover`}}
           />
         )}
-        <div className="post_card__block post_card__block--content">
+        <div className={`post_card__block post_card__block--content ${!content.main_img && 'full'}`}>
           <Link to={{ pathname: linkUrl, hash: hashUrl }} className="post_card__block">
             <h3>{content.title || content.root_title}</h3>
           </Link>

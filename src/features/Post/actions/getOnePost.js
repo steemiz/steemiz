@@ -4,6 +4,7 @@ import update from 'immutability-helper';
 import isEmpty from 'lodash/isEmpty';
 
 import format from '../utils/format';
+import getPostKey from '../utils/postKey';
 import { selectPostByPermlink } from '../selectors';
 
 /*--------- CONSTANTS ---------*/
@@ -41,7 +42,7 @@ export function getOnePostReducer(state, action) {
       const { post } = action;
       return update(state, {
         posts: {$merge: {
-          [`${post.author}/${post.permlink}`]: post,
+          [getPostKey(post)]: post,
         }},
       });
     }

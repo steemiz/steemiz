@@ -104,6 +104,10 @@
 		color: #999999;
 		width: 80%;
 
+		&.full {
+			width: 100%;
+		}
+
 		h3 {
 			color: #6f6f6f;
 			margin: 0 0 0.4rem;

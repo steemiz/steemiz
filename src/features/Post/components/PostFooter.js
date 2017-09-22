@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FormattedRelative } from 'react-intl';
 import IconWatch from 'material-ui/svg-icons/action/watch-later';
-import IconExchange from 'react-icons/lib/fa/exchange';
 import IconFb from 'react-icons/lib/fa/facebook-square';
 import IconTwitter from 'react-icons/lib/fa/twitter-square';
 import IconLinked from 'react-icons/lib/fa/linkedin-square';
 import IconComments from 'react-icons/lib/fa/comments';
 
+import ResteemButton from '../ResteemButton';
 import ContentPayoutAndVotes from 'components/ContentPayoutAndVotes';
 import CommentReplyForm from 'features/Comment/CommentReplyForm';
 import Author from 'components/Author';
@@ -60,9 +60,7 @@ export default class PostFooter extends PureComponent {
           </div>
 
           <div className="article__footer__details__right">
-            <div>
-              <SmallIconButton icon={IconExchange} tooltip="Resteem" />
-            </div>
+            <ResteemButton author={post.author} permlink={post.permlink} />
             <div>
               <ReplyButton onClick={this.switchReplyForm} />
             </div>

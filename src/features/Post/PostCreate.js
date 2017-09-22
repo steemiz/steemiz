@@ -52,7 +52,6 @@ class PostCreate extends Component {
   };
 
   handleCreatePost = () => {
-    console.log(this.state);
     const { title, editorState, tags, reward } = this.state;
     this.props.publishContent({
       title,

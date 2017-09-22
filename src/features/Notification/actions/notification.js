@@ -14,8 +14,8 @@ export function close() {
   return { type: CLOSE_NOTIFICATION };
 }
 
-export function open(message, actionName, actionFunction) {
-  return { type: OPEN_NOTIFICATION, message, actionName, actionFunction };
+export function open(status, message, actionName, actionFunction) {
+  return { type: OPEN_NOTIFICATION, status, message, actionName, actionFunction };
 }
 
 export function actionLaunchBegin(actionFunction) {
@@ -37,6 +37,7 @@ export function notificationReducer(state, action) {
       return update(state, {
         isOpen: {$set: false},
         message: {$set: ''},
+        status: {$set: ''},
         actionName: {$set: ''},
         actionFunction: {$set: null},
       });
@@ -45,6 +46,7 @@ export function notificationReducer(state, action) {
       return update(state, {
         isOpen: {$set: true},
         message: {$set: action.message},
+        status: {$set: action.status},
         actionName: {$set: action.actionName},
         actionFunction: {$set: action.actionFunction},
       });

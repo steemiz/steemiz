@@ -76,6 +76,7 @@ export default function commentsReducer(state, action) {
             [content.id]: {
               pending_payout_value: {$set: content.pending_payout_value},
               total_payout_value: {$set: content.total_payout_value},
+              active_votes: {$set: content.active_votes},
               isUpdating: {$set: false},
             }
           },

@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
+import IconDone from 'material-ui/svg-icons/action/done';
+import IconError from 'material-ui/svg-icons/alert/error';
+import IconWarning from 'material-ui/svg-icons/alert/warning';
+import { lightGreen500, yellow500, red500 } from 'material-ui/styles/colors';
 import { selectNotificationState } from './selectors';
 import { close, actionLaunchBegin } from './actions/notification';
+import './notification.css';
 
 class Notification extends Component {
   static propTypes = {
@@ -13,7 +18,7 @@ class Notification extends Component {
       message: PropTypes.string.isRequired,
       actionName: PropTypes.string,
       actionFunction: PropTypes.func,
-      status: PropTypes.oneOf(['success', 'warning', 'fail']),
+      status: PropTypes.oneOf(['success', 'warning', 'fail', '']),
     }).isRequired,
     close: PropTypes.func.isRequired,
     actionLaunch: PropTypes.func.isRequired,
@@ -21,11 +26,21 @@ class Notification extends Component {
 
   render() {
     const { close, notificationState, actionLaunch } = this.props;
-    const { isOpen, message, actionName, actionFunction } = notificationState;
+    const { isOpen, status, message, actionName, actionFunction } = notificationState;
+    let statusIcon = '';
+    if (status === 'success') {
+      statusIcon = <IconDone color={lightGreen500} />
+    } else if (status === 'warning') {
+      statusIcon = <IconWarning color={yellow500} />
+    } else if (status === 'fail') {
+      statusIcon = <IconError color={red500} />
+    }
+
     return (
       <Snackbar
         open={isOpen}
-        message={message}
+        message={<div className="notification">{statusIcon}<span>{message}</span></div>}
+        bodyStyle={{ padding: '0 20px 0 10px' }}
         action={actionName}
         autoHideDuration={4000}
         onActionTouchTap={() => actionLaunch(actionFunction)}

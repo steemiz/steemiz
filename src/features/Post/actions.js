@@ -6,6 +6,7 @@ import getPostsBy, { getPostsByReducer } from './actions/getPostsBy';
 import getOnePost, { getOnePostReducer } from './actions/getOnePost';
 import uploadFile from './actions/uploadFile';
 import publishContent, { publishContentReducer } from './actions/publishContent';
+import resteem, { resteemReducer } from './actions/resteem';
 import postsReducer from './reducer';
 
 const initialState = {
@@ -27,6 +28,7 @@ export const reducer = (state = initialState, action) => combine(
     getOnePostReducer,
     publishContentReducer,
     postsReducer,
+    resteemReducer,
   ],
   state,
   action,
@@ -38,4 +40,5 @@ export default [
   getOnePost,
   uploadFile,
   publishContent,
+  resteem,
 ];
