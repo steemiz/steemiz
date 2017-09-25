@@ -17,6 +17,7 @@ const initialState = {
     feed: {},
     blog: {},
     trending: {},
+    hot: {},
   },
   publishFormOpen: false,
   isPublishing: false,

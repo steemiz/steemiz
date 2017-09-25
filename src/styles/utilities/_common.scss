@@ -133,9 +133,9 @@ input:-webkit-autofill {
 |--------------------------------------------------
 */
 .btn_default {
+	transition: 0.4s ease;
 	border: 1px solid #f0f0f2;
 	height: 2.8rem;
-	line-height: calc(2.8rem - 2px);
 	color: $blue;
 	padding: 0 2rem;
 	border-radius: 2rem;
@@ -143,12 +143,15 @@ input:-webkit-autofill {
 	cursor: pointer;
 	font-family: 'nunito_sanssemibold';
 	overflow: hidden;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
 	&:hover, &:focus, &:active {
-		transition: 0.4s ease;
 		@include gradientHorizontal();
 		color: $white;
 	}
 }
+
 
 /*
 |--------------------------------------------------

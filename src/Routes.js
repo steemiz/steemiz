@@ -11,8 +11,8 @@ import { selectMe } from './features/User/selectors';
 
 const Home = asyncComponent(() => import('./pages/Home'));
 const Feed = asyncComponent(() => import('./pages/Feed'));
-const Category = asyncComponent(() => import('./pages/Category'));
-const TagPostList = asyncComponent(() => import('./pages/TagPostList'));
+const CategoryPostList = asyncComponent(() => import('./pages/CategoryPostList'));
+const SubCategoryPostList = asyncComponent(() => import('./pages/SubCategoryPostList'));
 const PostRead = asyncComponent(() => import('./features/Post/PostRead'));
 const Profile = asyncComponent(() => import('./features/User/Profile'));
 
@@ -43,9 +43,9 @@ class Routes extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/@:accountName/feed" exact component={Feed} />
           <Route path="/@:accountName" component={Profile} />
-          <Route path="/:category" exact component={Category} />
+          <Route path="/:category" exact component={CategoryPostList} />
           <Route path="/:topic/@:author/:permlink" exact component={PostRead} />
-          <Route path="/:category/:tag" exact component={TagPostList} />
+          <Route path="/:category/:tag" exact component={SubCategoryPostList} />
         </Switch>
       </div>
     );

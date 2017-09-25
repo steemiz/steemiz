@@ -8,7 +8,7 @@ const GreenButton = props => {
 };
 
 GreenButton.propTypes = {
-  children: PropTypes.string.isRequired
+  children: PropTypes.node
 };
 
 export default GreenButton;

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Menu from 'material-ui/Menu';
 import Divider from 'material-ui/Divider';
 import IconNotification from 'material-ui/svg-icons/social/notifications';
-import IconSms from 'material-ui/svg-icons/notification/sms';
 import IconAccountCircle from 'material-ui/svg-icons/action/account-circle';
 import IconMail from 'material-ui/svg-icons/communication/mail-outline';
 import IconSettings from 'material-ui/svg-icons/action/settings';
@@ -15,7 +14,6 @@ const HeaderMenu = ({ me, logout, closeMenu }) => {
   return (
     <Menu>
       <HeaderMenuItems to="#" label="Notifications" icon={IconNotification} onClick={closeMenu} />
-      <HeaderMenuItems to="#" label="Blog" icon={IconSms} onClick={closeMenu} />
       <HeaderMenuItems to={`/@${me}`} label="My Profile" icon={IconAccountCircle} onClick={closeMenu} />
       <HeaderMenuItems to="#" label="Transactions" icon={IconMail} onClick={closeMenu} />
       <Divider />

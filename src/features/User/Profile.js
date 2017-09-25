@@ -46,8 +46,10 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    const { match } = this.props;
-    this.props.setCurrentUser(match.params.accountName);
+    const { match, account } = this.props;
+    if (match.params.accountName !== account.name) {
+      this.props.setCurrentUser(match.params.accountName);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -86,11 +88,9 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  return createStructuredSelector({
-    account: selectCurrentAccount(),
-  });
-};
+const mapStateToProps = (state, props) => createStructuredSelector({
+  account: selectCurrentAccount(),
+});
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUserBegin(user)),

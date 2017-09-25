@@ -38,6 +38,16 @@ export const selectMyAccount = () => createSelector(
   (me, accounts) => accounts[me] || {},
 );
 
+export const selectMyFollowingsList = () => createSelector(
+  [selectMe(), selectFollowings()],
+  (me, state) => state[me] && state[me].list || [],
+);
+
+export const selectMyFollowingsLoadStatus = () => createSelector(
+  [selectMe(), selectFollowings()],
+  (me, state) => state[me] && state[me].loadStatus || {},
+);
+
 export const selectIsConnected = () => createSelector(
   selectMe(),
   me => !!me,

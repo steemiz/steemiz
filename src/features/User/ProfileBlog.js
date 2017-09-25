@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PostList from '../Post/PostList';
+import PostList from 'features/Post/PostList';
 
 const ProfileBlog = ({ match: { params: { accountName }} }) => {
   return (
-    <PostList category="blog" query={{ limit: 10, tag: accountName }} />
+    <PostList category="blog" subCategory={accountName} query={{ limit: 10, tag: accountName }} />
   )
 };
 

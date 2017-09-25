@@ -27,7 +27,7 @@ export function getOnePostFailure(message) {
   return { type: GET_ONE_POST_FAILURE, message };
 }
 
-export function setCurrentPostPermlink(id) {
+export function setCurrentPostId(id) {
   return { type: SET_CURRENT_POST_ID, id };
 }
 
@@ -61,7 +61,7 @@ export function getOnePostReducer(state, action) {
 function* getOnePost({ author, permlink }) {
   try {
     const postByPermlink = yield select(selectPostByPermlink(author, permlink));
-    yield put(setCurrentPostPermlink(`${author}/${permlink}`));
+    yield put(setCurrentPostId(`${author}/${permlink}`));
 
     if (isEmpty(postByPermlink)) {
       const post = yield steem.api.getContentAsync(author, permlink);

@@ -6,6 +6,7 @@ import background_url from 'styles/assets/imgs/bg.jpg';
 import AvatarSteemit from 'components/AvatarSteemit';
 import UserSteemPower from '../UserSteemPower';
 import FollowerCount from '../FollowerCount';
+import FollowButton from '../FollowButton';
 
 class UserHeader extends PureComponent {
   static propTypes = {
@@ -58,7 +59,7 @@ class UserHeader extends PureComponent {
                 <button className="statistic--buttons__message">
                   <IconSms color="#ffffff" />
                 </button>
-                <button className="btn_default" onClick={this.handleFollow}>Follow</button>
+                <FollowButton accountName={accountName} />
               </div>
             </div>
           </div>

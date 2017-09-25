@@ -125,6 +125,10 @@
                     @include gradientHorizontal();
                     color: white;
                     border: none;
+
+                    &:disabled {
+                        background: grey;
+                    }
                 }
             }
         }

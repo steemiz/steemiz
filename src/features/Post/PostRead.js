@@ -15,7 +15,7 @@ import { getCommentsFromPostBegin } from 'features/Comment/actions/getCommentsFr
 import { selectCommentsChild, selectCommentsData, selectCommentsIsLoading } from 'features/Comment/selectors';
 import { selectIsConnected } from 'features/User/selectors';
 import { selectCurrentPost, selectCurrentComments } from './selectors';
-import { getOnePostBegin, setCurrentPostPermlink } from './actions/getOnePost';
+import { getOnePostBegin, setCurrentPostId } from './actions/getOnePost';
 import PostTags from './components/PostTags';
 import PostFooter from './components/PostFooter';
 import './PostRead.css';
@@ -142,20 +142,18 @@ class PostRead extends Component {
   }
 }
 
-const mapStateToProps = () => {
-  return createStructuredSelector({
-    post: selectCurrentPost(),
-    commentsData: selectCommentsData(),
-    commentsChild: selectCommentsChild(),
-    currentComments: selectCurrentComments(),
-    commentsIsLoading: selectCommentsIsLoading(),
-    isConnected: selectIsConnected(),
-  });
-};
+const mapStateToProps = () => createStructuredSelector({
+  post: selectCurrentPost(),
+  commentsData: selectCommentsData(),
+  commentsChild: selectCommentsChild(),
+  currentComments: selectCurrentComments(),
+  commentsIsLoading: selectCommentsIsLoading(),
+  isConnected: selectIsConnected(),
+});
 
 const mapDispatchToProps = dispatch => ({
   getOnePost: (author, permlink) => dispatch(getOnePostBegin(author, permlink)),
-  setCurrentPostId: id => dispatch(setCurrentPostPermlink(id)),
+  setCurrentPostId: id => dispatch(setCurrentPostId(id)),
   getCommentsFromPost: (category, author, permlink) => dispatch(getCommentsFromPostBegin(category, author, permlink)),
 });
 

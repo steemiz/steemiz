@@ -11,6 +11,8 @@ import getVoteHistory, { getVoteHistoryReducer } from './actions/getVoteHistory'
 import getTransferHistory, { getTransferHistoryReducer } from './actions/getTransferHistory';
 import setCurrentUser, { setCurrentUserReducer } from './actions/setCurrentUser';
 import logout, { logoutReducer } from './actions/logout';
+import follow, { followReducer } from './actions/follow';
+import unfollow, { unfollowReducer } from './actions/unfollow';
 
 export const initialState = {
   me: '',
@@ -30,6 +32,8 @@ export const reducer = (state = initialState, action) => combine(
     getTransferHistoryReducer,
     logoutReducer,
     setCurrentUserReducer,
+    followReducer,
+    unfollowReducer,
   ],
   state,
   action,
@@ -46,4 +50,6 @@ export default [
   getTransferHistory,
   logout,
   setCurrentUser,
+  follow,
+  unfollow,
 ];

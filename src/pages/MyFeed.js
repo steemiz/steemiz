@@ -15,7 +15,7 @@ class MyFeed extends Component {
     const { me } = this.props;
     return (
       <div>
-        {me && <PostList category="feed" query={{ limit: 10, tag: me }} />}
+        {me && <PostList category="feed" subCategory={me} query={{ limit: 10, tag: me }} />}
       </div>
     );
   }

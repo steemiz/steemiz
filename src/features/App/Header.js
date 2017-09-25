@@ -20,59 +20,32 @@ import PostCreate from 'features/Post/PostCreate';
 import AvatarSteemit from 'components/AvatarSteemit';
 import GreenButton from 'components/GreenButton';
 
-import { COUNTRIES } from 'constants/constants'
 import HeaderMenu from './components/HeaderMenu';
 
-const countriesItems = Object.keys(COUNTRIES).map(index => (
-  <MenuItem
-    className={`icon_flag icon_flag_${COUNTRIES[index].flag}`}
-    value={index}
-    key={index}
-    primaryText={COUNTRIES[index].name}
-    label={<span
-      className={`selected_flag icon_flag_${COUNTRIES[index].flag}`}>{COUNTRIES[index].name}</span>}
-  />
-));
 
 class Header extends Component {
   static propTypes = {
     me: PropTypes.string.isRequired,
     currentCategory: PropTypes.string.isRequired,
+    currentTag: PropTypes.string,
     myAccount: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
+  constructor() {
     super();
 
     this.state = {
       filter: {
         post: 1,
         category: "videos",
-        country: "1",
       },
       dropdownMenu: {
         open: false,
       },
       collapseOpen: false,
-      category: props.currentCategory,
     }
   }
-  
-  componentWillReceiveProps(nextProps) {
-    // CANNOT SET CATEGORY DIRECTLY FROM currentCategory
-    // BECAUSE currentCategory CAN EQUAL 'blog' OR 'feed'
-    // (something different from select options)
-    if (['created', 'hot', 'trending'].indexOf(nextProps.currentCategory) >= 0) {
-      this.setState({ category: nextProps.currentCategory });
-    }
-  }
-
-  handleSelectCountry = (event, index, value) => {
-    this.setState(state => {
-      state.filter.country = value
-    })
-  };
 
   handleShowDropdownMenu = (event) => {
     // This prevents ghost click.
@@ -99,8 +72,8 @@ class Header extends Component {
   };
 
   render() {
-    const { me, myAccount, currentTag } = this.props;
-    const { filter, dropdownMenu, collapseOpen, category } = this.state;
+    const { me, myAccount, currentTag, currentCategory } = this.props;
+    const { filter, dropdownMenu, collapseOpen } = this.state;
     return (
       <header className="header clearfix">
         <div className="header__group header__group--search float_left">
@@ -118,10 +91,10 @@ class Header extends Component {
         {me && (
           <div className={`header__collapse collapse ${collapseOpen ? 'in' : ''}`}>
             <SelectField
-              value={category}
+              style={{ fontSize: '.9rem' }}
+              value={currentCategory}
               className="select_filter"
               maxHeight={400}
-              fullWidth={true}
               autoWidth={true}
             >
               <MenuItem value="trending" key="trending" primaryText={<Link className="menu_link" to={`/trending${currentTag ? `/${currentTag}` : ''}`}>trending</Link>} />
@@ -130,23 +103,23 @@ class Header extends Component {
               {/*<MenuItem value="promoted" key="promoted" primaryText={<Link className="menu_link" to="/promoted">promoted</Link>} />*/}
             </SelectField>
             <SelectField
+              style={{ fontSize: '.9rem' }}
               value={filter.category}
               className="select_filter"
               maxHeight={400}
-              fullWidth={true}
               autoWidth={true}
             >
               <MenuItem value="videos" key={1} primaryText="videos only" />
               <MenuItem value="articles" key={2} primaryText="articles only" />
             </SelectField>
             <SelectField
-              value={filter.country}
-              onChange={this.handleSelectCountry}
+              style={{ fontSize: '.9rem' }}
+              value="EN"
               className="select_filter"
-              fullWidth={true}
               autoWidth={true}
             >
-              {countriesItems}
+              <MenuItem value="EN" key={1} primaryText="EN" />
+              <MenuItem value="FR" key={2} primaryText="FR" />
             </SelectField>
             <PostCreate />
             <button className="header__group__username"

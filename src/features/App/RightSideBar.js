@@ -15,6 +15,7 @@ import FollowingsList from 'features/User/FollowingsList';
 import { selectIsSidebarOpen, selectTrendingTags, selectCurrentCategory, selectCurrentTag } from './selectors';
 import { selectMe } from 'features/User/selectors';
 import { toggleSidebar } from './actions/sidebar';
+import { setCategoryTag } from './actions/setCategoryTag';
 
 class RightSideBar extends Component {
   static propTypes = {
@@ -29,26 +30,16 @@ class RightSideBar extends Component {
     trendingTags: [],
   };
 
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       tabs1: 'tags',
       tabs2: 'followers',
-      category: props.currentCategory,
     };
     this.switchTags = this.switchTab1.bind(this, 'tags');
     this.switchUsers = this.switchTab1.bind(this, 'users');
     this.switchFollowers = this.switchTab2.bind(this, 'followers');
     this.switchFollowing = this.switchTab2.bind(this, 'following');
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // CANNOT SET CATEGORY DIRECTLY FROM currentCategory
-    // BECAUSE currentCategory CAN EQUAL 'blog' OR 'feed'
-    // (something different from select options)
-    if (['created', 'hot', 'trending'].indexOf(nextProps.currentCategory) >= 0) {
-      this.setState({ category: nextProps.currentCategory });
-    }
   }
 
   switchTab1(tab) {
@@ -64,8 +55,8 @@ class RightSideBar extends Component {
   }
 
   render() {
-    const { isSidebarOpen, trendingTags, me, currentTag } = this.props;
-    const { tabs1, tabs2, category } = this.state;
+    const { isSidebarOpen, trendingTags, me, currentTag, currentCategory } = this.props;
+    const { tabs1, tabs2 } = this.state;
     return (
       <aside id="right_sidebar" className={isSidebarOpen ? "-is-open" : ""}>
         <CustomTabs>
@@ -74,7 +65,12 @@ class RightSideBar extends Component {
             buttonStyle={{ color: tabs1 === 'tags' ? COLOR_HOVER : COLOR_INACTIVE }}
             onActive={this.switchTags}
           >
-            <TagsList tags={trendingTags} currentCategory={category} currentTag={currentTag} />
+            <TagsList
+              tags={trendingTags}
+              currentCategory={currentCategory}
+              currentTag={currentTag}
+              deleteTag={this.props.setCategoryTag}
+            />
           </Tab>
           <Tab
             label="Users"
@@ -125,6 +121,7 @@ const mapStateToProps = (state, props) => createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   toggleSidebar: () => dispatch(toggleSidebar()),
+  setCategoryTag: () => dispatch(setCategoryTag(null, '')),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RightSideBar));

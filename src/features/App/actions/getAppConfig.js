@@ -79,7 +79,10 @@ function* getAppConfig() {
 
     yield put(getAppConfigSuccess());
   } catch (e) {
+    console.log('get app failure', e);
     yield put(getAppConfigFailure(e.message));
+    // RETRY
+    yield put(getAppConfigBegin());
   }
 }
 

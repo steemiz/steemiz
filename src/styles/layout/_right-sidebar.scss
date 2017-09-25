@@ -204,32 +204,37 @@
 	.user_contact {
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		position: relative;
 		padding: 0.5rem 0.7rem;
 		width: 100%;
+		opacity: 0.5;
 
-		&[data-show="false"] {
-			opacity: 0.5;
+		.avatar-steemit {
+			margin-right: 7px;
+		}
+
+		a {
+			display: flex;
+			align-items: center;
 		}
 
 		&:hover {
 			background: $white;
 			opacity: 1;
-			.btn_unfollow {
-				display: inline-block;
+			button {
+				display: inline-flex;
 			}
-			p, h3 {
-				max-width: 55%;
+			a {
+				max-width: 58%;
+			}
+			h3 {
+				max-width: 65%;
 			}
 		}
 
-		&__block {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			width: 256px;
-			overflow: hidden;
-			padding-left: 10px;
+		button {
+			display: none;
 		}
 
 		h3 {
@@ -247,54 +252,6 @@
 				font-size: 0.7rem;
 				font-weight: normal;
 				margin-left: 7px;
-			}
-		}
-
-		&__data {
-			display: flex;
-			flex-direction: column;
-			padding: 0 1rem 0 0.7rem;
-			width: 100%;
-
-			p {
-				color: #89898a;
-				margin: 0;
-				@include ellipsis(85%);
-				.user_contact__status {
-					display: inline-block;
-					border-radius: 100%;
-					&.active {
-						background: $blue;
-						@include size(7px);
-						margin-right: 5px;
-					}
-				}
-			}
-
-			.user_contact__new_message {
-				background: $light-red;
-				@include size(1.2rem);
-				line-height: 1.2rem;
-				border-radius: 100%;
-				font-size: 0.7rem;
-				text-align: center;
-				display: inline-block;
-				@include position(absolute, 0px 0px null null);
-				color: $white;
-			}
-		}
-
-		.btn_unfollow {
-			border: 1px solid #f0f0f2;
-			border-radius: 0.3rem;
-			background: $white;
-			padding: 0.7rem 0.5rem;
-			color: $blue;
-			display: none;
-			&:hover {
-				background: $blue;
-				color: $white;
-				transition: 0.4s ease;
 			}
 		}
 	}

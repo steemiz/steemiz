@@ -5,14 +5,9 @@ import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 
 import {
-  selectAllPostsFromCategory,
-  selectCategoryTagHasMore,
-  selectPostsIsLoading,
+  selectPosts,
+  selectCategories,
 } from './selectors';
-import {
-  selectCurrentTag,
-  selectCurrentCategory,
-} from 'features/App/selectors';
 import { getPostsByBegin } from './actions/getPostsBy';
 import { setCategoryTag } from 'features/App/actions/setCategoryTag';
 import InfiniteList from 'components/InfiniteList';
@@ -20,66 +15,75 @@ import ContentItem from 'components/ContentItem';
 
 class PostList extends Component {
   static propTypes = {
-    posts: PropTypes.array.isRequired,
     category: PropTypes.string.isRequired,
+    subCategory: PropTypes.string.isRequired,
     query: PropTypes.shape({
       tag: PropTypes.string,
     }).isRequired,
-    postsIsLoading: PropTypes.bool.isRequired,
-    categoryHasMore: PropTypes.bool,
     getPostsBy: PropTypes.func.isRequired,
-    setCategoryTag: PropTypes.func.isRequired,
-    currentCategory: PropTypes.string,
-    currentTag: PropTypes.string,
   };
 
-  constructor() {
+  constructor(props) {
     super();
-    this.loadPosts = this.loadPosts.bind(this);
+    const { categories, category, subCategory, allPosts } = props;
+    let posts = [];
+    let hasMore;
+    let isLoading;
+    const subCategoryObj = categories[category][subCategory];
+    if (subCategoryObj) {
+      posts = subCategoryObj.list.map(id => allPosts[id]);
+      hasMore = subCategoryObj.hasMore;
+      isLoading = subCategoryObj.isLoading;
+    }
+    this.state = {
+      posts: posts,
+      hasMore: hasMore,
+      isLoading: isLoading,
+    };
   }
 
   componentDidMount() {
-    // POSTS BY CATEGORY
-    const { category, query, currentTag, currentCategory, posts } = this.props;
-    if (currentCategory !== category || currentTag !== query.tag) {
-      this.props.setCategoryTag(category, query.tag);
-    }
-    if (isEmpty(posts) && (currentCategory !== category || currentTag !== query.tag)) {
-      this.props.getPostsBy(this.props.query);
+    const { posts } = this.state;
+    if (isEmpty(posts)) {
+      this.props.getPostsBy(this.props.category, this.props.query);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.category !== nextProps.category || this.props.query.tag !== nextProps.query.tag) {
-      this.props.setCategoryTag(nextProps.category, nextProps.query.tag);
+    const { category, subCategory } = this.props;
+    if (nextProps.category !== category || nextProps.subCategory !== subCategory) {
+      this.props.getPostsBy(nextProps.category, nextProps.query);
     }
-    if (
-      isEmpty(nextProps.posts) &&
-      !nextProps.postsIsLoading &&
-      (nextProps.query.tag !== this.props.currentTag || nextProps.category !== this.props.currentCategory)
-    ) {
-      this.props.getPostsBy(nextProps.query);
+
+    const nextSubCategoryObj = nextProps.categories[nextProps.category][nextProps.subCategory];
+    if (nextSubCategoryObj) {
+      this.setState({
+        posts: nextSubCategoryObj.list.map(id => nextProps.allPosts[id]),
+        hasMore: nextSubCategoryObj.hasMore,
+        isLoading: nextSubCategoryObj.isLoading,
+      });
     }
   }
 
-  loadPosts() {
-    const { query, posts } = this.props;
-    this.props.getPostsBy({
+  loadPosts = () => {
+    const { query, category } = this.props;
+    const { posts } = this.state;
+    this.props.getPostsBy(category, {
       ...query,
       limit: query.limit + 1,
       start_author: posts[posts.length - 1].author,
       start_permlink: posts[posts.length - 1].permlink,
     });
-  }
+  };
 
   render() {
-    const { posts, categoryHasMore, postsIsLoading } = this.props;
+    const { posts, hasMore, isLoading } = this.state;
     return (
       <div>
         <InfiniteList
           list={posts}
-          hasMore={categoryHasMore}
-          isLoading={postsIsLoading}
+          hasMore={hasMore}
+          isLoading={isLoading}
           loadMoreCb={this.loadPosts}
           itemMappingCb={post => (
             <ContentItem
@@ -89,7 +93,7 @@ class PostList extends Component {
             />
           )}
         />
-        {posts.length === 0 && postsIsLoading === false && (
+        {posts.length === 0 && isLoading === false && (
           <div>
             There is no posts here yet.
           </div>
@@ -101,19 +105,15 @@ class PostList extends Component {
 
 const mapStateToProps = () => {
   return createStructuredSelector({
-    posts: selectAllPostsFromCategory(),
-    postsIsLoading: selectPostsIsLoading(),
-    categoryHasMore: selectCategoryTagHasMore(),
-    currentTag: selectCurrentTag(),
-    currentCategory: selectCurrentCategory(),
+    allPosts: selectPosts(),
+    categories: selectCategories(),
   });
 };
 
-const mapDispatchToProps = (dispatch, props) => {
-  const { category } = props;
+const mapDispatchToProps = dispatch => {
   return {
-    getPostsBy: query => dispatch(getPostsByBegin(category, query)),
-    setCategoryTag: (category, tag) => dispatch(setCategoryTag(category, tag)),
+    getPostsBy: (category, query) => dispatch(getPostsByBegin(category, query)),
+    setCategoryTag: (tag) => dispatch(setCategoryTag(tag)),
   }
 };
 
