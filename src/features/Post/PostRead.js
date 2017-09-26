@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Helmet } from 'react-helmet';
 
 import Body from 'components/Body';
 import AvatarSteemit from 'components/AvatarSteemit';
@@ -85,6 +86,9 @@ class PostRead extends Component {
       <div className="single_post_container clearfix">
         {!isEmpty(post) && (
           <div className="PostDetail">
+            <Helmet>
+              <title>{post.title}</title>
+            </Helmet>
             <div className="PostDetail__content">
               <article className="article">
                 <div className="article__post">

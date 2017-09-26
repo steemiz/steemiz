@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
+import { Helmet } from 'react-helmet';
 
 import asyncComponent from 'asyncComponent';
 import UserHeader from './components/UserHeader';
@@ -70,6 +71,10 @@ class Profile extends Component {
     return (
       <div className="profile_container">
         <UserHeader account={account} />
+        <Helmet
+          titleTemplate={`%s | @${accountName}`}
+          defaultTitle={`@${accountName}`}
+        />
         <div className="content">
           <UserMenu accountName={accountName} />
           <div className="content__details">

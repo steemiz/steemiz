@@ -13,6 +13,7 @@ import setCurrentUser, { setCurrentUserReducer } from './actions/setCurrentUser'
 import logout, { logoutReducer } from './actions/logout';
 import follow, { followReducer } from './actions/follow';
 import unfollow, { unfollowReducer } from './actions/unfollow';
+import usersReducer from './reducer';
 
 export const initialState = {
   me: '',
@@ -34,6 +35,7 @@ export const reducer = (state = initialState, action) => combine(
     setCurrentUserReducer,
     followReducer,
     unfollowReducer,
+    usersReducer,
   ],
   state,
   action,

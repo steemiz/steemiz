@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Route, NavLink } from 'react-router-dom';
 import numeral from 'numeral';
+import titleWrapper from 'titleWrapper';
 
 import { selectLastWeekRewardsAuthor, selectLastWeekRewardsCuration } from './selectors';
 import asyncComponent from 'asyncComponent';
@@ -56,4 +57,4 @@ const mapStateToProps = (state, props) => createStructuredSelector({
   lastWeekRewardsCuration: selectLastWeekRewardsCuration(props.match.params.accountName),
 });
 
-export default connect(mapStateToProps)(ProfileRewards);
+export default connect(mapStateToProps)(titleWrapper(ProfileRewards, 'Rewards'));

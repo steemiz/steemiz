@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
+import titleWrapper from 'titleWrapper';
 
 import InfiniteList from 'components/InfiniteList';
 import UserVote from './components/UserVote';
@@ -110,4 +111,4 @@ const mapDispatchToProps = (dispatch, props) => ({
   getTransferHistory: () => dispatch(getTransferHistoryBegin(props.match.params.accountName)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileVotes);
+export default connect(mapStateToProps, mapDispatchToProps)(titleWrapper(ProfileVotes, 'Votes'));

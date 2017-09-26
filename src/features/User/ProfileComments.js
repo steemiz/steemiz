@@ -7,6 +7,7 @@ import { selectListCommentsFromUser, selectHasMoreCommentsFromUser, selectIsLoad
 
 import InfiniteList from 'components/InfiniteList';
 import ContentItem from 'components/ContentItem';
+import titleWrapper from 'titleWrapper';
 
 class ProfileComments extends Component {
   static propTypes = {
@@ -54,4 +55,4 @@ const mapDispatchToProps = (dispatch, props) => ({
   getCommentsFromUser: query => dispatch(getCommentsFromUserBegin(props.match.params.accountName, query)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileComments);
+export default connect(mapStateToProps, mapDispatchToProps)(titleWrapper(ProfileComments, 'Comments'));

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import PostList from 'features/Post/PostList';
 import { setCategoryTag } from 'features/App/actions/setCategoryTag';
 
@@ -21,7 +22,12 @@ class SubCategoryPostList extends Component {
   render() {
     const { match: { params: { category, tag }} } = this.props;
     return (
-      <PostList category={category} subCategory={tag} query={{ limit: 10, tag: tag }} />
+      <div>
+        <Helmet>
+          <title>{`${category} | ${tag} `}</title>
+        </Helmet>
+        <PostList category={category} subCategory={tag} query={{ limit: 10, tag: tag }} />
+      </div>
     );
   }
 }

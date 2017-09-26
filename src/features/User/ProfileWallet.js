@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import numeral from 'numeral';
+import titleWrapper from 'titleWrapper';
 
 import UserSteemPower from './UserSteemPower';
 import UserEstimatedValue from './UserEstimatedValue';
@@ -103,4 +104,4 @@ const mapStateToProps = (state, props) => createStructuredSelector({
   currentAccount: selectCurrentAccount(),
 });
 
-export default connect(mapStateToProps)(ProfileRewards);
+export default connect(mapStateToProps)(titleWrapper(ProfileRewards, 'Wallet'));

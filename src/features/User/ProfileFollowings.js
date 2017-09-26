@@ -8,6 +8,7 @@ import UserCard from './components/UserCard';
 import InfiniteList from 'components/InfiniteList';
 import { selectFollowingsAccounts, selectFollowingsFromUser } from './selectors';
 import { getFollowingsBegin } from './actions/getFollowings';
+import titleWrapper from 'titleWrapper';
 
 class ProfileFollowings extends Component {
   static propTypes = {
@@ -51,4 +52,4 @@ const mapDispatchToProps = (dispatch, props) => ({
   getFollowings: query => dispatch(getFollowingsBegin(props.match.params.accountName, query, true)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileFollowings));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(titleWrapper(ProfileFollowings, 'Following')));

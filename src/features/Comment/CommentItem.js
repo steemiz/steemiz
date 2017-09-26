@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { FormattedRelative } from 'react-intl';
-import { formatter } from 'steem';
 import Body from 'components/Body';
 import { sortCommentsFromSteem } from 'utils/helpers/stateHelpers';
 import ContentPayoutAndVotes from 'components/ContentPayoutAndVotes';
@@ -43,7 +42,7 @@ class CommentItem extends PureComponent {
           <div className="CommentComponent__detail">
             <div className="CommentComponent__head">
               <Author name={comment.author}
-                      reputation={formatter.reputation(comment.author_reputation)} />
+                      reputation={comment.author_reputation} />
               <span className="timestamp">
                 <FormattedRelative value={`${comment.created}Z`} />
               </span>

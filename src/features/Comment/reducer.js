@@ -5,16 +5,21 @@ import { GET_COMMENTS_FROM_POST_SUCCESS } from './actions/getCommentsFromPost';
 import { GET_COMMENTS_FROM_USER_SUCCESS } from './actions/getCommentsFromUser';
 import { GET_REPLIES_TO_USER_SUCCESS } from './actions/getRepliesToUser';
 import { getCommentsChildrenLists, mapCommentsBasedOnId } from './utils/comments';
+import format from './utils/format';
 
 export default function commentsReducer(state, action) {
   switch (action.type) {
     case GET_COMMENTS_FROM_POST_SUCCESS:
     case GET_COMMENTS_FROM_USER_SUCCESS:
     case GET_REPLIES_TO_USER_SUCCESS: {
+      const commentsData = mapCommentsBasedOnId(action.state.content);
+      Object.keys(commentsData).forEach(key => {
+        commentsData[key] = format(commentsData[key]);
+      });
       return {
         ...state,
         commentsChild: Object.assign(getCommentsChildrenLists(action.state), state.commentsChild),
-        commentsData: Object.assign(mapCommentsBasedOnId(action.state.content), state.commentsData),
+        commentsData: Object.assign(commentsData, state.commentsData),
       };
     }
     case VOTE_OPTIMISTIC: {

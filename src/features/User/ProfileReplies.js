@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { getRepliesToUserBegin } from '../Comment/actions/getRepliesToUser';
 import { selectListRepliesToUser, selectHasMoreRepliesToUser, selectIsLoadingRepliesToUser, selectCommentsData } from '../Comment/selectors';
-
+import titleWrapper from 'titleWrapper';
 import InfiniteList from 'components/InfiniteList';
 import ContentItem from 'components/ContentItem';
 
@@ -54,4 +54,4 @@ const mapDispatchToProps = (dispatch, props) => ({
   getRepliesToUser: query => dispatch(getRepliesToUserBegin(props.match.params.accountName, query)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileReplies);
+export default connect(mapStateToProps, mapDispatchToProps)(titleWrapper(ProfileReplies, 'Replies'));

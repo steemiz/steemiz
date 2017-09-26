@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import titleWrapper from 'titleWrapper';
 
 import InfiniteList from 'components/InfiniteList';
 import Reward from './components/Reward';
@@ -50,4 +51,4 @@ const mapDispatchToProps = (dispatch, props) => ({
   getTransferHistory: () => dispatch(getTransferHistoryBegin(props.match.params.accountName)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileRewardsCuration);
+export default connect(mapStateToProps, mapDispatchToProps)(titleWrapper(ProfileRewardsCuration, 'Rewards Curation'));

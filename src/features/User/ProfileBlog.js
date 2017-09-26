@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PostList from 'features/Post/PostList';
+import titleWrapper from 'titleWrapper';
 
 const ProfileBlog = ({ match: { params: { accountName }} }) => {
   return (
@@ -16,4 +17,4 @@ ProfileBlog.propTypes = {
   }).isRequired,
 };
 
-export default ProfileBlog;
+export default titleWrapper(ProfileBlog, 'Blog');

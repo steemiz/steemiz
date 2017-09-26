@@ -14,8 +14,8 @@ export function getAppConfigBegin() {
   return { type: GET_APP_CONFIG_BEGIN };
 }
 
-function getAppConfigSuccess() {
-  return { type: GET_APP_CONFIG_SUCCESS };
+function getAppConfigSuccess(props) {
+  return { type: GET_APP_CONFIG_SUCCESS, props };
 }
 
 function getAppConfigFailure(message) {
@@ -77,7 +77,7 @@ function* getAppConfig() {
       put(setAppDollarRate(rate)),
     ]);
 
-    yield put(getAppConfigSuccess());
+    yield put(getAppConfigSuccess(steemiz.props));
   } catch (e) {
     console.log('get app failure', e);
     yield put(getAppConfigFailure(e.message));

@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import { withRouter } from 'react-router-dom';
+import titleWrapper from 'titleWrapper';
 
 import UserCard from './components/UserCard';
 import InfiniteList from 'components/InfiniteList';
@@ -54,4 +55,4 @@ const mapDispatchToProps = (dispatch, props) => ({
   getFollowers: query => dispatch(getFollowersBegin(props.match.params.accountName, query, true, 20)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileFollowers));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(titleWrapper(ProfileFollowers, 'Followers')));

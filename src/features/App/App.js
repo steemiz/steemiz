@@ -3,6 +3,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
+import { Helmet } from 'react-helmet';
 
 import ScrollToTop from 'components/ScrollToTop';
 import { selectAppProps, selectIsSidebarOpen } from './selectors';
@@ -27,6 +28,10 @@ class App extends Component {
     return (
       <ScrollToTop>
         <div id="app_container">
+          <Helmet>
+            <meta charSet="utf-8" />
+            <title>Steemiz</title>
+          </Helmet>
           <Header />
           <LeftSideBar />
           <RightSideBar />
