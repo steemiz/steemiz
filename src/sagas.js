@@ -4,10 +4,12 @@ import CommentsSagas from './features/Comment/actions';
 import VoteSagas from './features/Vote/actions';
 import AppSagas from './features/App/actions';
 import NotificationSagas from './features/Notification/actions';
+import SearchSagas from './features/Search/actions';
 
 export default UserSagas
   .concat(PostSagas)
   .concat(CommentsSagas)
   .concat(VoteSagas)
   .concat(AppSagas)
-  .concat(NotificationSagas);
+  .concat(NotificationSagas)
+  .concat(SearchSagas);

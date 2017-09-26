@@ -8,7 +8,7 @@ const Author = ({ name, reputation }) => {
       <Link to={`/@${name}`}>
         <span className="Author__name">{name}</span>
       </Link>
-      <span className="Author__reputation" title="Reputation">{reputation}</span>
+      {reputation && <span className="Author__reputation" title="Reputation">{reputation}</span>}
     </div>
   )
 };
@@ -18,7 +18,7 @@ Author.propTypes = {
   reputation: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
-  ]).isRequired,
+  ]),
 };
 
 export default Author;

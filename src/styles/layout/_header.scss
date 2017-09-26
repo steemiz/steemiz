@@ -192,36 +192,26 @@
   .search {
     $height_search: 2.9rem;
     $width_icon: 3rem;
-    float: left;
     margin: 0 0.4rem 0 1rem;
     @include size(20rem #{$height_search});
     background: $white;
     border-radius: 2rem;
     border: 1px solid #f0f0f2;
-    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+
     @media screen and (max-width: 480px) {
       width: 11rem;
     }
 
-    &__icon {
-      float: left;
-      width: $width_icon;
-      height: calc(#{$height_search} - 2px);
-      line-height: calc(#{$height_search} - 2px);
-      text-align: center;
-      color: $gray;
-      cursor: pointer;
-    }
-
     &__input {
       font-family: 'nunito_sanssemibold';
-      float: left;
-      width: calc(100% - #{$width_icon});
       color: $gray;
-      line-height: calc(#{$height_search} - 2px);
-      padding: 0 0.5rem 0 0;
       border: 0;
       border-radius: 2rem;
+      margin-left: 6px;
+      width: 100%;
       &:focus {
         outline: 0;
       }

@@ -1187,34 +1187,25 @@ input:-webkit-autofill {
       top: 8px;
       color: #606060; }
   .header .search {
-    float: left;
     margin: 0 0.4rem 0 1rem;
     height: 2.9rem;
     width: 20rem;
     background: #ffffff;
     border-radius: 2rem;
     border: 1px solid #f0f0f2;
-    position: relative; }
+    display: flex;
+    align-items: center;
+    padding-left: 15px; }
     @media screen and (max-width: 480px) {
       .header .search {
         width: 11rem; } }
-    .header .search__icon {
-      float: left;
-      width: 3rem;
-      height: calc(2.9rem - 2px);
-      line-height: calc(2.9rem - 2px);
-      text-align: center;
-      color: #999999;
-      cursor: pointer; }
     .header .search__input {
       font-family: 'nunito_sanssemibold';
-      float: left;
-      width: calc(100% - 3rem);
       color: #999999;
-      line-height: calc(2.9rem - 2px);
-      padding: 0 0.5rem 0 0;
       border: 0;
-      border-radius: 2rem; }
+      border-radius: 2rem;
+      margin-left: 6px;
+      width: 100%; }
       .header .search__input:focus {
         outline: 0; }
     .header .search__overlay {

@@ -19,9 +19,8 @@ import logo from 'styles/assets/imgs/logos/logo.png'
 import PostCreate from 'features/Post/PostCreate';
 import AvatarSteemit from 'components/AvatarSteemit';
 import GreenButton from 'components/GreenButton';
-
 import HeaderMenu from './components/HeaderMenu';
-
+import Search from '../Search/SearchInput';
 
 class Header extends Component {
   static propTypes = {
@@ -80,6 +79,7 @@ class Header extends Component {
           <Link to="/" id="logo">
             <img src={logo} alt="logo" />
           </Link>
+          <Search />
         </div>
         {me && (
           <div className="header__collapse__control">
