@@ -15,7 +15,7 @@ const CategoryPostList = asyncComponent(() => import('./pages/CategoryPostList')
 const SubCategoryPostList = asyncComponent(() => import('./pages/SubCategoryPostList'));
 const PostRead = asyncComponent(() => import('./features/Post/PostRead'));
 const Profile = asyncComponent(() => import('./features/User/Profile'));
-const Search = asyncComponent(() => import('./features/Search'));
+const PostSearch = asyncComponent(() => import('./features/Search/PostSearch'));
 
 class Routes extends Component {
   static propTypes = {
@@ -44,7 +44,7 @@ class Routes extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/@:accountName/feed" exact component={Feed} />
           <Route path="/@:accountName" component={Profile} />
-          <Route path="/search/:q/:page?" exact component={Search} />
+          <Route path="/search/:q" exact component={PostSearch} />
           <Route path="/:category" exact component={CategoryPostList} />
           <Route path="/:topic/@:author/:permlink" exact component={PostRead} />
           <Route path="/:category/:tag" exact component={SubCategoryPostList} />

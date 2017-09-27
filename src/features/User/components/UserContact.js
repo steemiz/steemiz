@@ -7,7 +7,7 @@ import AvatarSteemit from 'components/AvatarSteemit';
 
 const UserContact = ({ name }) => {
   return (
-    <div className="user_contact" data-show="false">
+    <div className="user_contact">
       <Link to={`/@${name}`}>
         <AvatarSteemit name={name} />
         <h3>{name}</h3>

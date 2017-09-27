@@ -16,6 +16,7 @@ import { selectIsSidebarOpen, selectTrendingTags, selectCurrentCategory, selectC
 import { selectMe } from 'features/User/selectors';
 import { toggleSidebar } from './actions/sidebar';
 import { setCategoryTag } from './actions/setCategoryTag';
+import UserSearch from 'features/Search/UserSearch';
 
 class RightSideBar extends Component {
   static propTypes = {
@@ -59,7 +60,7 @@ class RightSideBar extends Component {
     const { tabs1, tabs2 } = this.state;
     return (
       <aside id="right_sidebar" className={isSidebarOpen ? "-is-open" : ""}>
-        <CustomTabs>
+        <CustomTabs className="tab">
           <Tab
             label="Tags"
             buttonStyle={{ color: tabs1 === 'tags' ? COLOR_HOVER : COLOR_INACTIVE }}
@@ -77,13 +78,10 @@ class RightSideBar extends Component {
             buttonStyle={{ color: tabs1 === 'users' ? COLOR_HOVER : COLOR_INACTIVE }}
             onActive={this.switchUsers}
           >
-            <h2>Tab Two</h2>
-            <p>
-              This is another example tab.
-            </p>
+            <UserSearch />
           </Tab>
         </CustomTabs>
-        <CustomTabs>
+        <CustomTabs className="tab">
           <Tab
             label="Followers"
             buttonStyle={{ color: tabs2 === 'followers' ? COLOR_HOVER : COLOR_INACTIVE }}

@@ -150,6 +150,10 @@ input:-webkit-autofill {
 		@include gradientHorizontal();
 		color: $white;
 	}
+	&:disabled {
+		background: lightgrey;
+		color: $white;
+	}
 }
 
 

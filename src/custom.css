@@ -195,6 +195,9 @@ input:-webkit-autofill {
     background: linear-gradient(to right, #53aed1 0%, #68bc86 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53aed1', endColorstr='#68bc86',GradientType=1 );
     color: #ffffff; }
+  .btn_default:disabled {
+    background: lightgrey;
+    color: #ffffff; }
 
 /*
 |--------------------------------------------------
@@ -1195,7 +1198,7 @@ input:-webkit-autofill {
     border: 1px solid #f0f0f2;
     display: flex;
     align-items: center;
-    padding-left: 15px; }
+    padding: 0 15px; }
     @media screen and (max-width: 480px) {
       .header .search {
         width: 11rem; } }
@@ -1348,6 +1351,9 @@ input:-webkit-autofill {
     overflow: hidden; }
     #right_sidebar .link_wrapper.show_all {
       max-height: 1000px; }
+  #right_sidebar .user-search {
+    display: flex;
+    align-items: center; }
   #right_sidebar .btn_toggle_sidebar {
     padding: 0.5rem;
     background: #ffffff;
@@ -1380,7 +1386,7 @@ input:-webkit-autofill {
       color: #4aa7f4; }
   #right_sidebar .tab {
     position: relative;
-    padding: 0 0 2rem 0; }
+    padding: 0 0 1rem 0; }
     #right_sidebar .tab__title {
       border-bottom: 1px solid #e7e7e8;
       width: 100%; }
@@ -1481,57 +1487,56 @@ input:-webkit-autofill {
 .chat_list {
   padding: 0;
   margin-bottom: 0; }
-  .chat_list .avatar_progress {
-    min-width: 48px; }
   .chat_list .search_box {
     display: flex;
     align-items: center; }
     .chat_list .search_box > svg {
       margin-right: 10px; }
-  .chat_list .user_contact {
+
+.user_contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 0.5rem 0.7rem;
+  width: 100%;
+  opacity: 0.5; }
+  .user_contact .avatar-steemit {
+    margin-right: 7px; }
+  .user_contact a {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    padding: 0.5rem 0.7rem;
-    width: 100%;
-    opacity: 0.5; }
-    .chat_list .user_contact .avatar-steemit {
-      margin-right: 7px; }
-    .chat_list .user_contact a {
-      display: flex;
-      align-items: center; }
-    .chat_list .user_contact:hover {
-      background: #ffffff;
-      opacity: 1; }
-      .chat_list .user_contact:hover button {
-        display: inline-flex; }
-      .chat_list .user_contact:hover a {
-        max-width: 58%; }
-      .chat_list .user_contact:hover h3 {
-        max-width: 65%; }
-    .chat_list .user_contact button {
-      display: none; }
-    .chat_list .user_contact h3 {
-      display: inline-block;
-      max-width: 85%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      word-wrap: normal;
-      color: #666666;
-      margin: 3px 0 0 0;
-      line-height: 1.4rem;
-      position: relative; }
-      .chat_list .user_contact h3 span {
-        position: absolute;
-        font-family: 'nunito_sansregular';
-        border-radius: 0.3rem;
-        background: #f8f8fb;
-        color: #b3b3b3;
-        font-size: 0.7rem;
-        font-weight: normal;
-        margin-left: 7px; }
+    align-items: center; }
+  .user_contact:hover {
+    background: #ffffff;
+    opacity: 1; }
+    .user_contact:hover button {
+      display: inline-flex; }
+    .user_contact:hover a {
+      max-width: 58%; }
+    .user_contact:hover h3 {
+      max-width: 65%; }
+  .user_contact button {
+    display: none; }
+  .user_contact h3 {
+    display: inline-block;
+    max-width: 85%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    color: #666666;
+    margin: 3px 0 0 0;
+    line-height: 1.4rem;
+    position: relative; }
+    .user_contact h3 span {
+      position: absolute;
+      font-family: 'nunito_sansregular';
+      border-radius: 0.3rem;
+      background: #f8f8fb;
+      color: #b3b3b3;
+      font-size: 0.7rem;
+      font-weight: normal;
+      margin-left: 7px; }
 
 .avatar-steemit {
   position: relative;
@@ -2211,8 +2216,6 @@ input:-webkit-autofill {
           filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53aed1', endColorstr='#68bc86',GradientType=1 );
           color: white;
           border: none; }
-          .profile_container .user__info .statistic--buttons .btn_default:disabled {
-            background: grey; }
   .profile_container .content__links {
     width: 100%;
     margin-bottom: 0.5rem;

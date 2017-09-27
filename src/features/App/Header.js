@@ -20,7 +20,7 @@ import PostCreate from 'features/Post/PostCreate';
 import AvatarSteemit from 'components/AvatarSteemit';
 import GreenButton from 'components/GreenButton';
 import HeaderMenu from './components/HeaderMenu';
-import Search from '../Search/SearchInput';
+import Search from '../Search/PostSearchInput';
 
 class Header extends Component {
   static propTypes = {
