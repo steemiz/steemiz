@@ -6,6 +6,8 @@ import { selectPostSearch } from './selectors';
 import { postSearchBegin } from 'features/Search/actions/postSearch';
 import InfiniteList from 'components/InfiniteList';
 import Result from './components/Result';
+import logo from './powered_by_asksteem.png';
+import './PostSearch.css';
 
 class PostSearch extends Component {
   static propTypes = {
@@ -35,8 +37,13 @@ class PostSearch extends Component {
     const { match: { params : { q }}, postSearch } = this.props;
     return (
       <div>
-        <h2>Search results for '{q}'</h2>
-        {typeof postSearch.hits !== 'undefined' && <h4>{postSearch.hits} result(s)</h4>}
+        <div className="search-result-header">
+          <div>
+            <h2>Search results for '{q}'</h2>
+            {typeof postSearch.hits !== 'undefined' && <p className="nb">{postSearch.hits} result(s)</p>}
+          </div>
+          <a href={`https://www.asksteem.com/search?q=${q}`} target="_blank"><img src={logo} alt="AskSteem" /></a>
+        </div>
         <InfiniteList
           list={postSearch.results}
           hasMore={postSearch.pages && postSearch.pages.has_next}

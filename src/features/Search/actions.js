@@ -7,6 +7,7 @@ import { combineReducers } from 'redux';
 import postSearch, { postSearchReducer } from './actions/postSearch';
 import suggest, { suggestReducer } from './actions/suggest';
 import userSearch, { userSearchReducer } from './actions/userSearch';
+import getPostRelated, { getPostRelatedReducer } from './actions/getPostRelated';
 
 export const postInitialState = {
   q: '',
@@ -25,6 +26,10 @@ export const userInitialState = {
   term: '',
 };
 
+export const postRelatedInitialState = {
+
+};
+
 const postReducer = (state = postInitialState, action) => combine(
   [postSearchReducer, suggestReducer],
   state,
@@ -40,6 +45,7 @@ const userReducer = (state = userInitialState, action) => combine(
 export const reducer = combineReducers({
   post: postReducer,
   user: userReducer,
+  postRelated: (state = postRelatedInitialState, action) => getPostRelatedReducer(state, action),
 });
 
 // All sagas to be loaded
@@ -47,4 +53,5 @@ export default [
   postSearch,
   suggest,
   userSearch,
+  getPostRelated,
 ];

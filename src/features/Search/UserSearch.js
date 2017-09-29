@@ -5,12 +5,14 @@ import { connect } from 'react-redux';
 import IconSearch from 'material-ui/svg-icons/action/search';
 import TextField from 'material-ui/TextField';
 import { COLOR_INACTIVE } from 'styles/icons';
+import logo from './powered_by_asksteem.png';
 import { selectUserSearch } from './selectors';
 
 import SideBarNav from 'components/SideBarNav';
 import CircularProgress from 'components/CircularProgress';
 import { userSearchBegin } from 'features/Search/actions/userSearch';
 import UserContact from 'features/User/components/UserContact';
+import './PostSearch.css';
 
 class UserSearch extends Component {
   validate = evt => {
@@ -42,7 +44,12 @@ class UserSearch extends Component {
         </div>
         {results.length > 0 && (
           <div>
-            <p>{hits} result(s)</p>
+            <div className="search-result-header">
+              <p>{hits} result(s)</p>
+              <a href={`https://www.asksteem.com`} target="_blank">
+                <img src={logo} alt="AskSteem" width={70} />
+              </a>
+            </div>
             {results.map(result => {
               return <UserContact key={result.name} name={result.name} />;
             })}

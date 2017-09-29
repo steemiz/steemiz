@@ -48,7 +48,7 @@ export function userSearchReducer(state, action) {
 /*--------- SAGAS ---------*/
 function* userSearch({ q, page }) {
   try {
-    const response = yield call(request, `https://api.asksteem.com/search?q=${q}&pg=${page}&types=user`);
+    const response = yield call(request, `https://api.asksteem.com/search?q=${q}*&pg=${page}&types=user`);
     //response.results = response.results.map(result => format(result));
     yield put(userSearchSuccess(q, response));
   } catch (e) {

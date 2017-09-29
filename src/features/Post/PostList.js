@@ -8,6 +8,7 @@ import {
   selectPosts,
   selectCategories,
 } from './selectors';
+import { selectCurrentCategory } from 'features/App/selectors';
 import { getPostsByBegin } from './actions/getPostsBy';
 import { setCategoryTag } from 'features/App/actions/setCategoryTag';
 import InfiniteList from 'components/InfiniteList';
@@ -17,6 +18,7 @@ class PostList extends Component {
   static propTypes = {
     category: PropTypes.string.isRequired,
     subCategory: PropTypes.string.isRequired,
+    currentCategory: PropTypes.string.isRequired,
     query: PropTypes.shape({
       tag: PropTypes.string,
     }).isRequired,
@@ -77,6 +79,7 @@ class PostList extends Component {
   };
 
   render() {
+    const { currentCategory } = this.props;
     const { posts, hasMore, isLoading } = this.state;
     return (
       <div>
@@ -88,6 +91,7 @@ class PostList extends Component {
           itemMappingCb={post => (
             <ContentItem
               key={post.id}
+              currentCategory={currentCategory}
               content={post}
               type="post"
             />
@@ -107,6 +111,7 @@ const mapStateToProps = () => {
   return createStructuredSelector({
     allPosts: selectPosts(),
     categories: selectCategories(),
+    currentCategory: selectCurrentCategory(),
   });
 };
 

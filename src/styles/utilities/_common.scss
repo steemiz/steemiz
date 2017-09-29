@@ -50,7 +50,7 @@ input, select, textarea, a, button {
 
 	.content__inner {
 		@include size(100%);
-		padding: 1rem 0;
+		padding: 1rem 1rem 0 0;
 	}
 }
 

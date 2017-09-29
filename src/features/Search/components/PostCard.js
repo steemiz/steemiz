@@ -5,6 +5,7 @@ import { FormattedRelative } from 'react-intl';
 import isEmpty from 'lodash/isEmpty';
 import IconFavorite from 'material-ui/svg-icons/action/favorite';
 import IconSms from 'material-ui/svg-icons/notification/sms';
+
 import Author from 'components/Author';
 import CircularProgress from 'components/CircularProgress';
 import { COLOR, COLOR_HOVER, SIZE_SMALL } from 'styles/icons';
@@ -12,7 +13,8 @@ import {
   formatAmount,
 } from 'utils/helpers/steemitHelpers';
 
-const Result = ({ content, placeholderImg }) => {
+
+const PostCard = ({ content }) => {
   const mainTag = content.tags[0];
   const contentLink = `/${mainTag}/@${content.author}/${content.permlink}`;
   const pending = content.pending_payout_value || 0;
@@ -20,7 +22,7 @@ const Result = ({ content, placeholderImg }) => {
   const payout = pending + total;
   return (
     <div className="post_card">
-      {(content.main_img || placeholderImg) && (
+      {content.main_img && (
         <Link
           to={contentLink}
           className="post_card__block post_card__block--img"
@@ -64,13 +66,8 @@ const Result = ({ content, placeholderImg }) => {
   );
 };
 
-Result.propTypes = {
-  content: PropTypes.object.isRequired,
-  placeholderImg: PropTypes.bool,
+PostCard.propTypes = {
+  //prop: PropTypes.array.isRequired
 };
 
-Result.defaultProps = {
-  placeholderImg: false,
-};
-
-export default Result;
+export default PostCard;

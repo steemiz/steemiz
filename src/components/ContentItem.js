@@ -7,6 +7,8 @@ import extractDesc from 'utils/helpers/extractDesc';
 import IconFavorite from 'material-ui/svg-icons/action/favorite';
 import IconSms from 'material-ui/svg-icons/notification/sms';
 import IconReply from 'material-ui/svg-icons/content/reply';
+import Chip from 'material-ui/Chip';
+import Avatar from 'material-ui/Avatar';
 
 import Author from './Author';
 import VoteButton from 'features/Vote/VoteButton';
@@ -15,7 +17,7 @@ import {
   displayContentNbComments,
   formatAmount,
 } from 'utils/helpers/steemitHelpers';
-import { COLOR, COLOR_HOVER, SIZE_SMALL } from 'styles/icons';
+import { COLOR, COLOR_HOVER, COLOR_LIGHT_TEXT, SIZE_SMALL } from 'styles/icons';
 
 export default class ContentItem extends PureComponent {
   static propTypes = {
@@ -23,10 +25,15 @@ export default class ContentItem extends PureComponent {
       'post', 'comment',
     ]).isRequired,
     content: PropTypes.object.isRequired,
+    currentCategory: PropTypes.string,
+  };
+
+  static defaultProps = {
+    currentCategory: 'trending',
   };
 
   render() {
-    const { content, type } = this.props;
+    const { content, type, currentCategory } = this.props;
     const payout = calculateContentPayout(content);
     const splitUrl = content.url.split('#');
     const linkUrl = splitUrl[0];
@@ -43,17 +50,21 @@ export default class ContentItem extends PureComponent {
           />
         )}
         <div className={`post_card__block post_card__block--content ${!content.main_img && 'full'}`}>
-          <Link to={{ pathname: linkUrl, hash: hashUrl }} className="post_card__block">
-            <h3>{content.title || content.root_title}</h3>
-          </Link>
-          {isResteemed && (
-            <div className="resteemed">
-              <IconReply color={COLOR} style={{ width: SIZE_SMALL, margin: '0 0.3rem' }} />
-              <span>
-                Resteemed by {' '}<Link to={`/@${resteemedBy}`}>{resteemedBy}</Link>
-              </span>
-            </div>
-          )}
+          <div className="title">
+            <Link to={{ pathname: linkUrl, hash: hashUrl }} className="post_card__block">
+              <h3>{content.title || content.root_title}</h3>
+            </Link>
+            {isResteemed && (
+              <div className="resteemed">
+                <Chip labelColor={COLOR_LIGHT_TEXT}>
+                  <Avatar>
+                    <IconReply color="white" style={{ width: SIZE_SMALL, margin: '0 0.3rem' }} />
+                  </Avatar>
+                  Resteemed by {' '}<Link to={`/@${resteemedBy}`}>{resteemedBy}</Link>
+                </Chip>
+              </div>
+            )}
+          </div>
           <Link to={{ pathname: linkUrl, hash: hashUrl }} className="post_card__block">
             <p>{extractDesc(content)}</p>
           </Link>
@@ -79,7 +90,7 @@ export default class ContentItem extends PureComponent {
                 <Author name={content.author} reputation={content.author_reputation} />
               </div>
               <div className="datetime">
-                <FormattedRelative value={`${content.created}Z`} /> in <Link to={`/trending/${content.category}`}>{content.category}</Link>
+                <FormattedRelative value={`${content.created}Z`} /> in <Link to={`/${currentCategory}/${content.category}`}>{content.category}</Link>
               </div>
             </div>
           </div>

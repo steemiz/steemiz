@@ -1,0 +1,13 @@
+.search-result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-result-header h2 {
+    margin-bottom: .5rem;
+}
+
+.search-result-header .nb {
+    margin: 0;
+}

@@ -25,7 +25,7 @@ class LeftSideBar extends Component {
             </div>
             <div>
               <LeftSideBarItem to={`/@${me}`} label="Profile" icon={IconAccountCircle} exact={false} />
-              <LeftSideBarItem to="/settings" label="Settings" icon={IconSettings} />
+              <LeftSideBarItem to="#" label="Settings" icon={IconSettings} />
             </div>
           </aside>
         )}

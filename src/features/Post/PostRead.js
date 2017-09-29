@@ -12,6 +12,7 @@ import AvatarSteemit from 'components/AvatarSteemit';
 import Author from 'components/Author';
 import InfiniteList from 'components/InfiniteList';
 import CommentItem from 'features/Comment/CommentItem';
+import PostRelated from 'features/Search/PostRelated';
 import { getCommentsFromPostBegin } from 'features/Comment/actions/getCommentsFromPost';
 import { selectCommentsChild, selectCommentsData, selectCommentsIsLoading } from 'features/Comment/selectors';
 import { selectIsConnected } from 'features/User/selectors';
@@ -62,6 +63,13 @@ class PostRead extends Component {
       const { match: { params : { topic, author, permlink }}} = nextProps;
       this.props.getCommentsFromPost(topic, author, permlink);
     }
+
+    const { match: { params : { author, permlink }} } = this.props;
+    const nextAuthor = nextProps.match.params.author;
+    const nextPermlink = nextProps.match.params.permlink;
+    if (author !== nextAuthor || permlink !== nextPermlink) {
+      this.props.getOnePost(nextAuthor, nextPermlink);
+    }
   }
 
   componentWillUnmount() {
@@ -106,6 +114,7 @@ class PostRead extends Component {
               </article>
             </div>
             <div className="PostDetail__large">
+              <PostRelated author={post.author} permlink={post.permlink} />
               {post.json_metadata.tags ? <PostTags post={post} /> : <div />}
               <PostFooter post={post} />
             </div>

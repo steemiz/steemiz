@@ -19,3 +19,13 @@ export const selectUserSearch = () => createSelector(
   selectSearchDomain(),
   state => state.user,
 );
+
+export const selectPostRelated = () => createSelector(
+  selectSearchDomain(),
+  state => state.postRelated,
+);
+
+export const selectPostRelatedFromPost = (author, permlink) => createSelector(
+  selectPostRelated(),
+  state => state[`${author}/${permlink}`],
+);
