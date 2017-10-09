@@ -30,6 +30,13 @@ export default class ContentPayoutAndVotes extends PureComponent {
     };
   }
 
+  closeCards = () => {
+    this.setState({
+      isOpenMoneyCard: false,
+      isOpenVoteCard: false,
+    })
+  };
+
   openMoneyCard = (event) => {
     // This prevents ghost click.
     event.preventDefault();
@@ -47,13 +54,6 @@ export default class ContentPayoutAndVotes extends PureComponent {
     this.setState({
       isOpenVoteCard: !this.state.isOpenVoteCard,
       voteAnchor: event.currentTarget,
-    })
-  };
-
-  closeCards = () => {
-    this.setState({
-      isOpenMoneyCard: false,
-      isOpenVoteCard: false,
     })
   };
 

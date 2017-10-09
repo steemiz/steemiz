@@ -6,6 +6,10 @@ import isEmpty from 'lodash/isEmpty';
 import CircularProgress from 'components/CircularProgress';
 
 export default class InfiniteList extends PureComponent {
+  static defaultProps = {
+    isLoading: false,
+  };
+
   static propTypes = {
     list: PropTypes.array.isRequired,
     hasMore: PropTypes.bool,
@@ -14,15 +18,6 @@ export default class InfiniteList extends PureComponent {
     loadMoreCb: PropTypes.func.isRequired,
     itemMappingCb: PropTypes.func.isRequired,
   };
-
-  static defaultProps = {
-    isLoading: false,
-  };
-
-  constructor(props) {
-    super(props);
-    this.loadMore = this.loadMore.bind(this);
-  }
 
   componentDidMount() {
     // INITIAL DATA LOADING IF PROVIDED
@@ -34,12 +29,12 @@ export default class InfiniteList extends PureComponent {
     }
   }
 
-  loadMore() {
+  loadMore = () => {
     const { isLoading, hasMore } = this.props;
     if (isLoading === false && hasMore === true) {
       this.props.loadMoreCb();
     }
-  }
+  };
 
   render() {
     const { list, hasMore, isLoading, itemMappingCb } = this.props;

@@ -12,14 +12,14 @@ import { selectFollowersAccounts, selectFollowersFromUser } from './selectors';
 import { getFollowersBegin } from './actions/getFollowers';
 
 class ProfileFollowers extends Component {
+  static defaultProps = {
+    followersAccounts: [],
+  };
+
   static propTypes = {
     getFollowers: PropTypes.func.isRequired,
     followersAccounts: PropTypes.array,
     followersFromUser: PropTypes.object.isRequired,
-  };
-
-  static defaultProps = {
-    followersAccounts: [],
   };
 
   render() {

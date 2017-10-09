@@ -7,14 +7,14 @@ import { selectFollowersList } from './selectors';
 import { getFollowersBegin } from './actions/getFollowers';
 
 class FollowersList extends Component {
+  static defaultProps = {
+    followers: undefined,
+  };
+
   static propTypes = {
     accountName: PropTypes.string.isRequired,
     getFollowers: PropTypes.func.isRequired,
     followers: PropTypes.array,
-  };
-
-  static defaultProps = {
-    followers: undefined,
   };
 
   componentDidMount() {

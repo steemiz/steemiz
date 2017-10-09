@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {blue500, blue700, grey700} from 'material-ui/styles/colors';
+import { blue500, blue700, grey700 } from 'material-ui/styles/colors';
 import { BrowserRouter as Router } from 'react-router-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { getToken } from 'utils/token';
@@ -16,6 +16,8 @@ import App from './features/App/App';
 import registerServiceWorker from './registerServiceWorker';
 
 import steemconnect from 'sc2-sdk';
+import steem from 'steem';
+steem.api.setOptions({ url: 'wss://steemd-int.steemit.com' });
 
 steemconnect.init({
   app: 'steemiz.app',

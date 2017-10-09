@@ -11,14 +11,14 @@ import { getFollowingsBegin } from './actions/getFollowings';
 import titleWrapper from 'titleWrapper';
 
 class ProfileFollowings extends Component {
+  static defaultProps = {
+    followingsAccounts: [],
+  };
+
   static propTypes = {
     getFollowings: PropTypes.func.isRequired,
     followingsAccounts: PropTypes.array,
     followingsFromUser: PropTypes.object.isRequired,
-  };
-
-  static defaultProps = {
-    followingsAccounts: [],
   };
 
   render() {

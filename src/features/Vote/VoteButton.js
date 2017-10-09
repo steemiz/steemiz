@@ -27,27 +27,12 @@ class VoteButton extends Component {
 
   constructor() {
     super();
-    this.vote = this.vote.bind(this);
     this.state = {
       voteWeight: 100,
       sliderIsOpen: false,
       over: false,
     }
   }
-
-  vote(weight) {
-    const { isConnected, content, vote, type } = this.props;
-    if (isConnected) {
-      this.setState({ sliderIsOpen: false });
-      vote(content, weight, { type });
-    } else {
-      console.log('Not logged');
-    }
-  }
-
-  openSlider = () => {
-    this.setState({ sliderIsOpen: true });
-  };
 
   closeSlider = () => {
     this.setState({ sliderIsOpen: false, over: false });
@@ -57,12 +42,26 @@ class VoteButton extends Component {
     this.setState({ voteWeight: value });
   };
 
+  openSlider = () => {
+    this.setState({ sliderIsOpen: true });
+  };
+
   overIn = () => {
     this.setState({ over: true });
   };
 
   overOut = () => {
     this.setState({ over: false });
+  };
+
+  vote = weight => {
+    const { isConnected, content, vote, type } = this.props;
+    if (isConnected) {
+      this.setState({ sliderIsOpen: false });
+      vote(content, weight, { type });
+    } else {
+      console.log('Not logged');
+    }
   };
 
   votingValueCalculator = voteWeight => {

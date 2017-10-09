@@ -20,21 +20,19 @@ class CommentReplyForm extends Component {
 
   constructor() {
     super();
-    this.reply = this.reply.bind(this);
-    this.onChange = this.onChange.bind(this);
     this.state = {
       body: '',
     }
   }
 
-  reply() {
+  onChange = (evt, val) => {
+    this.setState({ body: val });
+  };
+
+  reply = () => {
     this.props.reply(this.state.body);
     this.props.closeForm();
-  }
-
-  onChange(evt, val) {
-    this.setState({ body: val });
-  }
+  };
 
   render() {
     const { closeForm, me } = this.props;

@@ -20,16 +20,16 @@ import {
 import { COLOR, COLOR_HOVER, COLOR_LIGHT_TEXT, SIZE_SMALL } from 'styles/icons';
 
 export default class ContentItem extends PureComponent {
+  static defaultProps = {
+    currentCategory: 'trending',
+  };
+
   static propTypes = {
     type: PropTypes.oneOf([
       'post', 'comment',
     ]).isRequired,
     content: PropTypes.object.isRequired,
     currentCategory: PropTypes.string,
-  };
-
-  static defaultProps = {
-    currentCategory: 'trending',
   };
 
   render() {

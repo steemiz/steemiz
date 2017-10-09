@@ -19,16 +19,16 @@ import { setCategoryTag } from './actions/setCategoryTag';
 import UserSearch from 'features/Search/UserSearch';
 
 class RightSideBar extends Component {
+  static defaultProps = {
+    trendingTags: [],
+  };
+
   static propTypes = {
     isSidebarOpen: PropTypes.bool.isRequired,
     trendingTags: PropTypes.array,
     me: PropTypes.string.isRequired,
     currentCategory: PropTypes.string.isRequired,
     currentTag: PropTypes.string,
-  };
-
-  static defaultProps = {
-    trendingTags: [],
   };
 
   constructor() {

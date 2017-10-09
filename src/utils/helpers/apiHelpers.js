@@ -1,6 +1,7 @@
 import steem from 'steem';
 
 const steemAPI = steem.api;
+
 /** *
  * Get the path from URL and the API object of steem and return the correct API call based on path
  * @param sortBy - as in URL like 'trending'

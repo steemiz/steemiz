@@ -8,14 +8,14 @@ import { selectFollowingsList } from './selectors';
 import { getFollowingsBegin } from './actions/getFollowings';
 
 class FollowingList extends Component {
+  static defaultProps = {
+    followings: undefined,
+  };
+
   static propTypes = {
     accountName: PropTypes.string.isRequired,
     getFollowings: PropTypes.func.isRequired,
     followings: PropTypes.array,
-  };
-
-  static defaultProps = {
-    followings: undefined,
   };
 
   componentDidMount() {

@@ -15,9 +15,6 @@ export default class UsersList extends PureComponent {
 
   constructor(props) {
     super();
-    this.filter = this.filter.bind(this);
-    this.reset = this.reset.bind(this);
-    this.goToPage = this.goToPage.bind(this);
     this.state = {
       page: 1,
       results: props.dataSource,
@@ -32,28 +29,28 @@ export default class UsersList extends PureComponent {
     }
   }
 
-  filter(value) {
+  filter = value => {
     this.setState({
       page: 1,
       results: this.props.dataSource
         .filter(user => user.indexOf(value) >= 0),
     });
-  }
+  };
 
-  reset(value) {
+  goToPage = page => {
+    this.setState({
+      page: page,
+    })
+  };
+
+  reset = value => {
     if (value === '') {
       this.setState({
         page: 1,
         results: this.props.dataSource,
       });
     }
-  }
-
-  goToPage(page) {
-    this.setState({
-      page: page,
-    })
-  }
+  };
 
   render() {
     const { results, page } = this.state;

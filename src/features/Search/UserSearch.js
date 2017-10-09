@@ -15,6 +15,10 @@ import UserContact from 'features/User/components/UserContact';
 import './PostSearch.css';
 
 class UserSearch extends Component {
+  changePage = page => {
+    this.props.userSearchBegin(this.props.userSearch.q, page);
+  };
+
   validate = evt => {
     const term = evt.target.value;
     if (term && evt.key === 'Enter') {
@@ -22,10 +26,6 @@ class UserSearch extends Component {
         this.props.userSearchBegin(term);
       }
     }
-  };
-
-  changePage = page => {
-    this.props.userSearchBegin(this.props.userSearch.q, page);
   };
 
   render() {

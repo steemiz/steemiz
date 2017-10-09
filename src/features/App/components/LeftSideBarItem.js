@@ -9,16 +9,16 @@ const ICON_STYLE = {
 };
 
 class LeftSideBarItem extends PureComponent {
+  static defaultProps = {
+    exact: true,
+  };
+
   static propTypes = {
     to: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     icon: PropTypes.func.isRequired,
     exact: PropTypes.bool,
     onClick: PropTypes.func,
-  };
-
-  static defaultProps = {
-    exact: true,
   };
 
   render() {

@@ -7,6 +7,10 @@ import { selectFollowersCount, selectFollowingsCount } from './selectors';
 import { getFollowerCountBegin } from './actions/getFollowerCount';
 
 class FollowerCount extends Component {
+  static defaultProps = {
+    count: undefined,
+  };
+
   static propTypes = {
     accountName: PropTypes.string.isRequired,
     unit: PropTypes.oneOf(['followers', 'followings']).isRequired,
@@ -15,10 +19,6 @@ class FollowerCount extends Component {
       PropTypes.number,
       PropTypes.oneOf([undefined]),
     ]),
-  };
-
-  static defaultProps = {
-    count: undefined,
   };
 
   componentDidMount() {

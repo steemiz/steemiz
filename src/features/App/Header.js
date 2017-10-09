@@ -46,18 +46,6 @@ class Header extends Component {
     }
   }
 
-  handleShowDropdownMenu = (event) => {
-    // This prevents ghost click.
-    event.preventDefault();
-
-    this.setState({
-      dropdownMenu: {
-        open: true,
-        anchorEl: event.currentTarget,
-      }
-    })
-  };
-
   handleCloseDropdownMenu = () => {
     this.setState(state => {
       state.dropdownMenu.open = false
@@ -67,6 +55,18 @@ class Header extends Component {
   handleControlCollapse = () => {
     this.setState(state => {
       state.collapseOpen = !state.collapseOpen
+    })
+  };
+
+  handleShowDropdownMenu = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
+
+    this.setState({
+      dropdownMenu: {
+        open: true,
+        anchorEl: event.currentTarget,
+      }
     })
   };
 

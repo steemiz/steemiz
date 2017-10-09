@@ -42,7 +42,6 @@ export function getPostRelatedReducer(state, action) {
 function* getPostRelated({ author, permlink }) {
   try {
     const response = yield call(request, `https://api.asksteem.com/related?author=${author}&permlink=${permlink}&include=meta,pending_payout_value,curator_payout_value,total_payout_value,author_reputation`);
-    console.log('response', response);
     response.results = response.results.map(result => format(result));
     yield put(getPostRelatedSuccess(author, permlink, response));
   } catch (e) {

@@ -27,7 +27,7 @@
     "react-progressive-image": "^0.1.2",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.1.2",
-    "react-scripts": "1.0.10",
+    "react-scripts": "1.0.14",
     "react-select": "^1.0.0-rc.5",
     "react-tagsinput": "^3.17.0",
     "react-tap-event-plugin": "^2.0.1",
@@ -40,7 +40,7 @@
     "sc2-sdk": "^0.0.4",
     "secure-random": "^1.1.1",
     "speakingurl": "^14.0.1",
-    "steem": "^0.5.20",
+    "steem": "^0.6.4",
     "xmldom": "^0.1.27"
   },
   "scripts": {

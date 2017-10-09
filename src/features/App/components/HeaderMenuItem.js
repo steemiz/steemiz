@@ -9,6 +9,11 @@ const ICON_STYLE = {
 };
 
 export default class HeaderMenuItem extends PureComponent {
+  static defaultProps = {
+    to: '#',
+    onClick: undefined,
+  };
+
   static propTypes = {
     to: PropTypes.string,
     label: PropTypes.string.isRequired,
@@ -16,32 +21,25 @@ export default class HeaderMenuItem extends PureComponent {
     onClick: PropTypes.func,
   };
 
-  static defaultProps = {
-    to: '#',
-    onClick: undefined,
-  };
-
   constructor(props) {
     super(props);
-    this.enter = this.enter.bind(this);
-    this.leave = this.leave.bind(this);
 
     this.state = {
       hover: false,
     };
   }
 
-  enter() {
+  enter = () => {
     this.setState({
       hover: true,
     });
-  }
+  };
 
-  leave() {
+  leave = () => {
     this.setState({
       hover: false,
     });
-  }
+  };
 
   render() {
     const { hover } = this.state;

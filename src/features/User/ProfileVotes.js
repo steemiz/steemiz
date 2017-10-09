@@ -11,6 +11,11 @@ import { selectReceivedVotes, selectGivenVotes, selectHistoryTransfer } from './
 import { getTransferHistoryBegin } from './actions/getTransferHistory';
 
 class ProfileVotes extends Component {
+  static defaultProps = {
+    givenVotes: undefined,
+    receivedVotes: undefined,
+  };
+
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -21,11 +26,6 @@ class ProfileVotes extends Component {
     historyTransfer: PropTypes.object.isRequired,
     givenVotes: PropTypes.array,
     receivedVotes: PropTypes.array,
-  };
-
-  static defaultProps = {
-    givenVotes: undefined,
-    receivedVotes: undefined,
   };
 
   componentDidMount() {

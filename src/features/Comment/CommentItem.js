@@ -12,21 +12,19 @@ import CommentReplyForm from './CommentReplyForm';
 class CommentItem extends PureComponent {
   constructor() {
     super();
-    this.switchReplyForm = this.switchReplyForm.bind(this);
-    this.closeReplyForm = this.closeReplyForm.bind(this);
     this.state = {
       showReplyForm: false,
       isEditing: false,
     };
   }
 
-  switchReplyForm() {
-    this.setState({ showReplyForm: !this.state.showReplyForm });
-  }
-
-  closeReplyForm() {
+  closeReplyForm = () => {
     this.setState({ showReplyForm: false });
-  }
+  };
+
+  switchReplyForm = () => {
+    this.setState({ showReplyForm: !this.state.showReplyForm });
+  };
 
   render() {
     const { comment, commentsChild, commentsData, sortOrder } = this.props;

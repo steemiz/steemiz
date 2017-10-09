@@ -43,12 +43,8 @@ class PostCreate extends Component {
     }
   }
 
-  toggleForm = () => {
-    this.props.togglePublishForm();
-  };
-
-  handleTitle = (evt) => {
-    this.setState({ title: evt.target.value });
+  handleChangeSelectTag = tags => {
+    this.setState({ tags });
   };
 
   handleCreatePost = () => {
@@ -69,14 +65,18 @@ class PostCreate extends Component {
     this.setState({ reward: value });
   };
 
+  handleTitle = (evt) => {
+    this.setState({ title: evt.target.value });
+  };
+
+  toggleForm = () => {
+    this.props.togglePublishForm();
+  };
+
   uploadImageCallBack = file => {
     return new Promise((resolve, reject) => {
       this.props.uploadFile({ resolve, reject }, file);
     });
-  };
-
-  handleChangeSelectTag = tags => {
-    this.setState({ tags });
   };
 
   render() {

@@ -18,17 +18,16 @@ export default class TagsList extends PureComponent {
 
   constructor() {
     super();
-    this.goToPage = this.goToPage.bind(this);
     this.state = {
       page: 1,
     };
   }
 
-  goToPage(page) {
+  goToPage = page => {
     this.setState({
       page: page,
     })
-  }
+  };
 
   render() {
     const { tags, currentCategory, currentTag, deleteTag } = this.props;

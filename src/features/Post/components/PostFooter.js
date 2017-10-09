@@ -25,21 +25,19 @@ export default class PostFooter extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.switchReplyForm = this.switchReplyForm.bind(this);
-    this.closeReplyForm = this.closeReplyForm.bind(this);
     this.state = {
       showReplyForm: false,
       isEditing: false,
     };
   }
 
-  switchReplyForm() {
-    this.setState({ showReplyForm: !this.state.showReplyForm });
-  }
-
-  closeReplyForm() {
+  closeReplyForm = () => {
     this.setState({ showReplyForm: false });
-  }
+  };
+
+  switchReplyForm = () => {
+    this.setState({ showReplyForm: !this.state.showReplyForm });
+  };
 
   render() {
     const { post } = this.props;

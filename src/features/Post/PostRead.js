@@ -23,6 +23,12 @@ import PostFooter from './components/PostFooter';
 import './PostRead.css';
 
 class PostRead extends Component {
+  static defaultProps = {
+    location: {
+      state: undefined,
+    }
+  };
+
   static propTypes = {
     location: PropTypes.shape({
       state: PropTypes.shape({
@@ -38,12 +44,6 @@ class PostRead extends Component {
     commentsChild: PropTypes.object.isRequired,
     currentComments: PropTypes.object,
     commentsIsLoading: PropTypes.bool.isRequired,
-  };
-
-  static defaultProps = {
-    location: {
-      state: undefined,
-    }
   };
 
   constructor() {

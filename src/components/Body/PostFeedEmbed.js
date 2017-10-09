@@ -10,6 +10,11 @@ export default class PostFeedEmbed extends Component {
     };
   }
 
+  handleThumbClick = (e) => {
+    e.stopPropagation();
+    this.setState({ showIframe: true });
+  };
+
   renderThumbFirst(thumb) {
     return (
       <a className="postFeedEmbed" onClick={this.handleThumbClick}>
@@ -20,11 +25,6 @@ export default class PostFeedEmbed extends Component {
       </a>
     );
   }
-
-  handleThumbClick = (e) => {
-    e.stopPropagation();
-    this.setState({ showIframe: true });
-  };
 
   renderWithIframe(embed) {
     return (
