@@ -47,15 +47,17 @@ class Header extends Component {
   }
 
   handleCloseDropdownMenu = () => {
-    this.setState(state => {
-      state.dropdownMenu.open = false
-    })
+    this.setState({
+      dropdownMenu: {
+        open: false,
+      }
+    });
   };
 
   handleControlCollapse = () => {
-    this.setState(state => {
-      state.collapseOpen = !state.collapseOpen
-    })
+    this.setState({
+      collapseOpen: !this.state.collapseOpen
+    });
   };
 
   handleShowDropdownMenu = (event) => {
