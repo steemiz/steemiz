@@ -1,4 +1,4 @@
-import { select, put, takeEvery } from 'redux-saga/effects';
+import { put, select, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
 import update from 'immutability-helper';
 import isEmpty from 'lodash/isEmpty';

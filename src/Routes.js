@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
+import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 import asyncComponent from 'asyncComponent';
 import { getToken } from './utils/token';

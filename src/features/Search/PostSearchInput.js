@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -7,7 +6,7 @@ import IconSearch from 'material-ui/svg-icons/action/search';
 import AutoComplete from 'material-ui/AutoComplete';
 import debounce from 'lodash/debounce';
 import { COLOR_INACTIVE } from 'styles/icons';
-import { selectPostSuggestions, selectPostSearch } from './selectors';
+import { selectPostSearch, selectPostSuggestions } from './selectors';
 
 import CircularProgress from 'components/CircularProgress';
 import { postSearchInit } from 'features/Search/actions/postSearch';

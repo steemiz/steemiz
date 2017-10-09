@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FormattedRelative } from 'react-intl';
 import isEmpty from 'lodash/isEmpty';
@@ -9,9 +8,7 @@ import IconSms from 'material-ui/svg-icons/notification/sms';
 import Author from 'components/Author';
 import CircularProgress from 'components/CircularProgress';
 import { COLOR, COLOR_HOVER, SIZE_SMALL } from 'styles/icons';
-import {
-  formatAmount,
-} from 'utils/helpers/steemitHelpers';
+import { formatAmount, } from 'utils/helpers/steemitHelpers';
 
 
 const PostCard = ({ content }) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import IconSearch from 'material-ui/svg-icons/action/search';
 import AutoComplete from 'material-ui/AutoComplete';
-import { COLOR_INACTIVE, COLOR_HOVER, COLOR_LIGHT_TEXT } from 'styles/icons';
+import { COLOR_HOVER, COLOR_INACTIVE, COLOR_LIGHT_TEXT } from 'styles/icons';
 
 const SearchBox = ({ dataSource, onNewRequest, onUpdateInput }) => {
   return (

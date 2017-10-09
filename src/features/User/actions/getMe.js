@@ -1,4 +1,4 @@
-import { select, call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import update from 'immutability-helper';
 import { setToken } from 'utils/token';
 import steemconnect from 'sc2-sdk';

@@ -12,7 +12,7 @@ import IconForward from 'material-ui/svg-icons/content/forward';
 import { grey400, white } from 'material-ui/styles/colors';
 
 import { selectIsConnected, selectMyAccount } from 'features/User/selectors';
-import { selectAppRewardFund, selectAppProps, selectAppRate } from 'features/App/selectors';
+import { selectAppProps, selectAppRate, selectAppRewardFund } from 'features/App/selectors';
 import { voteBegin } from './actions/vote';
 import { hasVoted } from 'utils/helpers/steemitHelpers';
 

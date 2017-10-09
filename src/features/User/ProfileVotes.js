@@ -7,7 +7,7 @@ import titleWrapper from 'titleWrapper';
 
 import InfiniteList from 'components/InfiniteList';
 import UserVote from './components/UserVote';
-import { selectReceivedVotes, selectGivenVotes, selectHistoryTransfer } from './selectors';
+import { selectGivenVotes, selectHistoryTransfer, selectReceivedVotes } from './selectors';
 import { getTransferHistoryBegin } from './actions/getTransferHistory';
 
 class ProfileVotes extends Component {

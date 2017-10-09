@@ -1,5 +1,10 @@
 import update from 'immutability-helper';
-import { VOTE_FAILURE, VOTE_OPTIMISTIC, VOTE_SUCCESS, UPDATE_PAYOUT } from 'features/Vote/actions/vote';
+import {
+  UPDATE_PAYOUT,
+  VOTE_FAILURE,
+  VOTE_OPTIMISTIC,
+  VOTE_SUCCESS
+} from 'features/Vote/actions/vote';
 import { manageContentVote } from 'features/Vote/utils';
 
 function getContentId(content) {

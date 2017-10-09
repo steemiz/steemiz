@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -11,40 +11,38 @@ import InfiniteList from 'components/InfiniteList';
 import { selectFollowersAccounts, selectFollowersFromUser } from './selectors';
 import { getFollowersBegin } from './actions/getFollowers';
 
-class ProfileFollowers extends Component {
-  static defaultProps = {
-    followersAccounts: [],
-  };
-
-  static propTypes = {
-    getFollowers: PropTypes.func.isRequired,
-    followersAccounts: PropTypes.array,
-    followersFromUser: PropTypes.object.isRequired,
-  };
-
-  render() {
-    const { getFollowers, followersAccounts, followersFromUser } = this.props;
-    return (
-      <div className="usercard_container">
-        {!isEmpty(followersFromUser) && (
-          <InfiniteList
-            list={followersAccounts}
-            hasMore={followersFromUser.hasMore || (followersFromUser.list && followersAccounts.length < followersFromUser.list.length)}
-            isLoading={followersFromUser.isLoading}
-            initLoad={getFollowers}
-            loadMoreCb={() => getFollowers({ addMore: true, lastFollower: followersAccounts[followersAccounts.length - 1].name })}
-            itemMappingCb={user => (
-              <UserCard
-                key={user.id}
-                user={user}
-              />
-            )}
-          />
-        )}
-      </div>
-    );
-  }
+function ProfileFollowers(props) {
+  const { getFollowers, followersAccounts, followersFromUser } = props;
+  return (
+    <div className="usercard_container">
+      {!isEmpty(followersFromUser) && (
+        <InfiniteList
+          list={followersAccounts}
+          hasMore={followersFromUser.hasMore || (followersFromUser.list && followersAccounts.length < followersFromUser.list.length)}
+          isLoading={followersFromUser.isLoading}
+          initLoad={getFollowers}
+          loadMoreCb={() => getFollowers({ addMore: true, lastFollower: followersAccounts[followersAccounts.length - 1].name })}
+          itemMappingCb={user => (
+            <UserCard
+              key={user.id}
+              user={user}
+            />
+          )}
+        />
+      )}
+    </div>
+  );
 }
+
+ProfileFollowers.defaultProps = {
+  followersAccounts: [],
+};
+
+ProfileFollowers.propTypes = {
+  getFollowers: PropTypes.func.isRequired,
+  followersAccounts: PropTypes.array,
+  followersFromUser: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state, props) => createStructuredSelector({
   followersAccounts: selectFollowersAccounts(props.match.params.accountName),

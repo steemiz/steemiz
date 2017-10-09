@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
 import { Helmet } from 'react-helmet';
 

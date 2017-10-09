@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { FormattedRelative } from 'react-intl';
 import IconWatch from 'material-ui/svg-icons/action/watch-later';
 import IconFb from 'react-icons/lib/fa/facebook-square';

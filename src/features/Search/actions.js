@@ -1,6 +1,5 @@
 import combine from 'utils/combine';
 import { combineReducers } from 'redux';
-
 /*
  * EXPORTING REDUCERS and SAGAS
  */

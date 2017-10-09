@@ -8,9 +8,7 @@ import IconSms from 'material-ui/svg-icons/notification/sms';
 import Author from 'components/Author';
 import CircularProgress from 'components/CircularProgress';
 import { COLOR, COLOR_HOVER, SIZE_SMALL } from 'styles/icons';
-import {
-  formatAmount,
-} from 'utils/helpers/steemitHelpers';
+import { formatAmount, } from 'utils/helpers/steemitHelpers';
 
 const Result = ({ content, placeholderImg }) => {
   const mainTag = content.tags[0];

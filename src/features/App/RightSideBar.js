@@ -7,12 +7,17 @@ import { Tab } from 'material-ui/Tabs';
 import IconLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import IconRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import CustomTabs from 'components/CustomTabs';
-import { COLOR_INACTIVE, COLOR_HOVER } from 'styles/icons';
+import { COLOR_HOVER, COLOR_INACTIVE } from 'styles/icons';
 
 import TagsList from './components/TagsList';
 import FollowersList from 'features/User/FollowersList';
 import FollowingsList from 'features/User/FollowingsList';
-import { selectIsSidebarOpen, selectTrendingTags, selectCurrentCategory, selectCurrentTag } from './selectors';
+import {
+  selectCurrentCategory,
+  selectCurrentTag,
+  selectIsSidebarOpen,
+  selectTrendingTags
+} from './selectors';
 import { selectMe } from 'features/User/selectors';
 import { toggleSidebar } from './actions/sidebar';
 import { setCategoryTag } from './actions/setCategoryTag';

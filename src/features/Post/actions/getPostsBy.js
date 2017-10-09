@@ -1,4 +1,4 @@
-import { select, put, takeEvery } from 'redux-saga/effects';
+import { put, select, takeEvery } from 'redux-saga/effects';
 import update from 'immutability-helper';
 import format from '../utils/format';
 import getPostKey from '../utils/postKey';

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { selectPublishFormOpen, selectIsPublishing } from './selectors';
+import { selectIsPublishing, selectPublishFormOpen } from './selectors';
 
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'

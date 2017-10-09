@@ -14,9 +14,13 @@ import InfiniteList from 'components/InfiniteList';
 import CommentItem from 'features/Comment/CommentItem';
 import PostRelated from 'features/Search/PostRelated';
 import { getCommentsFromPostBegin } from 'features/Comment/actions/getCommentsFromPost';
-import { selectCommentsChild, selectCommentsData, selectCommentsIsLoading } from 'features/Comment/selectors';
+import {
+  selectCommentsChild,
+  selectCommentsData,
+  selectCommentsIsLoading
+} from 'features/Comment/selectors';
 import { selectIsConnected } from 'features/User/selectors';
-import { selectCurrentPost, selectCurrentComments } from './selectors';
+import { selectCurrentComments, selectCurrentPost } from './selectors';
 import { getOnePostBegin, setCurrentPostId } from './actions/getOnePost';
 import PostTags from './components/PostTags';
 import PostFooter from './components/PostFooter';

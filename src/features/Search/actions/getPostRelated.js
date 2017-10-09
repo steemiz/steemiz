@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import update from 'immutability-helper';
 import request from 'utils/request';
 import format from '../utils/format';

@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
 import { manageContentVote } from '../Vote/utils';
-import { VOTE_OPTIMISTIC, VOTE_FAILURE, VOTE_SUCCESS, UPDATE_PAYOUT } from '../Vote/actions/vote';
+import { UPDATE_PAYOUT, VOTE_FAILURE, VOTE_OPTIMISTIC, VOTE_SUCCESS } from '../Vote/actions/vote';
 import { GET_COMMENTS_FROM_POST_SUCCESS } from './actions/getCommentsFromPost';
 import { GET_COMMENTS_FROM_USER_SUCCESS } from './actions/getCommentsFromUser';
 import { GET_REPLIES_TO_USER_SUCCESS } from './actions/getRepliesToUser';

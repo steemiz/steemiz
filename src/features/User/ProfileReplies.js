@@ -1,47 +1,50 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { getRepliesToUserBegin } from '../Comment/actions/getRepliesToUser';
-import { selectListRepliesToUser, selectHasMoreRepliesToUser, selectIsLoadingRepliesToUser, selectCommentsData } from '../Comment/selectors';
+import {
+  selectCommentsData,
+  selectHasMoreRepliesToUser,
+  selectIsLoadingRepliesToUser,
+  selectListRepliesToUser
+} from '../Comment/selectors';
 import titleWrapper from 'titleWrapper';
 import InfiniteList from 'components/InfiniteList';
 import ContentItem from 'components/ContentItem';
 
-class ProfileReplies extends Component {
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        accountName: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-    commentsData: PropTypes.object.isRequired,
-    listRepliesToUser: PropTypes.array.isRequired,
-    getRepliesToUser: PropTypes.func.isRequired,
-    hasMoreRepliesToUser: PropTypes.bool,
-    repliesIsLoading: PropTypes.bool.isRequired,
-  };
-
-  render() {
-    const { getRepliesToUser, listRepliesToUser, hasMoreRepliesToUser, repliesIsLoading, commentsData } = this.props;
-    return (
-      <InfiniteList
-        list={listRepliesToUser}
-        hasMore={hasMoreRepliesToUser}
-        isLoading={repliesIsLoading}
-        initLoad={getRepliesToUser}
-        loadMoreCb={() => getRepliesToUser({ addMore: true })}
-        itemMappingCb={commentId => (
-          <ContentItem
-            key={commentId}
-            content={commentsData[commentId]}
-            type="comment"
-          />
-        )}
-      />
-    );
-  }
+function ProfileReplies(props) {
+  const { getRepliesToUser, listRepliesToUser, hasMoreRepliesToUser, repliesIsLoading, commentsData } = props;
+  return (
+    <InfiniteList
+      list={listRepliesToUser}
+      hasMore={hasMoreRepliesToUser}
+      isLoading={repliesIsLoading}
+      initLoad={getRepliesToUser}
+      loadMoreCb={() => getRepliesToUser({ addMore: true })}
+      itemMappingCb={commentId => (
+        <ContentItem
+          key={commentId}
+          content={commentsData[commentId]}
+          type="comment"
+        />
+      )}
+    />
+  );
 }
+
+ProfileReplies.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      accountName: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  commentsData: PropTypes.object.isRequired,
+  listRepliesToUser: PropTypes.array.isRequired,
+  getRepliesToUser: PropTypes.func.isRequired,
+  hasMoreRepliesToUser: PropTypes.bool,
+  repliesIsLoading: PropTypes.bool.isRequired,
+};
 
 const mapStateToProps = (state, props) => createStructuredSelector({
   listRepliesToUser: selectListRepliesToUser(props.match.params.accountName),

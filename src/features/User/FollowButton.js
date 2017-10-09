@@ -1,38 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { selectMyFollowingsList, selectMyFollowingsLoadStatus, selectMe } from './selectors';
+import { selectMe, selectMyFollowingsList, selectMyFollowingsLoadStatus } from './selectors';
 
 import { followBegin } from './actions/follow';
 import { unfollowBegin } from './actions/unfollow';
 import CircularProgress from 'components/CircularProgress';
 import GreenButton from 'components/GreenButton';
 
-class FollowButton extends Component {
-  static propTypes = {
-    accountName: PropTypes.string.isRequired,
-    me: PropTypes.string.isRequired,
-    followingsList: PropTypes.array.isRequired,
-    followingLoadStatus: PropTypes.object.isRequired,
-    follow: PropTypes.func.isRequired,
-    unfollow: PropTypes.func.isRequired,
-  };
+function FollowButton(props) {
+  const { followingsList, followingLoadStatus, accountName, me, unfollow, follow } = props;
+  const isFollowing = followingsList.find(following => following.following === accountName);
+  const isLoading = followingLoadStatus[accountName];
+  const loadingStyle = isLoading ? { paddingLeft: '1rem' } : {};
 
-  render() {
-    const { followingsList, followingLoadStatus, accountName, me, unfollow, follow } = this.props;
-    const isFollowing = followingsList.find(following => following.following === accountName);
-    const isLoading = followingLoadStatus[accountName];
-    const loadingStyle = isLoading ? { paddingLeft: '1rem' } : {};
-
-    return (
-      <GreenButton style={loadingStyle} onClick={isFollowing ? unfollow : follow} disabled={accountName === me || isLoading}>
-        {isLoading && <CircularProgress size={20} thickness={3} style={{ marginRight: 10 }} color="white" />}
-        {isFollowing ? 'Unfollow' : 'Follow'}
-      </GreenButton>
-    );
-  }
+  return (
+    <GreenButton style={loadingStyle} onClick={isFollowing ? unfollow : follow} disabled={accountName === me || isLoading}>
+      {isLoading && <CircularProgress size={20} thickness={3} style={{ marginRight: 10 }} color="white" />}
+      {isFollowing ? 'Unfollow' : 'Follow'}
+    </GreenButton>
+  );
 }
+
+FollowButton.propTypes = {
+  accountName: PropTypes.string.isRequired,
+  me: PropTypes.string.isRequired,
+  followingsList: PropTypes.array.isRequired,
+  followingLoadStatus: PropTypes.object.isRequired,
+  follow: PropTypes.func.isRequired,
+  unfollow: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state, props) => createStructuredSelector({
   followingLoadStatus: selectMyFollowingsLoadStatus(),

@@ -4,10 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
 
-import {
-  selectPosts,
-  selectCategories,
-} from './selectors';
+import { selectCategories, selectPosts, } from './selectors';
 import { selectCurrentCategory } from 'features/App/selectors';
 import { getPostsByBegin } from './actions/getPostsBy';
 import { setCategoryTag } from 'features/App/actions/setCategoryTag';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -10,38 +10,36 @@ import { selectFollowingsAccounts, selectFollowingsFromUser } from './selectors'
 import { getFollowingsBegin } from './actions/getFollowings';
 import titleWrapper from 'titleWrapper';
 
-class ProfileFollowings extends Component {
-  static defaultProps = {
-    followingsAccounts: [],
-  };
-
-  static propTypes = {
-    getFollowings: PropTypes.func.isRequired,
-    followingsAccounts: PropTypes.array,
-    followingsFromUser: PropTypes.object.isRequired,
-  };
-
-  render() {
-    const { getFollowings, followingsFromUser, followingsAccounts } = this.props;
-    return (
-      <div className="usercard_container">
-        <InfiniteList
-          list={followingsAccounts}
-          hasMore={followingsFromUser.hasMore || (followingsFromUser.list && followingsAccounts.length < followingsFromUser.list.length)}
-          isLoading={followingsFromUser.isLoading}
-          initLoad={getFollowings}
-          loadMoreCb={() => getFollowings({ addMore: true, lastFollowing: followingsAccounts[followingsAccounts.length - 1].name })}
-          itemMappingCb={user => (
-            <UserCard
-              key={user.id}
-              user={user}
-            />
-          )}
-        />
-      </div>
-    );
-  }
+function ProfileFollowings(props) {
+  const { getFollowings, followingsFromUser, followingsAccounts } = props;
+  return (
+    <div className="usercard_container">
+      <InfiniteList
+        list={followingsAccounts}
+        hasMore={followingsFromUser.hasMore || (followingsFromUser.list && followingsAccounts.length < followingsFromUser.list.length)}
+        isLoading={followingsFromUser.isLoading}
+        initLoad={getFollowings}
+        loadMoreCb={() => getFollowings({ addMore: true, lastFollowing: followingsAccounts[followingsAccounts.length - 1].name })}
+        itemMappingCb={user => (
+          <UserCard
+            key={user.id}
+            user={user}
+          />
+        )}
+      />
+    </div>
+  );
 }
+
+ProfileFollowings.defaultProps = {
+  followingsAccounts: [],
+};
+
+ProfileFollowings.propTypes = {
+  getFollowings: PropTypes.func.isRequired,
+  followingsAccounts: PropTypes.array,
+  followingsFromUser: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = (state, props) => createStructuredSelector({
   followingsAccounts: selectFollowingsAccounts(props.match.params.accountName),

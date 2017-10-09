@@ -1,9 +1,9 @@
-import { select, take, call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, select, take, takeEvery } from 'redux-saga/effects';
 import steem from 'steem';
 import update from 'immutability-helper';
 
 import { selectAccounts } from '../selectors';
-import { getAccountsBegin, GET_ACCOUNTS_SUCCESS } from './getAccounts';
+import { GET_ACCOUNTS_SUCCESS, getAccountsBegin } from './getAccounts';
 
 /*--------- CONSTANTS ---------*/
 const GET_FOLLOWERS_BEGIN = 'GET_FOLLOWERS_BEGIN';
