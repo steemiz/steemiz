@@ -5,7 +5,7 @@ import numeral from 'numeral';
 function UserReceivedSteemPower({ account }) {
   return (
     <span>
-      {numeral(account.steemPowerReceived).format('0,0.00')}
+      {'('+numeral(account.steemPowerReceived).format('0,0.00')+')'}
     </span>
   );
 }
