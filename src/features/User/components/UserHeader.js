@@ -36,6 +36,7 @@ function UserHeader(props) {
           <div className="user__info__statistics">
             <div className="statistic statistic--steem_power">
               <h3><UserSteemPower account={account} /></h3>
+              <h3><UserReceivedSteemPower account={account} /></h3>
               <p>Steem Power</p>
             </div>
             <div className="statistic statistic--posts">
