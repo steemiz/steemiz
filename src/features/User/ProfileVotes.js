@@ -75,7 +75,7 @@ class ProfileVotes extends Component {
               <div className="votes__result votes__result--given">
                 <div className="votes__result__number">
                   <h2>{givenVotes.length}</h2>
-                  <p>Givens Upvotes</p>
+                  <p>Given Upvotes</p>
                 </div>
                 <ul className="votes__result__list">
                   <InfiniteList

@@ -7,10 +7,16 @@ export default function format(user, appProps) {
     appProps.total_vesting_shares,
     appProps.total_vesting_fund_steem
   ) : 0;
+  const steemPowerReceived = appProps ? formatter.vestToSteem(
+    user.received_vesting_shares-user.delegated_vesting_shares,
+    appProps.total_vesting_shares,
+    appProps.total_vesting_fund_steem
+  ) : 0;
   return {
     ...user,
     json_metadata: metadata,
     reputation: formatter.reputation(user.reputation),
     steemPower: steemPower,
+    steemPowerReceived:steemPowerReceived
   };
 }
