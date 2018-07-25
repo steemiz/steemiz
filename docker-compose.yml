@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  steemiz:
+    container_name: steemiz
+    build:
+      context: .
+      dockerfile: .docker/steemiz.dockerfile
+    ports:
+      - ${PORT}:${EXPOSED_PORT}
+    expose:
+      - ${EXPOSED_PORT}
+    environment:
+      - NODE_ENV=production
